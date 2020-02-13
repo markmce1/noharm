@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 
-export default class Entity extends Phaser.GameObjects.Sprite {
+export class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, type) {
     super(scene, x, y, key);
 
@@ -38,7 +38,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
   }
 }
 
-class Player extends Entity {
+export class Player extends Entity {
   constructor(scene, x, y, key) {
     super(scene, x, y, key, "Player");
 
@@ -93,21 +93,21 @@ class Player extends Entity {
   }
 }
 
-class PlayerLaser extends Entity {
+export class PlayerLaser extends Entity {
   constructor(scene, x, y) {
     super(scene, x, y, "sprLaserPlayer");
     this.body.velocity.y = -200;
   }
 }
 
-class EnemyLaser extends Entity {
+export class EnemyLaser extends Entity {
   constructor(scene, x, y) {
     super(scene, x, y, "sprLaserEnemy0");
     this.body.velocity.y = 200;
   }
 }
 
-class ChaserShip extends Entity {
+export class ChaserShip extends Entity {
   constructor(scene, x, y) {
     super(scene, x, y, "sprEnemy1", "ChaserShip");
 
@@ -155,7 +155,7 @@ class ChaserShip extends Entity {
   }
 }
 
-class GunShip extends Entity {
+export class GunShip extends Entity {
   constructor(scene, x, y) {
     super(scene, x, y, "sprEnemy0", "GunShip");
     this.play("sprEnemy0");
@@ -187,7 +187,7 @@ class GunShip extends Entity {
   }
 }
 
-class CarrierShip extends Entity {
+export class CarrierShip extends Entity {
   constructor(scene, x, y) {
     super(scene, x, y, "sprEnemy2", "CarrierShip");
     this.play("sprEnemy2");
@@ -196,7 +196,7 @@ class CarrierShip extends Entity {
   }
 }
 
-class ScrollingBackground {
+export default class ScrollingBackground {
   constructor(scene, key, velocityY) {
     this.scene = scene;
     this.key = key;

@@ -1,4 +1,4 @@
-import Entities from './Entities'
+import ScrollingBackground from './Entities'
 export default class SceneMain extends Phaser.Scene {
   constructor() {
     super({ key: "SceneMain" });

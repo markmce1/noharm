@@ -2,7 +2,7 @@ import * as Phaser from 'phaser';
 import SceneMain from './SceneMain'
 import SceneGameOver from './SceneGameOver'
 import SceneMainMenu from './SceneMainMenu'
-import Entities from './Entities'
+
 
 const config = {
   type: Phaser.WEBGL,
