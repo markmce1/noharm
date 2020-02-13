@@ -1,4 +1,4 @@
-import ScrollingBackground from './Entities'
+import { ScrollingBackground } from './Scrollbackground'
 
 export default class SceneGameOver extends Phaser.Scene {
   constructor() {

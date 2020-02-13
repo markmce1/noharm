@@ -17,7 +17,8 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
 		const game = new Phaser.Game(config)
-
+    console.log(game)
   }
+
 
 }
