@@ -129,6 +129,10 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
         if (k == 0) {
             //this.moveDown();//down
         }
+        else if(k == 1){
+            //fire projectile
+
+        }
         else if (k == 2) {
             this.moveLeft();//left
         }
@@ -149,7 +153,7 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
         }
     }
     moveDown() {
-        if (this.y < height) {
+        if (this.y > height) {
             this.y += this.deltay;
         }
     }
