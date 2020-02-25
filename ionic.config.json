@@ -1,5 +1,7 @@
 {
   "name": "NoHarm",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -8,7 +8,6 @@ export default class GameScene extends Phaser.Scene
 	private score = 0
 
 	private platforms: Phaser.Physics.Arcade.StaticGroup
-	// private spacebar: Phaser.Input.Keyboard.Key
 	private player: Phaser.Physics.Arcade.Sprite
 	private scoreText: Phaser.GameObjects.Text
 
@@ -29,10 +28,7 @@ export default class GameScene extends Phaser.Scene
 		this.load.image('sky', './assets/flappy/sky.png')
 		this.load.image('fencea', './assets/flappy/fencea.png')
 		this.load.image('fenceb', './assets/flappy/fenceb.png')
-		this.load.spritesheet('birdy',
-			'assets/flappy/birdy.png',
-			{ frameWidth: 34, frameHeight: 24 }
-		)
+		this.load.spritesheet('birdy','assets/flappy/birdy.png',{ frameWidth: 34, frameHeight: 24 })
 
 		this.load.audio('flap', './assets/flappy/sounds/sfx_wing.ogg')
 		this.load.audio('hit', './assets/flappy/sounds/sfx_hit.ogg')

@@ -136,7 +136,7 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
             this.moveRight();//right
         }
     }
-
+    //enemy movement
     moveLeft() {
         if (this.x > 0) {
             this.x -= this.deltaX;
@@ -164,6 +164,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     preload() {
+        //images loaded 
         
         this.load.image('tractor', 'assets/space/tractor.png');
         this.load.image('laser', 'assets/space/key.png');
@@ -177,7 +178,6 @@ export default class Scene1 extends Phaser.Scene {
     create() {
         
         this.add.image(300, 300, 'grass');
-        this.cursors = this.input.keyboard.createCursorKeys();
         this.myTractor = new tractor(this, 200, 475);
         this.add.existing(this.myTractor);
         this.enemies = this.physics.add.group();
@@ -241,7 +241,7 @@ export default class Scene1 extends Phaser.Scene {
 
     }
 
-    update() {//movement, should be changed to buttons 
+    update() {//movement 
         if (this.isMovingLeft) {//left
             this.myTractor.moveLeft();
         }
