@@ -1,6 +1,7 @@
 //need screen width and height in here too
 var score= 0;
 var scoreText;
+var endGame = 'Level won!';
 var width = 350;
 var height = 600;
 
@@ -99,6 +100,7 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
         laserSprite.destroy(true);//Key disappears
         score = score+1;//Add 1 to score
         scoreText.setText('Score: ' + score);// Set the text to score
+
     }
 
     preUpdate(time, delta) {
@@ -125,7 +127,7 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
     update() {//Updates every frame ( I assume ). generates random numer, then checks where the move left or right
         let k = Math.random() * 4;
         k = Math.round(k);
-
+        
         if (k == 0) {
             //this.moveDown();//down
         }
@@ -170,18 +172,18 @@ export default class Scene1 extends Phaser.Scene {
     preload() {
         //images loaded 
         
-        this.load.image('tractor', 'assets/space/tractor.png');
+        this.load.image('tractor', 'assets/space/tractor1.png');
         this.load.image('laser', 'assets/space/key.png');
-        this.load.image('enemy1', 'assets/space/gate.png');
-        this.load.image('grass', 'assets/space/grass.png');
+        this.load.image('enemy1', 'assets/space/gate2sh.png');
+        this.load.image('grass', 'assets/space/grass2.png');
         this.load.image('rightBut', 'assets/space/rightBut.png');
         this.load.image('leftBut', 'assets/space/leftBut.png');
-        this.load.image('upBut', 'assets/space/upBut.png'); //CHANGE SPRITE
+        this.load.image('shoot', 'assets/space/shoot.png'); 
     }
 
     create() {
         
-        this.add.image(300, 300, 'grass');
+        this.add.image(200, 300, 'grass');
         this.myTractor = new tractor(this, 200, 475);
         this.add.existing(this.myTractor);
         this.enemies = this.physics.add.group();
@@ -192,10 +194,12 @@ export default class Scene1 extends Phaser.Scene {
         let yloop = 0;
         let x =   25;
         let y =   70;
+        
         for(yloop =0; yloop < 4; yloop++)//To put them lower on the screen
         {
             for (k = 0; k < 6; k++) {//for loop to make enemies. This loop also sets amount of en
 
+                
                 this.enemy = new Enemy1(this, x, y);//Calls enemy1 function
                 this.add.existing(this.enemy);
                 this.enemies.add(this.enemy);
@@ -205,6 +209,8 @@ export default class Scene1 extends Phaser.Scene {
         y = y + 50;
         x = 25;
     }
+
+
 
     ////////buttons galore here. Left Right and fire. Change fire sprite!!!!!!!!!!!!!!
     this.moveLeftButton = this.add.image(100, 575, 'leftBut');
@@ -219,7 +225,7 @@ export default class Scene1 extends Phaser.Scene {
      this.isMovingRight = false;
     });
 
-    this.moveRightButton = this.add.image(300, 575, 'rightBut');
+    this.moveRightButton = this.add.image(200, 575, 'rightBut');
     this.moveRightButton.setInteractive();
 
     this.moveRightButton.on('pointerdown', () => {
@@ -231,7 +237,7 @@ export default class Scene1 extends Phaser.Scene {
      this.isMovingRight = false;
     });
 
-    this.shootButton = this.add.image(200, 575, 'upBut');// CHANGE SPRITE
+    this.shootButton = this.add.image(300, 575, 'shoot');
     this.shootButton.setInteractive();
 
     this.shootButton.on('pointerdown', () => {
@@ -241,7 +247,7 @@ export default class Scene1 extends Phaser.Scene {
     this.shootButton.on('pointerup', () => {
      this.isShooting = false;
     });
-        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+        scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
 
     }
 
@@ -265,6 +271,15 @@ export default class Scene1 extends Phaser.Scene {
             let enemy = this.enemies2[j];
             enemy.update();
         }
-    }
-}
 
+
+        if(score == 24){
+            var endGame = this.add.text(150, 300, 'Level won!', { fontSize: '32px', fill: '#000' });
+            //start new scene after 5 seconds.
+            this.scene.restart(Scene1); 
+            score =0;
+        }
+    }
+
+
+}

@@ -51,6 +51,11 @@ var WorldScene = new Phaser.Class({
     {
         
     },
+    dialogue (){
+        console.log("Fuck");
+    
+    
+    },
     create ()
     {
      
@@ -74,12 +79,9 @@ var WorldScene = new Phaser.Class({
 
         this.farmer1 =  this.physics.add.image(500,100, 'farmer');
 
-
-
-
-
-
         this.player = this.physics.add.sprite(200, 200, 'player', 6);
+
+
 
         this.physics.world.bounds.width = map.widthInPixels;
         this.physics.world.bounds.height = map.heightInPixels;
@@ -93,7 +95,9 @@ var WorldScene = new Phaser.Class({
 
         this.physics.add.collider(this.player, obstacles);
         this.physics.add.collider(this.player, house);
-        this.physics.add.overlap(this.player, this.farmer1, this.dialogue, false, this);
+
+        //this.physics.add.overlap(this.player, this.farmer, dialogue, null, this);
+        ///WHY THE FUCK DOESNT THIS FUCKING WORK
 
 
         //animations
@@ -255,11 +259,7 @@ var WorldScene = new Phaser.Class({
 
 },
 
-dialogue (){
-    console.log("pee pee");
 
-
-}
 });
   
 
