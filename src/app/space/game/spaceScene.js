@@ -118,31 +118,11 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
         this.setTexture('enemy1');//sets texture. Change name later
         this.setPosition(x,y);//sets enemy position
         scene.physics.world.enable(this);//Makes them apply to the set physics
-
         this.gameObject = this;
         this.deltaX = 3;//used in movement calculation
         this.deltaY = 3;
     }
 
-    update() {//Updates every frame ( I assume ). generates random numer, then checks where the move left or right
-        let k = Math.random() * 4;
-        k = Math.round(k);
-        
-        if (k == 0) {
-            //this.moveDown();//down
-        }
-        else if(k == 1){
-            //fire projectile
-
-        }
-        else if (k == 2) {
-            this.moveLeft();//left
-        }
-        else if (k == 3) {
-            this.moveRight();//right
-        }
-    }
-    //enemy movement
     moveLeft() {
         if (this.x > 0) {
             this.x -= this.deltaX;
@@ -159,6 +139,7 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
             this.y += this.deltay;
         }
     }
+
 }
 
 //================================================================================
@@ -202,6 +183,7 @@ export default class Scene1 extends Phaser.Scene {
                 
                 this.enemy = new Enemy1(this, x, y);//Calls enemy1 function
                 this.add.existing(this.enemy);
+
                 this.enemies.add(this.enemy);
                 this.enemies2.push(this.enemy);
                 x = x + 75;
@@ -209,10 +191,13 @@ export default class Scene1 extends Phaser.Scene {
         y = y + 50;
         x = 25;
     }
+    this.topLeft = this.enemies2[0];
+    this.bottomRight = this.enemies2[23];
+    
 
 
 
-    ////////buttons galore here. Left Right and fire. Change fire sprite!!!!!!!!!!!!!!
+    ////////buttons galore here. Left Right and fire. 
     this.moveLeftButton = this.add.image(100, 575, 'leftBut');
     this.moveLeftButton.setInteractive();
 
@@ -266,10 +251,16 @@ export default class Scene1 extends Phaser.Scene {
 
         this.myTractor.update();
 
-        let j = 0;
-        for (j = 0; j < this.enemies2.length; j++) {
-            let enemy = this.enemies2[j];
-            enemy.update();
+                
+        if (this.bottomRight.x >= 300 ) {
+            if (this.x < width) {
+                this.x += this.deltaX;
+            }
+        }
+        else if(this.topLeft.x <= 5){
+            this.Enemy1.moveRight();
+            
+
         }
 
 
