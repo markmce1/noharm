@@ -172,6 +172,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         let k = 0;
+        let arrCount =0;
         let yloop = 0;
         let x =   25;
         let y =   70;
@@ -179,13 +180,15 @@ export default class Scene1 extends Phaser.Scene {
         for(yloop =0; yloop < 4; yloop++)//To put them lower on the screen
         {
             for (k = 0; k < 6; k++) {//for loop to make enemies. This loop also sets amount of en
-
+                
                 
                 this.enemy = new Enemy1(this, x, y);//Calls enemy1 function
                 this.add.existing(this.enemy);
 
                 this.enemies.add(this.enemy);
                 this.enemies2.push(this.enemy);
+                this.enemies2[arrCount].body.setVelocityX(-5);
+                arrCount++;
                 x = x + 75;
             }
         y = y + 50;
@@ -193,7 +196,6 @@ export default class Scene1 extends Phaser.Scene {
     }
     this.topLeft = this.enemies2[0];
     this.bottomRight = this.enemies2[23];
-    
 
 
 
@@ -252,13 +254,20 @@ export default class Scene1 extends Phaser.Scene {
         this.myTractor.update();
 
                 
-        if (this.bottomRight.x >= 300 ) {
-            if (this.x < width) {
-                this.x += this.deltaX;
+        if (this.bottomRight.body.velocity.x > 0 && this.bottomRight.body.x >= 300 ) {
+            var arrCount=0;
+            const list = this.enemies.getChildren();
+            for(arrCount=0; arrCount < 24; arrCount++){
+            list[arrCount].body.setVelocityX(-5);
             }
         }
-        else if(this.topLeft.x <= 5){
-            this.Enemy1.moveRight();
+        else if(this.topLeft.body.velocity.x < 0 && this.topLeft.body.x <= -5){
+            var arrCount=0;
+            
+    const list = this.enemies.getChildren();
+            for(arrCount=0; arrCount < 24; arrCount++){
+                list[arrCount].body.setVelocityX(+5);
+            }
             
 
         }
