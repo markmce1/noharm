@@ -87,7 +87,7 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
 
     constructor(scene, x, y) {
         super(scene, x, y);
-        this.setTexture('laser');
+        this.setTexture('key');
         this.setPosition(x, y);
         this.speed = 10;
         this.scene = scene;
@@ -154,7 +154,7 @@ export default class Scene1 extends Phaser.Scene {
         //images loaded 
         
         this.load.image('tractor', 'assets/space/tractor1.png');
-        this.load.image('laser', 'assets/space/key.png');
+        this.load.image('key', 'assets/space/key.png');
         this.load.image('enemy1', 'assets/space/gate2sh.png');
         this.load.image('grass', 'assets/space/grass2.png');
         this.load.image('rightBut', 'assets/space/rightBut.png');
@@ -258,15 +258,18 @@ export default class Scene1 extends Phaser.Scene {
             var arrCount=0;
             const list = this.enemies.getChildren();
             for(arrCount=0; arrCount < 24; arrCount++){
+            if(list[arrCount] != null){
             list[arrCount].body.setVelocityX(-5);
+            }
             }
         }
         else if(this.topLeft.body.velocity.x < 0 && this.topLeft.body.x <= -5){
             var arrCount=0;
-            
-    const list = this.enemies.getChildren();
+            const list = this.enemies.getChildren();
             for(arrCount=0; arrCount < 24; arrCount++){
+                if(list[arrCount] != null){
                 list[arrCount].body.setVelocityX(+5);
+                }
             }
             
 
