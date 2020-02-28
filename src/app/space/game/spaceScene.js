@@ -3,7 +3,9 @@ var score= 0;
 var scoreText;
 var endGame;
 var width = 350;
+var timedevent;
 var height = 600;
+var scorecount = 0;
 
 
 //================================================================================
@@ -97,8 +99,13 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
 
     handleHit(laserSprite, enemySprite) {//What happens when a Key and Enemy sprite hit each other
         enemySprite.destroy(true);//Enemy disappears
+        this.scene.enemies.remove;
+        this.scene.topLeft = this.scene.enemies.getChildren()[0];
+        this.scene.bottomRight = this.scene.enemies.getChildren()[this.scene.enemies.getChildren().length - 1];
         laserSprite.destroy(true);//Key disappears
+
         score = score+1;//Add 1 to score
+        scorecount = scorecount +1;
         scoreText.setText('Score: ' + score);// Set the text to score
     }
 
@@ -153,25 +160,24 @@ export default class Scene1 extends Phaser.Scene {
         let k = 0;
         let arrCount =0;
         let yloop = 0;
-        let x =   25;
+        let x =   50;
         let y =   70;
         
-        for(yloop =0; yloop < 4; yloop++)//To put them lower on the screen
+        for(yloop =0; yloop < 6; yloop++)//To put them lower on the screen
         {
-            for (k = 0; k < 6; k++) {//for loop to make enemies. This loop also sets amount of en
+            for (k = 0; k < 4; k++) {//for loop to make enemies. This loop also sets amount of en
                 
                 
                 this.enemy = new Enemy1(this, x, y);//Calls enemy1 function
                 this.add.existing(this.enemy);
-
                 this.enemies.add(this.enemy);
                 this.enemies2.push(this.enemy);
-                this.enemies2[arrCount].body.setVelocityX(-5);
+                this.enemies2[arrCount].body.setVelocityX(-15);
                 arrCount++;
-                x = x + 75;
+                y = y + 50;
             }
-        y = y + 50;
-        x = 25;
+        x = x + 50;
+        y = 70;
     }
     this.topLeft = this.enemies2[0];
     this.bottomRight = this.enemies2[23];
@@ -231,40 +237,31 @@ export default class Scene1 extends Phaser.Scene {
         }
 
         this.myTractor.update();
-        var arrCount = 0;
-        for(arrCount = 0; arrCount > this.enemies2.length, arrCount++;){
-        if(enemies[arrCount != NULL]){
-             this.topLeft = this.enemies2[arrCount];
 
-             break;
-        }
-    }
-        
-                
-        if (this.bottomRight.body.velocity.x > 0 && this.bottomRight.body.x >= 300 ) {
-            var arrCount=0;
-            const list = this.enemies.getChildren();
-            console.log(list);
-            for(arrCount=0; arrCount < list.length; arrCount++){
-            if(list[arrCount] != null){
-            enemies.setVelocityX(-5);
-            }
-            }
-        }
-        else if(this.topLeft.body.velocity.x < 0 && this.topLeft.body.x <= -5){
-            var arrCount=0;
-            const list = this.enemies.getChildren();
-            for(arrCount=0; arrCount < list.length; arrCount++){
+        const list = this.enemies.getChildren();
+        //movement logic
+        if(this.bottomRight !=  null && this.topLeft != null ){  
+            if (this.bottomRight.body.velocity.x > 0 && this.bottomRight.body.x >= 360 ) {
+                var arrCount=0;
+                for(arrCount=0; arrCount < list.length; arrCount++){
                 if(list[arrCount] != null){
-                enemies2[arrCount].body.setVelocityX(+5);
+                this.enemies.setVelocityX(-15);
+                }
+                }
+            }
+            else if(this.topLeft.body.velocity.x < 0 && this.topLeft.body.x <= -5){
+                var arrCount=0;
+                for(arrCount=0; arrCount < list.length; arrCount++){
+                    if(list[arrCount] != null){
+                    this.enemies.setVelocityX(+15);
+                    }
                 }
             }
         }
         if(score == 24){
             var endGame = this.add.text(150, 300, 'Level won!', { fontSize: '32px', fill: '#000' });
-            //start new scene after 5 seconds.
-            this.scene.restart(Scene1); 
             score =0;
+            timedevent = this.time.delayedCall(5000, this.scene.restart);
         }
     }
 
