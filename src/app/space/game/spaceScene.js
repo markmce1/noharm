@@ -1,7 +1,7 @@
 //need screen width and height in here too
 var score= 0;
 var scoreText;
-var endGame = 'Level won!';
+var endGame;
 var width = 350;
 var height = 600;
 
@@ -100,7 +100,6 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
         laserSprite.destroy(true);//Key disappears
         score = score+1;//Add 1 to score
         scoreText.setText('Score: ' + score);// Set the text to score
-
     }
 
     preUpdate(time, delta) {
@@ -119,27 +118,7 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
         this.setPosition(x,y);//sets enemy position
         scene.physics.world.enable(this);//Makes them apply to the set physics
         this.gameObject = this;
-        this.deltaX = 3;//used in movement calculation
-        this.deltaY = 3;
     }
-
-    moveLeft() {
-        if (this.x > 0) {
-            this.x -= this.deltaX;
-        }
-    }
-
-    moveRight() {
-        if (this.x < width) {
-            this.x += this.deltaX;
-        }
-    }
-    moveDown() {
-        if (this.y > height) {
-            this.y += this.deltay;
-        }
-    }
-
 }
 
 //================================================================================
@@ -252,30 +231,35 @@ export default class Scene1 extends Phaser.Scene {
         }
 
         this.myTractor.update();
+        var arrCount = 0;
+        for(arrCount = 0; arrCount > this.enemies2.length, arrCount++;){
+        if(enemies[arrCount != NULL]){
+             this.topLeft = this.enemies2[arrCount];
 
+             break;
+        }
+    }
+        
                 
         if (this.bottomRight.body.velocity.x > 0 && this.bottomRight.body.x >= 300 ) {
             var arrCount=0;
             const list = this.enemies.getChildren();
-            for(arrCount=0; arrCount < 24; arrCount++){
+            console.log(list);
+            for(arrCount=0; arrCount < list.length; arrCount++){
             if(list[arrCount] != null){
-            list[arrCount].body.setVelocityX(-5);
+            enemies.setVelocityX(-5);
             }
             }
         }
         else if(this.topLeft.body.velocity.x < 0 && this.topLeft.body.x <= -5){
             var arrCount=0;
             const list = this.enemies.getChildren();
-            for(arrCount=0; arrCount < 24; arrCount++){
+            for(arrCount=0; arrCount < list.length; arrCount++){
                 if(list[arrCount] != null){
-                list[arrCount].body.setVelocityX(+5);
+                enemies2[arrCount].body.setVelocityX(+5);
                 }
             }
-            
-
         }
-
-
         if(score == 24){
             var endGame = this.add.text(150, 300, 'Level won!', { fontSize: '32px', fill: '#000' });
             //start new scene after 5 seconds.

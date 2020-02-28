@@ -17,7 +17,7 @@ export class SpacePage implements OnInit {
   ngOnInit() {
 
     const game = new Phaser.Game(config);
-		  game.scene.add('scene1', Scene1, true, { x: 400, y: 300});
+    game.scene.add('scene1', Scene1, true, { x: 400, y: 300});
   }
 
 }
