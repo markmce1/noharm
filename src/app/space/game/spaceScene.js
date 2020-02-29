@@ -3,9 +3,9 @@ var score= 0;
 var scoreText;
 var roundText; //just stuff for set Texts
 var endGame;
-var width = 350;
+var width = 300;
 var timedevent;
-var height = 600;
+var height =650;
 var scorecount = 0;
 var round = 1;
 var speed = 1;
@@ -150,11 +150,14 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('rightBut', 'assets/space/rightBut.png');
         this.load.image('leftBut', 'assets/space/leftBut.png');
         this.load.image('shoot', 'assets/space/shoot.png'); 
+        this.load.image('pause','assets/space/pause.png');
+        this.load.image('bg', 'assets/space/bg.png');
     }
 
     create() {
         
         this.add.image(200, 300, 'grass');
+        this.add.image(200,45,'bg');
         this.myTractor = new tractor(this, 200, 475);
         this.add.existing(this.myTractor);
         this.enemies = this.physics.add.group();
@@ -185,6 +188,17 @@ export default class Scene1 extends Phaser.Scene {
     }
     this.topLeft = this.enemies2[0];
     this.bottomRight = this.enemies2[23];
+
+    this.pauseBut = this.add.image(300,25, 'pause');
+    this.pauseBut.setInteractive();
+
+    this.pauseBut.on('pointerdown',()=>{
+        this.scene.start('pause');
+        this.scene.pause();
+        console.log('paused');
+        
+    });
+
 
 
 
@@ -223,6 +237,8 @@ export default class Scene1 extends Phaser.Scene {
     this.shootButton.on('pointerup', () => {
      this.isShooting = false;
     });
+
+    
         scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
         roundText = this.add.text(16 ,48 ,'Round: ' + round + ' Lives: ' + lives, { fontSize: '32px', fill: '#000' });
 
@@ -240,6 +256,7 @@ export default class Scene1 extends Phaser.Scene {
         if (this.isShooting) {//space to fire lazers
             this.myTractor.fireLasers();
         }
+
 
         this.myTractor.update();
 
@@ -267,16 +284,17 @@ export default class Scene1 extends Phaser.Scene {
                 }
             }
             if(this.bottomRight.body.y  >= 375){
-                var endGame = this.add.text(150, 300, 'Lost a life', { fontSize: '32px', fill: '#000' });
-                timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
-                this.scene.pause();
+                var endGame = this.add.text(100, 200, 'Lost a life', { fontSize: '32px', fill: '#000' });
+                this.scene.stop();
                 lives --;
-                if(lives == 0){
-                    var endGame = this.add.text(150, 300, 'Game over', { fontSize: '32px', fill: '#000' });
-                    timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);//change to a button
-                    score = 0;
-                    round = 1;
-                }
+                this.scene.restart();
+                timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
+            }
+            if(lives == 0){
+                var endGame = this.add.text(150, 200, 'Game over', { fontSize: '32px', fill: '#000' });
+                timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);//change to a button
+                score = 0;
+                round = 1;
             }
             if(this.topLeft.body.y >= 350)
             {
@@ -285,16 +303,50 @@ export default class Scene1 extends Phaser.Scene {
         }
 
         if(scorecount == 24){
-            var endGame = this.add.text(150, 300, 'Level won!', { fontSize: '32px', fill: '#000' });
+            var endGame = this.add.text(150, 200, 'Level won!', { fontSize: '32px', fill: '#000' });
             scorecount =0;
             //pausing game
-            this.scene.pause();
             round++;
             speed++;
-            timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
+            timedevent= this.time.delayedCall(3000,function(){this.scene.restart()}, [],this);
             //add functionality to make the game harder and to add more score per kill
         }
     }
 
 
+}
+class pause extends Phaser.Scene {
+    preload(){
+        this.load.image('resumeBut', 'assets/space/resume.png');
+        this.load.image('leftBut', 'assets/space/leftBut.png');
+        this.load.image('shoot', 'assets/space/shoot.png'); 
+        this.load.image('grass', 'assets/space/grass2.png');
+    }
+    create(){
+        this.add.image(200, 300, 'grass');
+
+        this.resume = this.add.image(200, 300, 'resumeBut');
+        this.resume.setInteractive();
+
+        this.resume.on('pointerdown', () => {
+            this.scene.resume('Scene1');
+            this.scene.stop();
+            
+        });
+        console.log('In the scene');
+
+
+        this.home = this.add.image(400,300, 'leftBut' );
+        this.home.setInteractive();
+
+        this.home.on('pointerdown', ()=> {
+            location.href = "/home"
+        });
+
+
+
+    }
+    update(){
+
+    }
 }

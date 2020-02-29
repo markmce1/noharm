@@ -2,7 +2,7 @@ import * as Phaser from 'phaser';
 //config file for phaser to run
 
 var width = 400;
-var height = 600;
+var height = 650;
 var config ={
     mode: Phaser.Scale.FIT,
     type: Phaser.AUTO,
