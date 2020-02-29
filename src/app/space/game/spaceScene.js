@@ -219,7 +219,7 @@ export default class Scene1 extends Phaser.Scene {
     this.shootButton.on('pointerup', () => {
      this.isShooting = false;
     });
-        scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
+        scoreText = this.add.text(16, 16, 'Score:' + score, { fontSize: '32px', fill: '#000' });
 
     }
 
@@ -258,10 +258,11 @@ export default class Scene1 extends Phaser.Scene {
                 }
             }
         }
-        if(score == 24){
+        if(scorecount == 24){
             var endGame = this.add.text(150, 300, 'Level won!', { fontSize: '32px', fill: '#000' });
-            score =0;
-            timedevent = this.time.delayedCall(5000, this.scene.restart);
+            scorecount =0;
+            this.scene.restart(Scene1); 
+            //timedevent = this.time.delayedCall(5000, this.scene.restart);
         }
     }
 
