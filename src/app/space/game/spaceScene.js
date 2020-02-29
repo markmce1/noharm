@@ -1,11 +1,15 @@
 //need screen width and height in here too
 var score= 0;
 var scoreText;
+var roundText; //just stuff for set Texts
 var endGame;
 var width = 350;
 var timedevent;
 var height = 600;
 var scorecount = 0;
+var round = 1;
+var speed = 1;
+var lives = 3;
 
 
 //================================================================================
@@ -104,7 +108,7 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
         this.scene.bottomRight = this.scene.enemies.getChildren()[this.scene.enemies.getChildren().length - 1];
         laserSprite.destroy(true);//Key disappears
 
-        score = score+1;//Add 1 to score
+        score = score+(1 * round);//Add 1 to score
         scorecount = scorecount +1;
         scoreText.setText('Score: ' + score);// Set the text to score
     }
@@ -160,8 +164,8 @@ export default class Scene1 extends Phaser.Scene {
         let k = 0;
         let arrCount =0;
         let yloop = 0;
-        let x =   50;
-        let y =   70;
+        let x =   100;
+        let y =   120;
         
         for(yloop =0; yloop < 6; yloop++)//To put them lower on the screen
         {
@@ -172,12 +176,12 @@ export default class Scene1 extends Phaser.Scene {
                 this.add.existing(this.enemy);
                 this.enemies.add(this.enemy);
                 this.enemies2.push(this.enemy);
-                this.enemies2[arrCount].body.setVelocityX(-15);
+                this.enemies2[arrCount].body.setVelocityX(-15 * speed);
                 arrCount++;
                 y = y + 50;
             }
         x = x + 50;
-        y = 70;
+        y = 120;
     }
     this.topLeft = this.enemies2[0];
     this.bottomRight = this.enemies2[23];
@@ -219,7 +223,8 @@ export default class Scene1 extends Phaser.Scene {
     this.shootButton.on('pointerup', () => {
      this.isShooting = false;
     });
-        scoreText = this.add.text(16, 16, 'Score:' + score, { fontSize: '32px', fill: '#000' });
+        scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
+        roundText = this.add.text(16 ,48 ,'Round: ' + round + ' Lives: ' + lives, { fontSize: '32px', fill: '#000' });
 
     }
 
@@ -245,7 +250,9 @@ export default class Scene1 extends Phaser.Scene {
                 var arrCount=0;
                 for(arrCount=0; arrCount < list.length; arrCount++){
                 if(list[arrCount] != null){
-                this.enemies.setVelocityX(-15);
+                this.enemies.setVelocityX(-15 * speed);
+                this.enemies.setVelocityY(+30);
+                timedevent = this.time.delayedCall(500, function() {this.enemies.setVelocityY(0)}, [], this);
                 }
                 }
             }
@@ -253,16 +260,39 @@ export default class Scene1 extends Phaser.Scene {
                 var arrCount=0;
                 for(arrCount=0; arrCount < list.length; arrCount++){
                     if(list[arrCount] != null){
-                    this.enemies.setVelocityX(+15);
+                    this.enemies.setVelocityX(+15 * speed);
+                    this.enemies.setVelocityY(+30);
+                    timedevent = this.time.delayedCall(500, function() {this.enemies.setVelocityY(0)}, [], this);
                     }
                 }
             }
+            if(this.bottomRight.body.y  >= 375){
+                var endGame = this.add.text(150, 300, 'Lost a life', { fontSize: '32px', fill: '#000' });
+                timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
+                this.scene.pause();
+                lives --;
+                if(lives == 0){
+                    var endGame = this.add.text(150, 300, 'Game over', { fontSize: '32px', fill: '#000' });
+                    timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);//change to a button
+                    score = 0;
+                    round = 1;
+                }
+            }
+            if(this.topLeft.body.y >= 350)
+            {
+                console.log('This also works');
+            }
         }
+
         if(scorecount == 24){
             var endGame = this.add.text(150, 300, 'Level won!', { fontSize: '32px', fill: '#000' });
             scorecount =0;
-            this.scene.restart(Scene1); 
-            //timedevent = this.time.delayedCall(5000, this.scene.restart);
+            //pausing game
+            this.scene.pause();
+            round++;
+            speed++;
+            timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
+            //add functionality to make the game harder and to add more score per kill
         }
     }
 
