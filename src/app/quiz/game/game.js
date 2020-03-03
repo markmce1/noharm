@@ -21,7 +21,8 @@ export default class Scene1 extends Phaser.Scene {
 
     }
 
-    create() {
+    create()
+    {
         //this.add.image(300, 200, 'bg');
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#3498db");
         this.add.image(200,45,'bg2');
@@ -32,14 +33,6 @@ export default class Scene1 extends Phaser.Scene {
         this.play = this.add.image(200, 350, 'start');
         this.play.setInteractive();
         this.play.on('pointerdown', () => {
-
-            round1();
-        });
-
-        round1()
-        {
-
-            
             this.play.destroy(true);
             var start = this.add.text(100, 106, 'What is the danger?', { fontSize: '22px', fill: '#000' });
 
@@ -92,7 +85,7 @@ export default class Scene1 extends Phaser.Scene {
     
             });
 
-        }
+        });
 
 
 
