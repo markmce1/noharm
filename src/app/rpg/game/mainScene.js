@@ -96,7 +96,12 @@ var WorldScene = new Phaser.Class({
         this.physics.add.collider(this.player, obstacles);
         this.physics.add.collider(this.player, house);
 
-        //this.physics.add.overlap(this.player, this.farmer, dialogue, null, this);
+        //this.physics.add.overlap(this.player, this.farmer, dialogue(), null, this);
+        function dialogue ()
+        {
+            scoreText = this.add.text(16, 16, 'Helllo world', { fontSize: '32px', fill: '#000' });
+
+        }
         ///WHY THE FUCK DOESNT THIS FUCKING WORK
 
 

@@ -6,7 +6,6 @@ var height = 650;
 var config ={
     scale:{
     mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
     },
 
     type: Phaser.AUTO,

@@ -3,13 +3,14 @@ var score= 0;
 var scoreText;
 var roundText; //just stuff for set Texts
 var endGame;
-var width = 300;
+var dir=1;
+var width = 375;
 var timedevent;
 var height =650;
 var scorecount = 0;
 var round = 1;
 var speed = 1;
-var lives = 3;
+var lives =3 ;
 
 
 //================================================================================
@@ -59,6 +60,7 @@ class tractor extends Phaser.GameObjects.Sprite  {
         if (currentTime - this.lastShot > this.shotFrequency) {
             var shipLaser = new ShipLaser(this.scene, this.x, this.y);
             this.scene.add.existing(shipLaser);
+            this.scene.sound.play('shoot');
             this.lasers.push(shipLaser);
             this.lastShot = currentTime;
         } 
@@ -101,12 +103,16 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
         scene.physics.add.collider(this, scene.enemies, this.handleHit, null, this);//Adds Collision
     }
 
+
+
     handleHit(laserSprite, enemySprite) {//What happens when a Key and Enemy sprite hit each other
         enemySprite.destroy(true);//Enemy disappears
+        this.scene.sound.play('lock');
         this.scene.enemies.remove;
         this.scene.topLeft = this.scene.enemies.getChildren()[0];
         this.scene.bottomRight = this.scene.enemies.getChildren()[this.scene.enemies.getChildren().length - 1];
         laserSprite.destroy(true);//Key disappears
+        
 
         score = score+(1 * round);//Add 1 to score
         scorecount = scorecount +1;
@@ -141,9 +147,14 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     preload() {
-        //images loaded 
-        
+        //sounds loaded 
+        this.load.audio('lock', 'assets/space/sounds/lock.wav');
+        this.load.audio('shoot', 'assets/space/sounds/shoot.wav');
+        this.load.audio('click1', 'assets/space/sounds/click.wav');
+        //images loaded
         this.load.image('tractor', 'assets/space/tractor1.png');
+        this.load.image('resumeBut', 'assets/space/resume.png');
+        this.load.image('homeBut', 'assets/space/homeBut.png');
         this.load.image('key', 'assets/space/key.png');
         this.load.image('enemy1', 'assets/space/gate2sh.png');
         this.load.image('grass', 'assets/space/grass2.png');
@@ -188,21 +199,46 @@ export default class Scene1 extends Phaser.Scene {
     }
     this.topLeft = this.enemies2[0];
     this.bottomRight = this.enemies2[23];
-
+    //////////////////////////////pausing here//////////////////////////////////////////////////////////////////////////
     this.pauseBut = this.add.image(300,25, 'pause');
     this.pauseBut.setInteractive();
 
     this.pauseBut.on('pointerdown',()=>{
-        this.scene.start('pause');
-        this.scene.pause();
-        console.log('paused');
+        //this.scene.sound.play('click');
+        this.enemies.setVelocityX(0);
+        this.resume = this.add.image(200, 300, 'resumeBut');
+        this.resume.setInteractive();
+        this.moveLeftButton.removeInteractive();
+        this.moveRightButton.removeInteractive();
+        this.shootButton.removeInteractive();
+
+        this.home = this.add.image(200,400, 'homeBut' );
+        this.home.setInteractive();
+
+        this.home.on('pointerdown', ()=> {
+            location.href = "/home"
+        });
+
+        this.resume.on('pointerdown', () => {
+            this.resume.destroy(true);
+            this.moveLeftButton.setInteractive();
+            this.moveRightButton.setInteractive();
+            this.shootButton.setInteractive();
+            
+            this.home.destroy(true);
+            if(dir == 2){
+                this.enemies.setVelocityX(+15 * speed);
+
+            }else
+            {
+                this.enemies.setVelocityX(-15 * speed);
+            };
+
+
+        });
         
     });
-
-
-
-
-    ////////buttons galore here. Left Right and fire. 
+    ////////buttons galore here. Left Right and fire. //////////////////////////////////////////////////////////////////////
     this.moveLeftButton = this.add.image(100, 575, 'leftBut');
     this.moveLeftButton.setInteractive();
 
@@ -268,6 +304,7 @@ export default class Scene1 extends Phaser.Scene {
                 for(arrCount=0; arrCount < list.length; arrCount++){
                 if(list[arrCount] != null){
                 this.enemies.setVelocityX(-15 * speed);
+                dir = 1; //direction being left
                 this.enemies.setVelocityY(+30);
                 timedevent = this.time.delayedCall(500, function() {this.enemies.setVelocityY(0)}, [], this);
                 }
@@ -278,6 +315,7 @@ export default class Scene1 extends Phaser.Scene {
                 for(arrCount=0; arrCount < list.length; arrCount++){
                     if(list[arrCount] != null){
                     this.enemies.setVelocityX(+15 * speed);
+                    dir = 2; //direction being right
                     this.enemies.setVelocityY(+30);
                     timedevent = this.time.delayedCall(500, function() {this.enemies.setVelocityY(0)}, [], this);
                     }
@@ -287,14 +325,27 @@ export default class Scene1 extends Phaser.Scene {
                 var endGame = this.add.text(100, 200, 'Lost a life', { fontSize: '32px', fill: '#000' });
                 this.scene.stop();
                 lives --;
+                scorecount = 0;
                 this.scene.restart();
                 timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
             }
             if(lives == 0){
-                var endGame = this.add.text(150, 200, 'Game over', { fontSize: '32px', fill: '#000' });
-                timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);//change to a button
+                var endGame = this.add.text(125, 200, 'Game over', { fontSize: '32px', fill: '#000' });
+                var endGame2 = this.add.text(50, 250, 'Press the button', { fontSize: '32px', fill: '#000' });
+                var endGame3 = this.add.text(125,300, 'to retry', { fontSize: '32px', fill: '#000' });
+                this.resume = this.add.image(200, 350, 'resumeBut');
+                this.resume.setInteractive();
+                this.resume.on('pointerdown', () => {
+                    this.scene.restart();
+                    
+                });
                 score = 0;
                 round = 1;
+                lives = 3;
+                scorecount =0;
+                endGame.destroy(true);
+                //var endGame = this.add.text(1500, 2000, 'Game over', { fontSize: '32px', fill: '#000' });
+
             }
             if(this.topLeft.body.y >= 350)
             {
@@ -314,39 +365,4 @@ export default class Scene1 extends Phaser.Scene {
     }
 
 
-}
-class pause extends Phaser.Scene {
-    preload(){
-        this.load.image('resumeBut', 'assets/space/resume.png');
-        this.load.image('leftBut', 'assets/space/leftBut.png');
-        this.load.image('shoot', 'assets/space/shoot.png'); 
-        this.load.image('grass', 'assets/space/grass2.png');
-    }
-    create(){
-        this.add.image(200, 300, 'grass');
-
-        this.resume = this.add.image(200, 300, 'resumeBut');
-        this.resume.setInteractive();
-
-        this.resume.on('pointerdown', () => {
-            this.scene.resume('Scene1');
-            this.scene.stop();
-            
-        });
-        console.log('In the scene');
-
-
-        this.home = this.add.image(400,300, 'leftBut' );
-        this.home.setInteractive();
-
-        this.home.on('pointerdown', ()=> {
-            location.href = "/home"
-        });
-
-
-
-    }
-    update(){
-
-    }
 }

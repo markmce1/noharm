@@ -2,6 +2,9 @@ import * as Phaser from 'phaser';
 
 import {WorldScene, BootScene} from './mainScene';
     var config = {
+        scale:{
+            mode: Phaser.Scale.FIT,
+            },
         type: Phaser.AUTO,
         parent: 'content',
         width: 400,

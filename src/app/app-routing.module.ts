@@ -5,10 +5,6 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
   {
-    path: 'tab2',
-    loadChildren: () => import('./tab2/tab2.module').then( m => m.Tab2PageModule)
-  },
-  {
     path: 'space',
     loadChildren: () => import('./space/space.module').then( m => m.SpacePageModule)
   },
@@ -16,6 +12,15 @@ const routes: Routes = [
     path: 'rpg',
     loadChildren: () => import('./rpg/rpg.module').then( m => m.RPGPageModule)
   },
+  {
+    path: 'quiz',
+    loadChildren: () => import('./quiz/quiz.module').then( m => m.QuizPageModule)
+  },  {
+    path: 'flap',
+    loadChildren: () => import('./flap/flap.module').then( m => m.FlapPageModule)
+  },
+
+
 
 
 ];
