@@ -13,7 +13,7 @@ var speed = 1;
 var lives =3 ;
 
 
-//================================================================================
+///////////////////////////////////////////////////////
 
 class tractor extends Phaser.GameObjects.Sprite  {
 
@@ -89,7 +89,7 @@ class tractor extends Phaser.GameObjects.Sprite  {
     }
 }
 
-//================================================================================
+///////////////////////////////////////////////////
 
 class ShipLaser extends Phaser.GameObjects.Sprite {
 
@@ -126,7 +126,7 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
     }
 }
 
-//================================================================================
+///////////////////////////////////////////////
 
 class Enemy1 extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {//accessed by function in scene1 to create enemies
@@ -138,7 +138,7 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
     }
 }
 
-//================================================================================
+/////////////////////////////////////////////
 
 export default class Scene1 extends Phaser.Scene {
 
@@ -203,39 +203,13 @@ export default class Scene1 extends Phaser.Scene {
     this.pauseBut = this.add.image(300,25, 'pause');
     this.pauseBut.setInteractive();
 
-    this.pauseBut.on('pointerdown',()=>{
-        //this.scene.sound.play('click');
-        this.enemies.setVelocityX(0);
-        this.resume = this.add.image(200, 300, 'resumeBut');
-        this.resume.setInteractive();
-        this.moveLeftButton.removeInteractive();
-        this.moveRightButton.removeInteractive();
-        this.shootButton.removeInteractive();
+    this.pauseBut.once('pointerdown',()=>{
+            this.pause1();
 
-        this.home = this.add.image(200,400, 'homeBut' );
-        this.home.setInteractive();
+            this.resume.on('pointerdown', () => {
+                this.resume1();
+            });
 
-        this.home.on('pointerdown', ()=> {
-            location.href = "/home"
-        });
-
-        this.resume.on('pointerdown', () => {
-            this.resume.destroy(true);
-            this.moveLeftButton.setInteractive();
-            this.moveRightButton.setInteractive();
-            this.shootButton.setInteractive();
-            
-            this.home.destroy(true);
-            if(dir == 2){
-                this.enemies.setVelocityX(+15 * speed);
-
-            }else
-            {
-                this.enemies.setVelocityX(-15 * speed);
-            };
-
-
-        });
         
     });
     ////////buttons galore here. Left Right and fire. //////////////////////////////////////////////////////////////////////
@@ -275,8 +249,51 @@ export default class Scene1 extends Phaser.Scene {
     });
 
     
-        scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
-        roundText = this.add.text(16 ,48 ,'Round: ' + round + ' Lives: ' + lives, { fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
+    roundText = this.add.text(16 ,48 ,'Round: ' + round + ' Lives: ' + lives, { fontSize: '32px', fill: '#000' });
+
+    }
+
+    pause1(){
+        this.enemies.setVelocityX(0);
+        this.resume = this.add.image(200, 300, 'resumeBut');
+        this.resume.setInteractive();
+        this.moveLeftButton.disableInteractive();
+        this.moveRightButton.disableInteractive();
+        this.shootButton.disableInteractive();
+
+        this.home = this.add.image(200,400, 'homeBut' );
+        this.home.setInteractive();
+
+        
+        this.home.on('pointerdown', ()=> {
+            location.href = "/home"
+        });
+
+    }
+
+    resume1(){
+        this.resume.setVisible(false);
+        this.moveLeftButton.setInteractive();
+        this.moveRightButton.setInteractive();
+        this.shootButton.setInteractive();
+        
+        this.home.destroy();
+        if(dir == 2){
+            this.enemies.setVelocityX(+15 * speed);
+
+        }else
+        {
+            this.enemies.setVelocityX(-15 * speed);
+        };
+
+        this.pauseBut.once('pointerdown',()=>{
+            this.pause1();
+
+            this.resume.on('pointerdown', () => {
+                this.resume1();
+            });
+        });
 
     }
 
@@ -343,8 +360,9 @@ export default class Scene1 extends Phaser.Scene {
                 round = 1;
                 lives = 3;
                 scorecount =0;
-                endGame.destroy(true);
+                endGame.destroy();
                 //var endGame = this.add.text(1500, 2000, 'Game over', { fontSize: '32px', fill: '#000' });
+                //setText you fool
 
             }
             if(this.topLeft.body.y >= 350)
@@ -360,7 +378,6 @@ export default class Scene1 extends Phaser.Scene {
             round++;
             speed++;
             timedevent= this.time.delayedCall(3000,function(){this.scene.restart()}, [],this);
-            //add functionality to make the game harder and to add more score per kill
         }
     }
 
