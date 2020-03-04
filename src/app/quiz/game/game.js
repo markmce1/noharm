@@ -39,28 +39,15 @@ export default class Scene1 extends Phaser.Scene {
         this.pauseBut = this.add.image(300,25, 'pause');
         this.pauseBut.setInteractive();
 
-        this.pauseBut.on('pointerdown',()=>{
-            this.resume = this.add.image(200, 300, 'resumeBut');
-            this.resume.setInteractive();
-
-
-            this.home = this.add.image(200,400, 'homeBut' );
-            this.home.setInteractive();
-
-            this.home.on('pointerdown', ()=> {
-                location.href = "/home"
-            });
+        this.pauseBut.once('pointerdown',()=>{
+            this.pause1();
 
             this.resume.on('pointerdown', () => {
-                this.resume.setVisible(false);
-                this.home.setVisible(false);
+                this.resume1();
+
             });
         
         });
-        
-
-
-
         this.play = this.add.image(200, 350, 'start');
         this.play.setInteractive();
         this.play.on('pointerdown', () => {
@@ -71,7 +58,9 @@ export default class Scene1 extends Phaser.Scene {
     update() {
 
     }
-    resume(){
+
+    pause1()
+    {
 
         this.resume = this.add.image(200, 300, 'resumeBut');
         this.resume.setInteractive();
@@ -84,12 +73,21 @@ export default class Scene1 extends Phaser.Scene {
             location.href = "/home"
         });
 
-        this.resume.on('pointerdown', () => {
-            this.resume.setVisible(false);
-            this.home.setVisible(false);
-        });
-
     }
+    resume1()
+    {
+        this.resume.setVisible(false);
+        this.home.setVisible(false);
+
+        this.pauseBut.once('pointerdown',()=>{
+            this.pause1();
+
+            this.resume.on('pointerdown', () => {
+                this.resume1();
+            });
+        });
+    }
+
 
     round1()
         {

@@ -203,39 +203,13 @@ export default class Scene1 extends Phaser.Scene {
     this.pauseBut = this.add.image(300,25, 'pause');
     this.pauseBut.setInteractive();
 
-    this.pauseBut.on('pointerdown',()=>{
-        //this.scene.sound.play('click');
-        this.enemies.setVelocityX(0);
-        this.resume = this.add.image(200, 300, 'resumeBut');
-        this.resume.setInteractive();
-        this.moveLeftButton.disableInteractive();
-        this.moveRightButton.disableInteractive();
-        this.shootButton.disableInteractive();
+    this.pauseBut.once('pointerdown',()=>{
+            this.pause1();
 
-        this.home = this.add.image(200,400, 'homeBut' );
-        this.home.setInteractive();
+            this.resume.on('pointerdown', () => {
+                this.resume1();
+            });
 
-        this.home.on('pointerdown', ()=> {
-            location.href = "/home"
-        });
-
-        this.resume.on('pointerdown', () => {
-            this.resume.destroy();
-            this.moveLeftButton.setInteractive();
-            this.moveRightButton.setInteractive();
-            this.shootButton.setInteractive();
-            
-            this.home.destroy();
-            if(dir == 2){
-                this.enemies.setVelocityX(+15 * speed);
-
-            }else
-            {
-                this.enemies.setVelocityX(-15 * speed);
-            };
-
-
-        });
         
     });
     ////////buttons galore here. Left Right and fire. //////////////////////////////////////////////////////////////////////
@@ -277,6 +251,49 @@ export default class Scene1 extends Phaser.Scene {
     
     scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
     roundText = this.add.text(16 ,48 ,'Round: ' + round + ' Lives: ' + lives, { fontSize: '32px', fill: '#000' });
+
+    }
+
+    pause1(){
+        this.enemies.setVelocityX(0);
+        this.resume = this.add.image(200, 300, 'resumeBut');
+        this.resume.setInteractive();
+        this.moveLeftButton.disableInteractive();
+        this.moveRightButton.disableInteractive();
+        this.shootButton.disableInteractive();
+
+        this.home = this.add.image(200,400, 'homeBut' );
+        this.home.setInteractive();
+
+        
+        this.home.on('pointerdown', ()=> {
+            location.href = "/home"
+        });
+
+    }
+
+    resume1(){
+        this.resume.setVisible(false);
+        this.moveLeftButton.setInteractive();
+        this.moveRightButton.setInteractive();
+        this.shootButton.setInteractive();
+        
+        this.home.destroy();
+        if(dir == 2){
+            this.enemies.setVelocityX(+15 * speed);
+
+        }else
+        {
+            this.enemies.setVelocityX(-15 * speed);
+        };
+
+        this.pauseBut.once('pointerdown',()=>{
+            this.pause1();
+
+            this.resume.on('pointerdown', () => {
+                this.resume1();
+            });
+        });
 
     }
 
