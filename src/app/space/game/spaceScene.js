@@ -126,6 +126,40 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
 
 ///////////////////////////////////////////////
 
+class EnemyLaser extends Phaser.GameObjects.Sprite {
+
+    constructor(scene, x, y) {
+        super(scene, x, y);
+        this.setTexture('key');
+        this.setPosition(x, y);
+        this.speed = -10;
+        this.scene = scene;
+        scene.physics.world.enable(this);
+        scene.physics.add.collider(this, scene.tractor, this.handleHit, null, this);//Adds Collision
+    }
+
+
+
+    handleHit(laserSprite) {//What happens when a Key and Enemy sprite hit each other
+        laserSprite.destroy(true);//Key disappears
+        //add in some "lost a life" dialogue here
+        lives --; 
+        //scene restart
+
+    }
+
+    preUpdate(time, delta) {/// no clue what this does
+        if(this.active == false){return;}
+        super.preUpdate(time, delta);
+        this.y -= this.speed;
+    }
+}
+
+
+
+
+///////////////////////////////////////
+
 class Enemy1 extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {//accessed by function in scene1 to create enemies
         super(scene, x, y);
@@ -133,6 +167,17 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
         this.setPosition(x,y);//sets enemy position
         scene.physics.world.enable(this);//Makes them apply to the set physics
         this.gameObject = this;
+    }
+
+    fireLasers() {
+        var currentTime = new Date().getTime();
+        if (currentTime - this.lastShot > this.shotFrequency) {
+            var enemyLaser = new EnemyLaser(this.scene, this.x, this.y);
+            this.scene.add.existing(enemyLaser);
+            this.scene.sound.play('shoot');
+            this.lasers.push(enemyLaser);
+            this.lastShot = currentTime;
+        } 
     }
 }
 
@@ -166,6 +211,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     create() {
+        
         
         this.add.image(200, 300, 'grass');
         this.add.image(200,45,'bg');
@@ -252,8 +298,24 @@ export default class Scene1 extends Phaser.Scene {
     scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
     roundText = this.add.text(16 ,48 ,'Round: ' + round + ' Lives: ' + lives, { fontSize: '32px', fill: '#000' });
 
+
+    this.time.delayedCall(1000, () => {
+        const list = this.enemies.getChildren()
+        list[0].fireLasers()
+        console.log('lol');
+    })
+
+
     }
 
+    /*
+    getRandom(min, max) {
+        return Math.random() * (max - min) + min;
+    }//passed two numbers when called
+
+    this.getRandom(0,this.scene.enemies.getChildren()[this.scene.enemies.getChildren().length - 1] );
+    whatever it returns would be the enemy that shoots. Run every 5-10 seconds. Maybe change per round
+    */
     pause1(){
         
         this.pauseBG = this.add.image(200,  350, 'pauseBG');
@@ -307,7 +369,6 @@ export default class Scene1 extends Phaser.Scene {
                 this.resume1();
             });
         });
-
     }
 
     update() {//movement 
