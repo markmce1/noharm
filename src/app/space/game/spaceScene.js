@@ -112,8 +112,6 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
         this.scene.topLeft = this.scene.enemies.getChildren()[0];
         this.scene.bottomRight = this.scene.enemies.getChildren()[this.scene.enemies.getChildren().length - 1];
         laserSprite.destroy(true);//Key disappears
-        
-
         score = score+(1 * round);//Add 1 to score
         scorecount = scorecount +1;
         scoreText.setText('Score: ' + score);// Set the text to score
@@ -162,7 +160,9 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('leftBut', 'assets/space/leftBut.png');
         this.load.image('shoot', 'assets/space/shoot.png'); 
         this.load.image('pause','assets/space/pause.png');
+        this.load.image('restartBut','assets/space/restart.png');
         this.load.image('bg', 'assets/space/bg.png');
+        this.load.image('pauseBG','assets/gui/pauseBG.png' );
     }
 
     create() {
@@ -255,6 +255,8 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     pause1(){
+        
+        this.pauseBG = this.add.image(200,  350, 'pauseBG');
         this.enemies.setVelocityX(0);
         this.resume = this.add.image(200, 300, 'resumeBut');
         this.resume.setInteractive();
@@ -266,14 +268,25 @@ export default class Scene1 extends Phaser.Scene {
         this.home.setInteractive();
 
         
+        this.restart = this.add.image(200, 350, 'restartBut');
+        this.restart.setInteractive();
+
+        this.restart.on('pointerdown', ()=> {
+            this.scene.restart();
+        });
+        
+
+        
         this.home.on('pointerdown', ()=> {
             location.href = "/home"
         });
 
     }
 
-    resume1(){
+    resume1(){//resume function for the pause menu
         this.resume.setVisible(false);
+        this.pauseBG.setVisible(false);
+        this.restart.setVisible(false);
         this.moveLeftButton.setInteractive();
         this.moveRightButton.setInteractive();
         this.shootButton.setInteractive();
@@ -358,9 +371,10 @@ export default class Scene1 extends Phaser.Scene {
                 });
                 score = 0;
                 round = 1;
-                lives = 3;
+                speed = 1;
+                lives = 3;//PUT A MESSAGE ABOUT THIS HERE FINAL ROUND AND SCORE SHOULD BE PRINTED HERE
                 scorecount =0;
-                endGame.destroy();
+                endGame.destroy();//CHANGE THIS TO A BUTTON LIKE I SAID
                 //var endGame = this.add.text(1500, 2000, 'Game over', { fontSize: '32px', fill: '#000' });
                 //setText you fool
 
@@ -376,7 +390,11 @@ export default class Scene1 extends Phaser.Scene {
             scorecount =0;
             //pausing game
             round++;
-            speed++;
+            speed++;//CHANGE THIS TO GET SLOWER AS ROUNDS GO UP FOR BALANCE
+            //OR MAYBE FASTER WHO KNOWS
+            this.moveLeftButton.disableInteractive();
+            this.moveRightButton.disableInteractive();
+            this.shootButton.disableInteractive();
             timedevent= this.time.delayedCall(3000,function(){this.scene.restart()}, [],this);
         }
     }

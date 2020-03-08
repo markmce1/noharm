@@ -9,7 +9,7 @@ var config ={
     autoCenter: Phaser.Scale.CENTER_BOTH,
     },
 
-    input: { activePointers: 2 },
+    input: { activePointers: 3 },
 
     type: Phaser.AUTO,
     width: width,

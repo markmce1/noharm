@@ -9,6 +9,11 @@ export default class Scene1 extends Phaser.Scene {
     
     preload() {
 
+
+        //sounds
+        this.load.audio('correct', 'assets/quiz/sounds/correct.wav');
+        this.load.audio('wrong', 'assets/quiz/sounds/wrong.wav');
+        //images
         this.load.image('bg', 'assets/quiz/images/bg.jpg');
         this.load.image('true', 'assets/quiz/images/true.png');
         this.load.image('false', 'assets/quiz/images/false.png');
@@ -19,7 +24,8 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('pause','assets/quiz/images/pause.png');
         this.load.image('resumeBut', 'assets/quiz/images/resume.png');
         this.load.image('homeBut', 'assets/quiz/images/homeBut.png');
-        this.load.image('restartBut','assets/quiz/images/restartBut.png' );
+        this.load.image('restartBut','assets/quiz/images/restart.png' );
+        this.load.image('pauseBG','assets/gui/pauseBG.png' );
         
         this.load.image('ans1', 'assets/quiz/images/ans1.png');
         this.load.image('ans2', 'assets/quiz/images/ans2.png');
@@ -44,6 +50,12 @@ export default class Scene1 extends Phaser.Scene {
 
         scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
         roundText = this.add.text(16 ,48 ,'Round: ' + round, { fontSize: '32px', fill: '#000' });
+
+        score = 0;
+        round = 1;
+
+        scoreText.setText('Score: ' + score);
+        roundText.setText('Round: ' + round);
 
         this.pauseBut = this.add.image(300,25, 'pause');
         this.pauseBut.setInteractive();
@@ -71,9 +83,17 @@ export default class Scene1 extends Phaser.Scene {
     pause1()
     {
 
+        this.pauseBG = this.add.image(200,  350, 'pauseBG');
+
         this.resume = this.add.image(200, 300, 'resumeBut');
         this.resume.setInteractive();
 
+        this.restart = this.add.image(200, 350, 'restartBut');
+        this.restart.setInteractive();
+
+        this.restart.on('pointerdown', ()=> {
+            this.scene.restart();
+        });
 
         this.home = this.add.image(200,400, 'homeBut' );
         this.home.setInteractive();
@@ -87,6 +107,10 @@ export default class Scene1 extends Phaser.Scene {
     {
         this.resume.setVisible(false);
         this.home.setVisible(false);
+        this.restart.setVisible(false);
+        this.pauseBG.setVisible(false);
+        
+        this.pauseBG.setVisible(false);
 
         this.pauseBut.once('pointerdown',()=>{
             this.pause1();
@@ -123,8 +147,7 @@ export default class Scene1 extends Phaser.Scene {
             score = score + 100;
             round++;
             this.round2();
-
-    
+            this.scene.sound.play('correct');
         });
             
         this.box2.once('pointerdown', () => {
@@ -133,6 +156,7 @@ export default class Scene1 extends Phaser.Scene {
                 console.log('wrong1');
                 round++;
                 this.round2();
+                this.scene.sound.play('wrong');
     
             });
             
@@ -142,6 +166,8 @@ export default class Scene1 extends Phaser.Scene {
                 round++;
                 console.log('wrong2');
                 this.round2();
+                
+                this.scene.sound.play('wrong');
     
             });
             
@@ -151,6 +177,8 @@ export default class Scene1 extends Phaser.Scene {
                 round++;
                 console.log('wrong3');
                 this.round2();
+                
+                this.scene.sound.play('wrong');
     
             });
 
