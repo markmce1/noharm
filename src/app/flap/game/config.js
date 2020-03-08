@@ -1,8 +1,8 @@
 
 import * as Phaser from 'phaser';
 
-var gameWidth = window.innerWidth;
-var gameHeight = window.innerHeight;
+var gameWidth = 400;
+var gameHeight = 650;
 
     
     var config = {
@@ -12,7 +12,6 @@ var gameHeight = window.innerHeight;
         scale: {
             mode: Phaser.Scale.FIT,
             parent: 'phaser-example',
-            autoCenter: Phaser.Scale.CENTER_BOTH,
             // width: gameWidth,
             // height: gameHeight
         },

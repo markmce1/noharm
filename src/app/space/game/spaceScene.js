@@ -11,6 +11,8 @@ var scorecount = 0;
 var round = 1;
 var speed = 1;
 var lives =3 ;
+var start = 0;
+var paused = 0;
 
 
 ///////////////////////////////////////////////////////
@@ -117,7 +119,7 @@ class ShipLaser extends Phaser.GameObjects.Sprite {
         scoreText.setText('Score: ' + score);// Set the text to score
     }
 
-    preUpdate(time, delta) {
+    preUpdate(time, delta) {//handles movement of the keys
         if(this.active == false){return;}
         super.preUpdate(time, delta);
         this.y -= this.speed;
@@ -132,23 +134,19 @@ class EnemyLaser extends Phaser.GameObjects.Sprite {
         super(scene, x, y);
         this.setTexture('key');
         this.setPosition(x, y);
-        this.speed = -10;
+        this.speed = -5;
         this.scene = scene;
         scene.physics.world.enable(this);
-        scene.physics.add.collider(this, scene.tractor, this.handleHit, null, this);//Adds Collision
+        scene.physics.add.collider(this, scene.myTractor, this.handleHit, null, this);//Adds Collision
     }
-
-
-
     handleHit(laserSprite) {//What happens when a Key and Enemy sprite hit each other
         laserSprite.destroy(true);//Key disappears
         //add in some "lost a life" dialogue here
+        console.log('hit');
         lives --; 
         //scene restart
-
     }
-
-    preUpdate(time, delta) {/// no clue what this does
+    preUpdate(time, delta) {//handles movement of the keys
         if(this.active == false){return;}
         super.preUpdate(time, delta);
         this.y -= this.speed;
@@ -170,14 +168,9 @@ class Enemy1 extends Phaser.GameObjects.Sprite {
     }
 
     fireLasers() {
-        var currentTime = new Date().getTime();
-        if (currentTime - this.lastShot > this.shotFrequency) {
-            var enemyLaser = new EnemyLaser(this.scene, this.x, this.y);
-            this.scene.add.existing(enemyLaser);
-            this.scene.sound.play('shoot');
-            this.lasers.push(enemyLaser);
-            this.lastShot = currentTime;
-        } 
+        var enemyLaser = new EnemyLaser(this.scene, this.x, this.y);
+        this.scene.add.existing(enemyLaser);
+        this.scene.sound.play('shoot');
     }
 }
 
@@ -236,7 +229,7 @@ export default class Scene1 extends Phaser.Scene {
                 this.add.existing(this.enemy);
                 this.enemies.add(this.enemy);
                 this.enemies2.push(this.enemy);
-                this.enemies2[arrCount].body.setVelocityX(-15 * speed);
+                //this.enemies2[arrCount].body.setVelocityX(-15 * speed);
                 arrCount++;
                 y = y + 50;
             }
@@ -251,7 +244,7 @@ export default class Scene1 extends Phaser.Scene {
 
     this.pauseBut.once('pointerdown',()=>{
             this.pause1();
-
+            //add help option
             this.resume.on('pointerdown', () => {
                 this.resume1();
             });
@@ -260,7 +253,6 @@ export default class Scene1 extends Phaser.Scene {
     });
     ////////buttons galore here. Left Right and fire. //////////////////////////////////////////////////////////////////////
     this.moveLeftButton = this.add.image(100, 575, 'leftBut');
-    this.moveLeftButton.setInteractive();
 
     this.moveLeftButton.on('pointerdown', () => {
     this.isMovingLeft = true;
@@ -272,7 +264,6 @@ export default class Scene1 extends Phaser.Scene {
     });
 
     this.moveRightButton = this.add.image(200, 575, 'rightBut');
-    this.moveRightButton.setInteractive();
 
     this.moveRightButton.on('pointerdown', () => {
     this.isMovingRight = true;
@@ -284,7 +275,6 @@ export default class Scene1 extends Phaser.Scene {
     });
 
     this.shootButton = this.add.image(300, 575, 'shoot');
-    this.shootButton.setInteractive();
 
     this.shootButton.on('pointerdown', () => {
     this.isShooting= true;
@@ -293,17 +283,53 @@ export default class Scene1 extends Phaser.Scene {
     this.shootButton.on('pointerup', () => {
      this.isShooting = false;
     });
+    this.moveLeftButton.setInteractive();
+    this.moveRightButton.setInteractive();
+    this.shootButton.setInteractive();
 
     
     scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
     roundText = this.add.text(16 ,48 ,'Round: ' + round + ' Lives: ' + lives, { fontSize: '32px', fill: '#000' });
 
+    if(start == 1){
+        this.shootloop();
+    }
 
-    this.time.delayedCall(1000, () => {
-        const list = this.enemies.getChildren()
-        list[0].fireLasers()
-        console.log('lol');
-    })
+
+
+    
+    if(start ==0){
+
+        this.pauseBG = this.add.image(200,  350, 'pauseBG');
+        var starttext = this.add.text(100, 200, 'The farmer needs your help!', { fontSize: '12px', fill: '#000' });
+        this.start = this.add.image(200, 300, 'resumeBut');
+        this.start.setInteractive();
+        this.moveLeftButton.disableInteractive();
+        this.moveRightButton.disableInteractive();
+        this.shootButton.disableInteractive();
+        this.pauseBut.disableInteractive();
+
+    }
+    else
+    {
+        this.enemies.setVelocityX(+15 * speed);
+    }
+
+
+
+    this.start.once('pointerdown', () => {
+        this.moveLeftButton.setInteractive();
+        this.moveRightButton.setInteractive();
+        this.shootButton.setInteractive();
+        this.pauseBut.setInteractive();
+        
+        this.enemies.setVelocityX(+15 * speed);
+        this.pauseBG.setVisible(false);
+        this.start.setVisible(false);
+        starttext.setText();
+        start = 1;
+        
+    });
 
 
     }
@@ -316,6 +342,25 @@ export default class Scene1 extends Phaser.Scene {
     this.getRandom(0,this.scene.enemies.getChildren()[this.scene.enemies.getChildren().length - 1] );
     whatever it returns would be the enemy that shoots. Run every 5-10 seconds. Maybe change per round
     */
+
+   shootloop(){
+
+        this.time.delayedCall(2000, () => {
+            this.shootloop();
+            if(paused == 0)
+            {
+                const list = this.enemies.getChildren()
+                var r = Math.floor((Math.random() * list.length - 1) + 1);
+                console.log(r);
+                if(this.bottomRight !=  null && this.topLeft != null ){  
+                    list[r].fireLasers()
+                }
+            }
+        })
+
+    }
+
+
     pause1(){
         
         this.pauseBG = this.add.image(200,  350, 'pauseBG');
@@ -328,6 +373,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.home = this.add.image(200,400, 'homeBut' );
         this.home.setInteractive();
+        paused = 1;
 
         
         this.restart = this.add.image(200, 350, 'restartBut');
@@ -352,6 +398,7 @@ export default class Scene1 extends Phaser.Scene {
         this.moveLeftButton.setInteractive();
         this.moveRightButton.setInteractive();
         this.shootButton.setInteractive();
+        paused = 0;
         
         this.home.destroy();
         if(dir == 2){

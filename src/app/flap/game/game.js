@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 
 const SCENE_KEY = 'flappy-bird-game'
-const xGap = 250
+const xGap = 450
 var score = 0
 
 var hitflag = false
@@ -37,8 +37,8 @@ export default class GameScene extends Phaser.Scene
 
 	create()
 	{
-		const gameWidth = this.scale.width
-		const gameHeight = this.scale.height
+		var gameWidth = 400;
+		var gameHeight = 650;
 
 		const colors = ['0x1fbde0']
 
@@ -65,13 +65,6 @@ export default class GameScene extends Phaser.Scene
 		this.player.setBounce(0.2);
 		this.player.setCollideWorldBounds(true);
 
-		this.anims.create({
-			key: 'flap',
-			frames: this.anims.generateFrameNumbers('birdy', { start: 0, end: 3 }),
-			frameRate: 20,
-			repeat: 0
-		});
-
 		this.player.body.setGravityY(300)
 
 		this.physics.add.collider(this.player, this.platforms, this.playerHit, null, this)
@@ -83,24 +76,21 @@ export default class GameScene extends Phaser.Scene
 		this.input.on('pointerdown', this.flapNow, null);
 
 		
-		this.flybutton = this.add.image(200, 575, 'shoot');
+		this.flybutton = this.add.image(200, 550, 'shoot');
 		this.flybutton.setInteractive();
 	
 		this.flybutton.once('pointerdown', () => {
 			this.flapNow();
 		
 		});
-	
-
-
-
-
 	}
 
 	update()
 	{
-		const gameWidth = this.scale.width
-		const gameHeight = this.scale.height
+		var gameWidth = 400;
+		var gameHeight = 650;
+
+		this.flybutton = this.add.image(200, 550, 'shoot');
 
 		const children = this.platforms.getChildren()
 		children.forEach((child) => {
@@ -171,7 +161,6 @@ export default class GameScene extends Phaser.Scene
 			this.endGame()
 		}
 	}
-
 	flapNow()
 	{
 		if (gameOver)
@@ -189,16 +178,13 @@ export default class GameScene extends Phaser.Scene
 
 		this.game.sound.play('flap')
 
-				
-		this.flybutton = this.add.image(200, 575, 'shoot');
+		this.flybutton = this.add.image(200, 550, 'shoot');
 		this.flybutton.setInteractive();
 	
 		this.flybutton.once('pointerdown', () => {
 			this.flapNow();
 		
 		});
-	
-		
 	}
 
 	playerHit()
