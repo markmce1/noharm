@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 import config from './game/config';
 import Scene1 from './game/game';
 

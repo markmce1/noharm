@@ -26,6 +26,8 @@ export default class GameScene extends Phaser.Scene
 		this.load.image('fencea', './assets/flappy/fencea.png')
 		this.load.image('fenceb', './assets/flappy/fenceb.png')
 		this.load.spritesheet('birdy','assets/flappy/birdy.png',{ frameWidth: 34, frameHeight: 24 })
+		this.load.image('shoot', 'assets/space/shoot.png'); 
+
 
 		this.load.audio('flap', './assets/flappy/sounds/sfx_wing.ogg')
 		this.load.audio('hit', './assets/flappy/sounds/sfx_hit.ogg')
@@ -76,10 +78,23 @@ export default class GameScene extends Phaser.Scene
 
 		// this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
 
-		this.input.keyboard.on('keydown-' + 'SPACE', this.flapNow, this)
+		this.input.keyboard.on('keydown-' + 'SPACE', this.flapNow, this);
 
-		// touch support
-		this.input.on('pointerdown', this.flapNow, this)
+		this.input.on('pointerdown', this.flapNow, null);
+
+		
+		this.flybutton = this.add.image(200, 575, 'shoot');
+		this.flybutton.setInteractive();
+	
+		this.flybutton.once('pointerdown', () => {
+			this.flapNow();
+		
+		});
+	
+
+
+
+
 	}
 
 	update()
@@ -169,10 +184,21 @@ export default class GameScene extends Phaser.Scene
 			this.resume()
 		}
 
-		// console.log("flap")
+		console.log("flap")
 		this.player.setVelocityY(-330)
 
 		this.game.sound.play('flap')
+
+				
+		this.flybutton = this.add.image(200, 575, 'shoot');
+		this.flybutton.setInteractive();
+	
+		this.flybutton.once('pointerdown', () => {
+			this.flapNow();
+		
+		});
+	
+		
 	}
 
 	playerHit()
