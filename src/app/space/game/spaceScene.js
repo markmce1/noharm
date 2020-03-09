@@ -219,7 +219,7 @@ export default class Scene1 extends Phaser.Scene {
         let yloop = 0;
         let x =   100;
         let y =   120;
-        
+        //creating enemies
         for(yloop =0; yloop < 6; yloop++)//To put them lower on the screen
         {
             for (k = 0; k < 4; k++) {//for loop to make enemies. This loop also sets amount of en
