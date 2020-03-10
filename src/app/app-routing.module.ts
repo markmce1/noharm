@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'flap',
     loadChildren: () => import('./flap/flap.module').then( m => m.FlapPageModule)
   },
+  {
+    path: 'guide',
+    loadChildren: () => import('./guide/guide.module').then( m => m.GuidePageModule)
+  },
 
 
 
