@@ -3,10 +3,11 @@ var score= 0;
 var scoreText;
 var roundText; //just stuff for set Texts
 var endGame;
+var livesText;
 var dir=1;
-var width = 375;
+var width = window.innerWidth;
 var timedevent;
-var height =650;
+var height =window.innerHeight;
 var scorecount = 0;
 var round = 1;
 var speed = 1;
@@ -33,29 +34,17 @@ class tractor extends Phaser.GameObjects.Sprite  {
     }
 
     moveLeft() {
-        if (this.x > 0) {
+        if (this.x > 25) {
             this.x -= this.deltaX;
         }
     }
 
     moveRight() {
-        if (this.x < width) {
+        if (this.x < width - 25) {
             this.x += this.deltaX;
         }
     }
 
-    moveUp() {
-        if (this.y > 0) {
-            this.y -= this.deltaY;
-        }
-    }
-
-    moveDown() {
-
-        if (this.y < height) {
-            this.y += this.deltaY;
-        }
-    }
 
     fireLasers() {
         var currentTime = new Date().getTime();
@@ -199,16 +188,19 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('shoot', 'assets/space/shoot.png'); 
         this.load.image('pause','assets/space/pause.png');
         this.load.image('restartBut','assets/space/restart.png');
-        this.load.image('bg', 'assets/space/bg.png');
+        this.load.image('bg', 'assets/space/bg3.png');
         this.load.image('pauseBG','assets/gui/pauseBG.png' );
     }
 
     create() {
+
+        
+        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#32CD32");
         
         
-        this.add.image(200, 300, 'grass');
-        this.add.image(200,45,'bg');
-        this.myTractor = new tractor(this, 200, 475);
+        this.add.image(width/2, height/2, 'grass');
+        this.add.image(width/2,45,'bg');
+        this.myTractor = new tractor(this, width/2,height - 200);
         this.add.existing(this.myTractor);
         this.enemies = this.physics.add.group();
         this.enemies2 = new Array();
@@ -217,8 +209,9 @@ export default class Scene1 extends Phaser.Scene {
         let k = 0;
         let arrCount =0;
         let yloop = 0;
-        let x =   100;
         let y =   120;
+        let w = width / 6;
+        let x = w / 2;//was 100
         //creating enemies
         for(yloop =0; yloop < 6; yloop++)//To put them lower on the screen
         {
@@ -233,13 +226,13 @@ export default class Scene1 extends Phaser.Scene {
                 arrCount++;
                 y = y + 50;
             }
-        x = x + 50;
+        x = x + w;
         y = 120;
     }
     this.topLeft = this.enemies2[0];
     this.bottomRight = this.enemies2[23];
     //////////////////////////////pausing here//////////////////////////////////////////////////////////////////////////
-    this.pauseBut = this.add.image(300,25, 'pause');
+    this.pauseBut = this.add.image(width/2+ w,25, 'pause');
     this.pauseBut.setInteractive();
 
     this.pauseBut.once('pointerdown',()=>{
@@ -252,7 +245,7 @@ export default class Scene1 extends Phaser.Scene {
         
     });
     ////////buttons galore here. Left Right and fire. //////////////////////////////////////////////////////////////////////
-    this.moveLeftButton = this.add.image(100, 575, 'leftBut');
+    this.moveLeftButton = this.add.image( width/8, height - 100, 'leftBut');
 
     this.moveLeftButton.on('pointerdown', () => {
     this.isMovingLeft = true;
@@ -263,7 +256,7 @@ export default class Scene1 extends Phaser.Scene {
      this.isMovingRight = false;
     });
 
-    this.moveRightButton = this.add.image(200, 575, 'rightBut');
+    this.moveRightButton = this.add.image(width/8 * 7, height - 100, 'rightBut');
 
     this.moveRightButton.on('pointerdown', () => {
     this.isMovingRight = true;
@@ -274,7 +267,7 @@ export default class Scene1 extends Phaser.Scene {
      this.isMovingRight = false;
     });
 
-    this.shootButton = this.add.image(300, 575, 'shoot');
+    this.shootButton = this.add.image(width/2 , height - 100, 'shoot');
 
     this.shootButton.on('pointerdown', () => {
     this.isShooting= true;
@@ -289,7 +282,8 @@ export default class Scene1 extends Phaser.Scene {
 
     
     scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
-    roundText = this.add.text(16 ,48 ,'Round: ' + round + ' Lives: ' + lives, { fontSize: '32px', fill: '#000' });
+    roundText = this.add.text(16 ,48 ,'Round: ' + round, { fontSize: '32px', fill: '#000' });
+    livesText = this.add.text(width/2+ (w - 50), 48, 'Lives: ' + lives, { fontSize: '32px', fill: '#000' });
 
     if(start == 1){
         this.shootloop();
@@ -300,9 +294,9 @@ export default class Scene1 extends Phaser.Scene {
     
     if(start ==0){
 
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
-        var starttext = this.add.text(100, 200, 'The farmer needs your help!', { fontSize: '12px', fill: '#000' });
-        this.start = this.add.image(200, 300, 'resumeBut');
+        this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The farmer needs your help!', { fontSize: '12px', fill: '#000' });
+        this.start = this.add.image(width/2, height/2, 'resumeBut');
         this.start.setInteractive();
         this.moveLeftButton.disableInteractive();
         this.moveRightButton.disableInteractive();
@@ -363,20 +357,20 @@ export default class Scene1 extends Phaser.Scene {
 
     pause1(){
         
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
+        this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
         this.enemies.setVelocityX(0);
-        this.resume = this.add.image(200, 300, 'resumeBut');
+        this.resume = this.add.image(width/2, height/2 - 100,'resumeBut');
         this.resume.setInteractive();
         this.moveLeftButton.disableInteractive();
         this.moveRightButton.disableInteractive();
         this.shootButton.disableInteractive();
 
-        this.home = this.add.image(200,400, 'homeBut' );
+        this.home = this.add.image(width/2 , height/2 + 100, 'homeBut' );
         this.home.setInteractive();
         paused = 1;
 
         
-        this.restart = this.add.image(200, 350, 'restartBut');
+        this.restart = this.add.image(width/2, height/2, 'restartBut');
         this.restart.setInteractive();
 
         this.restart.on('pointerdown', ()=> {
@@ -459,7 +453,7 @@ export default class Scene1 extends Phaser.Scene {
                     }
                 }
             }
-            if(this.bottomRight.body.y  >= 375){
+            if(this.bottomRight.body.y  >= height -275){
                 var endGame = this.add.text(100, 200, 'Lost a life', { fontSize: '32px', fill: '#000' });
                 this.scene.stop();
                 lives --;
@@ -468,10 +462,10 @@ export default class Scene1 extends Phaser.Scene {
                 timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
             }
             if(lives == 0){
-                var endGame = this.add.text(125, 200, 'Game over', { fontSize: '32px', fill: '#000' });
-                var endGame2 = this.add.text(50, 250, 'Press the button', { fontSize: '32px', fill: '#000' });
-                var endGame3 = this.add.text(125,300, 'to retry', { fontSize: '32px', fill: '#000' });
-                this.resume = this.add.image(200, 350, 'resumeBut');
+                var endGame = this.add.text(width/2 - 125, 200, 'Game over', { fontSize: '32px', fill: '#000' });
+                var endGame2 = this.add.text(width/2 - 125, 250, 'Press the button', { fontSize: '32px', fill: '#000' });
+                var endGame3 = this.add.text(width/2 - 125,300, 'to retry', { fontSize: '32px', fill: '#000' });
+                this.resume = this.add.image(width/2, height/2, 'resumeBut');
                 this.resume.setInteractive();
                 this.resume.on('pointerdown', () => {
                     this.scene.restart();
@@ -482,19 +476,18 @@ export default class Scene1 extends Phaser.Scene {
                 speed = 1;
                 lives = 3;//PUT A MESSAGE ABOUT THIS HERE FINAL ROUND AND SCORE SHOULD BE PRINTED HERE
                 scorecount =0;
-                endGame.destroy();//CHANGE THIS TO A BUTTON LIKE I SAID
+                endGame.destroy();
+                endGame2.destroy();
+                endGame3.destroy();//CHANGE THIS TO A BUTTON LIKE I SAID
+
                 //var endGame = this.add.text(1500, 2000, 'Game over', { fontSize: '32px', fill: '#000' });
                 //setText you fool
 
             }
-            if(this.topLeft.body.y >= 350)
-            {
-                console.log('This also works');
-            }
         }
 
         if(scorecount == 24){
-            var endGame = this.add.text(150, 200, 'Level won!', { fontSize: '32px', fill: '#000' });
+            var endGame = this.add.text(width/2, 200, 'Level won!', { fontSize: '32px', fill: '#000' });
             scorecount =0;
             //pausing game
             round++;
