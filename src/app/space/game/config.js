@@ -1,8 +1,8 @@
 import * as Phaser from 'phaser';
 //config file for phaser to run
 
-var width = 400;
-var height = 650;
+var width = window.innerWidth;
+var height = window.innerHeight;
 var config ={
     scale:{
     mode: Phaser.Scale.FIT,
