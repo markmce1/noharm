@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 var start;
 var score = 0;
 var round = 0;
+var correct = 0;
 var question;
 var question2;
 var roundText;
@@ -198,7 +199,8 @@ export default class Scene1 extends Phaser.Scene {
             console.log('correct');
             score = score + 100;
             round++;
-            this.round2();
+            correct = 1;
+            this.round1inter();
             this.sound.play('correct');
         });
             
@@ -234,8 +236,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     round1inter(){
-        
-        this.sound.play('wrong');
+    
         this.fall.destroy(true);
         this.pauseBG = this.add.image(200,  350, 'pauseBG');
         question.setText('');
@@ -245,7 +246,13 @@ export default class Scene1 extends Phaser.Scene {
         var ansText2 = this.add.text(120, 425, 'could fall.', { fontSize: '12px', fill: '#000' });
         this.continue = this.add.image(190, 500, 'continueBut');
         
-        var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+        if(correct == 1){
+            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            this.sound.play('wrong');
+        }
 
         this.continue.setInteractive();
 
@@ -283,19 +290,18 @@ export default class Scene1 extends Phaser.Scene {
             round++;
             this.round2inter();
         });  
-        this.box2.once('pointerdown', () => {
-            console.log('correct');
-            this.slurry.destroy(true);
+        this.box2.once('pointerdown', () => {  
+            correct = 1;
             score = score + 100;
             round++;
-            this.round3();
+            this.round2inter();
             this.sound.play('correct');
         });
     }
 
     round2inter(){
         
-        this.sound.play('wrong');
+
         this.pauseBG = this.add.image(200,  350, 'pauseBG');
         this.slurry.destroy(true);
         this.slurrySmall = this.add.image(200, 325, 'slurrySmall');
@@ -309,7 +315,13 @@ export default class Scene1 extends Phaser.Scene {
         var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000' });
         this.continue = this.add.image(190, 500, 'continueBut');
         
-        var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+        if(correct == 1){
+            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            this.sound.play('wrong');
+        }
 
         this.continue.setInteractive();
 
@@ -357,8 +369,9 @@ export default class Scene1 extends Phaser.Scene {
             console.log('correct');
             score = score + 100;
             round++;
+            correct = 1;
             this.sound.play('correct');
-            this.round4();
+            this.round3inter();
         });
         this.box4.once('pointerdown', () => {
             round++;
@@ -369,8 +382,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     round3inter(){
-        
-        this.sound.play('wrong');
+
         question.setText('');
         this.pauseBG = this.add.image(200,  350, 'pauseBG');
         this.ptoSmall = this.add.image(200,295, 'ptoSmall');
@@ -383,8 +395,14 @@ export default class Scene1 extends Phaser.Scene {
         var ansText4 = this.add.text(120, 425, 'back of a tractor.', { fontSize: '12px', fill: '#000' });
         var ansText5 = this.add.text(120, 450, 'It should be covered', { fontSize: '12px', fill: '#000' });
         this.continue = this.add.image(190, 500, 'continueBut');
-        
-        var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+
+        if(correct == 1){
+            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+
+        }
 
         this.continue.setInteractive();
 
@@ -422,23 +440,27 @@ export default class Scene1 extends Phaser.Scene {
         this.interactive();
         this.box1.once('pointerdown', () => {
             this.round4inter();
+            this.sound.play('wrong');
         });  
         this.box2.once('pointerdown', () => {
             this.round4inter();
+            this.sound.play('wrong');
+            
         });
         this.box3.once('pointerdown', () => {
             score = score + 100;
             this.sound.play('correct');
-            this.round5();
+            correct = 1;
+            this.round4inter();
         });
         this.box4.once('pointerdown', () => {
             this.round4inter();
+            this.sound.play('wrong');
         });
+        
 
     }
     round4inter(){
-        
-        this.sound.play('wrong');
         question.setText('');
         this.pauseBG = this.add.image(200,  350, 'pauseBG');
         this.smallele = this.add.image(200, 325, 'smallele');
@@ -448,8 +470,14 @@ export default class Scene1 extends Phaser.Scene {
         var ansText = this.add.text(120, 400, 'This sign means that', { fontSize: '12px', fill: '#000' });
         var ansText2 = this.add.text(120, 425, 'the fence is electrified', { fontSize: '12px', fill: '#000' });
         this.continue = this.add.image(190, 500, 'continueBut');
-        
-        var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+        if(correct == 1){
+            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            this.sound.play('wrong');
+        }
+
 
         this.continue.setInteractive();
 
@@ -492,6 +520,7 @@ export default class Scene1 extends Phaser.Scene {
         this.box1.once('pointerdown', () => {
             round++;
             this.round5inter();
+            this.sound.play('wrong');
             
         });  
         this.box2.once('pointerdown', () => {
@@ -499,24 +528,24 @@ export default class Scene1 extends Phaser.Scene {
             score = score + 100;
             this.sound.play('correct');
             round++;
-            this.round6();
+            correct=1;
+            this.round5inter();
         });
         this.box3.once('pointerdown', () => {
             round++;
             this.round5inter();
+            this.sound.play('wrong');
         });
         this.box4.once('pointerdown', () => {
             round++;
             this.round5inter();
+            this.sound.play('wrong');
         });
 
     }
 
     round5inter(){
-        
-        this.sound.play('wrong');
-        
-        
+
         question.setText('');
         
         question2.setText('');  
@@ -528,7 +557,12 @@ export default class Scene1 extends Phaser.Scene {
         var ansText3 = this.add.text(120, 450, 'on a farm', { fontSize: '12px', fill: '#000' });
         this.continue = this.add.image(190, 500, 'continueBut');
         
-        var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+        if(correct == 1){
+            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+        }
 
         this.continue.setInteractive();
 
@@ -572,10 +606,10 @@ export default class Scene1 extends Phaser.Scene {
             score = score +100;  
             this.sound.play('correct');
             this.accident.destroy(true);
-            
+            correct = 1;
             this.box3.destroy(true);
             this.box4.destroy(true);
-            this.finish();
+            this.round6inter();
         });
         this.box4.once('pointerdown', () => {
             this.round6inter();
@@ -583,8 +617,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     round6inter(){
-        
-        this.sound.play('wrong');
+
         this.accident.destroy(true);
         
         
@@ -596,10 +629,16 @@ export default class Scene1 extends Phaser.Scene {
         this.box4.destroy(true);
         question.setText('');
         var ansText = this.add.text(120, 400, 'Farm accidents have', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(120, 425, 'risen by X%', { fontSize: '12px', fill: '#000' });
+        var ansText2 = this.add.text(120, 425, 'risen by 5%', { fontSize: '12px', fill: '#000' });
         this.continue = this.add.image(190, 500, 'continueBut');
         
-        var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+        if(correct == 1){
+            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            this.sound.play('wrong');
+        }
 
         this.continue.setInteractive();
         this.continue.once('pointerdown', () => {

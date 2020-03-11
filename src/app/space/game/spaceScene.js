@@ -227,7 +227,7 @@ export default class Scene1 extends Phaser.Scene {
                 y = y + 50;
             }
         x = x + w;
-        y = 120;
+        y = height/7;
     }
     this.topLeft = this.enemies2[0];
     this.bottomRight = this.enemies2[23];
