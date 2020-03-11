@@ -14,6 +14,7 @@ var speed = 1;
 var lives =3 ;
 var start = 0;
 var paused = 0;
+var hitvar = 0;
 
 
 ///////////////////////////////////////////////////////
@@ -24,6 +25,8 @@ class tractor extends Phaser.GameObjects.Sprite  {
         super(scene, x, y);
         this.setTexture('tractor');
         this.setPosition(x, y);
+        
+        scene.physics.world.enable(this);
 
         this.scene = scene;
         this.deltaX = 5;
@@ -128,11 +131,13 @@ class EnemyLaser extends Phaser.GameObjects.Sprite {
         scene.physics.world.enable(this);
         scene.physics.add.collider(this, scene.myTractor, this.handleHit, null, this);//Adds Collision
     }
-    handleHit(laserSprite) {//What happens when a Key and Enemy sprite hit each other
+    handleHit(laserSprite) {//What happens when a cow and the player sprite hit each other
         laserSprite.destroy(true);//Key disappears
         //add in some "lost a life" dialogue here
         console.log('hit');
         lives --; 
+        scorecount = 0;
+        hitvar = 1;
         //scene restart
     }
     preUpdate(time, delta) {//handles movement of the keys
@@ -227,7 +232,7 @@ export default class Scene1 extends Phaser.Scene {
                 y = y + 50;
             }
         x = x + w;
-        y = height/7;
+        y = 120;
     }
     this.topLeft = this.enemies2[0];
     this.bottomRight = this.enemies2[23];
@@ -320,22 +325,13 @@ export default class Scene1 extends Phaser.Scene {
         this.enemies.setVelocityX(+15 * speed);
         this.pauseBG.setVisible(false);
         this.start.setVisible(false);
-        starttext.setText();
+        starttext.setText('');
         start = 1;
         
     });
 
 
     }
-
-    /*
-    getRandom(min, max) {
-        return Math.random() * (max - min) + min;
-    }//passed two numbers when called
-
-    this.getRandom(0,this.scene.enemies.getChildren()[this.scene.enemies.getChildren().length - 1] );
-    whatever it returns would be the enemy that shoots. Run every 5-10 seconds. Maybe change per round
-    */
 
    shootloop(){
 
@@ -385,6 +381,7 @@ export default class Scene1 extends Phaser.Scene {
 
     }
 
+
     resume1(){//resume function for the pause menu
         this.resume.setVisible(false);
         this.pauseBG.setVisible(false);
@@ -424,6 +421,20 @@ export default class Scene1 extends Phaser.Scene {
         if (this.isShooting) {//space to fire lazers
             this.myTractor.fireLasers();
         }
+        if(hitvar == 1){
+            this.enemies.setVelocityX(0);
+            this.enemies.setVelocityY(0);
+            this.moveLeftButton.disableInteractive();
+            this.moveRightButton.disableInteractive();
+            this.shootButton.disableInteractive();
+
+            
+            
+            timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
+            hitvar = 0;
+            scorecount =0;
+
+        }
 
 
         this.myTractor.update();
@@ -431,7 +442,7 @@ export default class Scene1 extends Phaser.Scene {
         const list = this.enemies.getChildren();
         //movement logic
         if(this.bottomRight !=  null && this.topLeft != null ){  
-            if (this.bottomRight.body.velocity.x > 0 && this.bottomRight.body.x >= 360 ) {
+            if (this.bottomRight.body.velocity.x > 0 && this.bottomRight.body.x >= width - 25 ) {
                 var arrCount=0;
                 for(arrCount=0; arrCount < list.length; arrCount++){
                 if(list[arrCount] != null){
@@ -455,7 +466,6 @@ export default class Scene1 extends Phaser.Scene {
             }
             if(this.bottomRight.body.y  >= height -275){
                 var endGame = this.add.text(100, 200, 'Lost a life', { fontSize: '32px', fill: '#000' });
-                this.scene.stop();
                 lives --;
                 scorecount = 0;
                 this.scene.restart();
