@@ -124,7 +124,7 @@ class EnemyLaser extends Phaser.GameObjects.Sprite {
 
     constructor(scene, x, y) {
         super(scene, x, y);
-        this.setTexture('key');
+        this.setTexture('cow');
         this.setPosition(x, y);
         this.speed = -5;
         this.scene = scene;
@@ -195,6 +195,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('restartBut','assets/space/restart.png');
         this.load.image('bg', 'assets/space/bg3.png');
         this.load.image('pauseBG','assets/gui/pauseBG.png' );
+        this.load.image('cow', 'assets/space/cow.png' )
     }
 
     create() {
