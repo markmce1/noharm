@@ -2,12 +2,13 @@ var width = window.innerWidth;
 var height = window.innerHeight;
 var scoreText;
 var roundText;
-var score;
-var round;
-var counter = 0;
-var checkone;
-var checktwo;
-var clicked;
+var score = 0;
+var round = 1;//round counter
+var counter = 0;//
+var checkone;//stores what the first box clicks image number was
+var checktwo;//stores what the second box clicks image number was
+var clicked;//stores what was just clicked
+var allchecked = 0;
 var checker = [0,0,0,0,0,0,0,0,0,0,0,0];//0 means covered, 1 means uncovered, 2 means its been finished with
 var arr = [1,1,2
     ,2,3,3
@@ -23,17 +24,30 @@ export default class Scene1 extends Phaser.Scene {
 
     preload() {
         //images loaded
-        this.load.image('one', 'assets/memory/images/1.png');
-        this.load.image('two', 'assets/memory/images/2.png');
-        this.load.image('three', 'assets/memory/images/3.png');
-        this.load.image('four', 'assets/memory/images/4.png');
-        this.load.image('five', 'assets/memory/images/5.png');
-        this.load.image('six', 'assets/memory/images/6.png');
+        this.load.image('one', 'assets/memory/images/z11.png');
+        this.load.image('two', 'assets/memory/images/haz2.png');
+        this.load.image('three', 'assets/memory/images/haz3.png');
+        this.load.image('four', 'assets/memory/images/haz4.png');
+        this.load.image('five', 'assets/memory/images/haz5.png');
+        this.load.image('six', 'assets/memory/images/haz6.png');
         this.load.image('card', 'assets/memory/images/card.png');
+        this.load.image('cardbg', 'assets/memory/images/cardbg.png');
         this.load.image('bg', 'assets/space/bg3.png');
 
+        this.load.image('pause','assets/quiz/images/pause.png');
+        this.load.image('resumeBut', 'assets/quiz/images/resume.png');
+        this.load.image('homeBut', 'assets/quiz/images/homeBut.png');
+        this.load.image('restartBut','assets/quiz/images/restart.png' );
+        this.load.image('pauseBG','assets/gui/pauseBG.png' );
+        
+        this.load.image('grass', 'assets/space/grass2.png');
+
+
+        this.load.audio('flip' , 'assets/memory/sounds/cardflip.wav');
     }
     create() {
+
+        this.add.image(width/2, height/2, 'grass');
 
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#00FF00" );
 
@@ -42,12 +56,35 @@ export default class Scene1 extends Phaser.Scene {
         const frames = ['','one', 'two', 'three', 'four', 'five', 'six'];
         //make onecard, two card array
         this.shuffle(arr);
-        score = 0;
-        round = 0;
         scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
         roundText = this.add.text(16 ,48 ,'Round: ' + round, { fontSize: '32px', fill: '#000' });
         var w = width /4;
-        var h = height/4 - height/8 + 50;
+        var h = height/4 - height/8 + 65;
+        
+        this.pauseBut = this.add.image(300,25, 'pause');
+        this.pauseBut.setInteractive();
+
+        this.pauseBut.once('pointerdown',()=>{
+            this.pause1();
+            this.resume.on('pointerdown', () => {
+                this.resume1();
+
+            });
+        
+        });
+        this.ima = this.add.image(w,h, 'cardbg');
+        this.ima = this.add.image(w*2, h , 'cardbg');
+        this.ima = this.add.image(w*3,h, 'cardbg');
+        this.ima = this.add.image(w, h*2, 'cardbg');
+        this.ima = this.add.image(w*2,h*2, 'cardbg');
+        this.ima = this.add.image(w*3, h*2, 'cardbg');    
+        this.ima = this.add.image(w,h*3, 'cardbg');
+        this.ima = this.add.image(w*2 , h*3, 'cardbg');
+        this.nine = this.add.image(w*3,h*3, 'cardbg');
+        this.ten = this.add.image(w * 1, h*4 , 'cardbg');
+        this.eleven = this.add.image(w*2,h*4, 'cardbg');
+        this.twelve = this.add.image(w*3, h*4, 'cardbg');
+
 
         for(i=0; i < 7; i++)
         {
@@ -136,29 +173,16 @@ export default class Scene1 extends Phaser.Scene {
         }
 
         this.one = this.add.image(w,h, 'card');
-
         this.two = this.add.image(w*2, h , 'card');
-
-
         this.three = this.add.image(w*3,h, 'card');
-
         this.four = this.add.image(w, h*2, 'card');
-
-
         this.five = this.add.image(w*2,h*2, 'card');
-
-        this.six = this.add.image(w*3, h*2, 'card');
-
-        
+        this.six = this.add.image(w*3, h*2, 'card');    
         this.seven = this.add.image(w,h*3, 'card');
-
         this.eight = this.add.image(w*2 , h*3, 'card');
-    
         this.nine = this.add.image(w*3,h*3, 'card');
-
         this.ten = this.add.image(w * 1, h*4 , 'card');
         this.eleven = this.add.image(w*2,h*4, 'card');
-
         this.twelve = this.add.image(w*3, h*4, 'card');
 
 
@@ -168,74 +192,74 @@ export default class Scene1 extends Phaser.Scene {
 
         this.one.on('pointerdown',()=>{
             this.one.setVisible(false);
-            counter ++;
+            this.clickedIma();
             checker[0]= 1;
             clicked = 0;
         });
         this.two.on('pointerdown',()=>{
             this.two.setVisible(false);
-            counter++;
             checker[1]= 1;
             clicked = 1;
+            this.clickedIma();
         });
         this.three.on('pointerdown',()=>{
             this.three.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[2]= 1;
             clicked= 2;
 
         });
         this.four.on('pointerdown',()=>{
             this.four.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[3]=1;
             clicked = 3;
         });
         this.five.on('pointerdown',()=>{
             this.five.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[4]=1;
             clicked = 4;
         });
         this.six.on('pointerdown',()=>{
             this.six.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[5]=1;
             clicked = 5;
         });
         this.seven.on('pointerdown',()=>{
             this.seven.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[6]=1;
             clicked = 6;
         });
         this.eight.on('pointerdown',()=>{
             this.eight.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[7]=1;
             clicked = 7;
         });
         this.nine.on('pointerdown',()=>{
             this.nine.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[8]=1;
             clicked = 8;
         });
         this.ten.on('pointerdown',()=>{
             this.ten.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[9]=1;
             clicked = 9;
         });
         this.eleven.on('pointerdown',()=>{
             this.eleven.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[10]=1;
             clicked = 10;
         });
         this.twelve.on('pointerdown',()=>{
             this.twelve.setVisible(false);
-            counter++;
+            this.clickedIma();
             checker[11]=1;
             clicked = 11;
         });
@@ -261,18 +285,8 @@ export default class Scene1 extends Phaser.Scene {
 
     counterflip()
     {
-        this.one.disableInteractive();
-        this.two.disableInteractive();
-        this.three.disableInteractive();
-        this.four.disableInteractive();
-        this.five.disableInteractive();
-        this.six.disableInteractive();
-        this.seven.disableInteractive();
-        this.eight.disableInteractive();
-        this.nine.disableInteractive();
-        this.ten.disableInteractive();
-        this.eleven.disableInteractive();
-        this.twelve.disableInteractive();
+        this.disableinter();
+
         if(checktwo != checkone)
         {
             
@@ -337,35 +351,51 @@ export default class Scene1 extends Phaser.Scene {
                     this.twelve.setVisible(true);
                     checker[11] = 0;    
                 }
-
                 this.setinter();
 
-            }, 1000);
+            }, 500);
             
 
         }else if(checktwo == checkone)
         {
-            //do the things man
             score = score + 100;
-            //do a for to make all ones in checker to 2
-            scoreText.setText('score: ' + score );
+            scoreText.setText('Score: ' + score );
             for(i=0; i < 13; i++){
                 if(checker[i] == 1)
                 {
                     checker[i] = 2;
                     console.log(checker[i]);
-                    console.log('bruh')
+                    allchecked ++;
                 }
-
             }
             this.setinter();
-
+            if(allchecked == 12)
+            {
+                //end game
+                round++;
+                allchecked = 0;
+                checker = [0,0,0,0,0,0,0,0,0,0,0,0];
+                var endGame = this.add.text(width/2 - 100, 200, 'Level won!', { fontSize: '32px', fill: '#000' });
+                setInterval(() => {
+                    endGame.setText("");
+                    roundText.setText("Round: " + round);
+                    checktwo =0;
+                    checkone = 0;
+                    clicked =0;
+                    this.shuffle(arr);
+                }, 3000);
+            }
         }
 
     }
 
     shuffle(array) {
         array.sort(() => Math.random() - 0.5);
+    }
+    clickedIma()
+    {
+        counter++;
+        this.sound.play('flip');
     }
     setinter()
     {
@@ -384,6 +414,71 @@ export default class Scene1 extends Phaser.Scene {
         this.twelve.setInteractive();
 
     }
+
+    disableinter()
+    {
+        this.one.disableInteractive();
+        this.two.disableInteractive();
+        this.three.disableInteractive();
+        this.four.disableInteractive();
+        this.five.disableInteractive();
+        this.six.disableInteractive();
+        this.seven.disableInteractive();
+        this.eight.disableInteractive();
+        this.nine.disableInteractive();
+        this.ten.disableInteractive();
+        this.eleven.disableInteractive();
+        this.twelve.disableInteractive();
+
+    }
+
+    pause1()
+    {
+
+        this.disableinter();
+
+        this.pauseBG = this.add.image(200,  350, 'pauseBG');
+
+        this.resume = this.add.image(200, 275, 'resumeBut');
+        this.resume.setInteractive();
+
+        this.restart = this.add.image(200, 350, 'restartBut');
+        this.restart.setInteractive();
+
+        this.restart.on('pointerdown', ()=> {
+            this.scene.restart();
+        });
+
+        this.home = this.add.image(200,425, 'homeBut' );
+        this.home.setInteractive();
+
+        this.home.on('pointerdown', ()=> {
+            location.href = "/home"
+        });
+
+    }
+    resume1()
+    {
+        setInterval(() => {
+            
+        this.setinter();
+        }, 200);
+        this.resume.setVisible(false);
+        this.home.setVisible(false);
+        this.restart.setVisible(false);
+        this.pauseBG.setVisible(false);
+        
+        this.pauseBG.setVisible(false);
+
+        this.pauseBut.once('pointerdown',()=>{
+            this.pause1();
+
+            this.resume.on('pointerdown', () => {
+                this.resume1();
+            });
+        });
+    }
+
 
 
 

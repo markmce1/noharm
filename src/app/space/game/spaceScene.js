@@ -204,6 +204,7 @@ export default class Scene1 extends Phaser.Scene {
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#32CD32");
         
         
+        
         this.add.image(width/2, height/2, 'grass');
         this.add.image(width/2,45,'bg');
         this.myTractor = new tractor(this, width/2,height - 200);
