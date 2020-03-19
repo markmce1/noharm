@@ -21,7 +21,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('false', 'assets/quiz/images/false.png');
         this.load.image('fall', 'assets/quiz/images/couldfall.png');
         this.load.image('box', 'assets/quiz/images/box.png');
-        this.load.image('bg2', 'assets/quiz/images/bg.png');
+        this.load.image('bg2', 'assets/space/bg3.png');
         this.load.image('start', 'assets/quiz/images/start.png');
         this.load.image('pause','assets/quiz/images/pause.png');
         this.load.image('resumeBut', 'assets/quiz/images/resume.png');

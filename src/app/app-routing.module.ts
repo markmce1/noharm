@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'guide',
     loadChildren: () => import('./guide/guide.module').then( m => m.GuidePageModule)
   },
+  {
+    path: 'memory',
+    loadChildren: () => import('./memory/memory.module').then( m => m.MemoryPageModule)
+  },
 
 
 
