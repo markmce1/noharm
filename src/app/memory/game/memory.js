@@ -24,7 +24,7 @@ export default class Scene1 extends Phaser.Scene {
 
     preload() {
         //images loaded
-        this.load.image('one', 'assets/memory/images/z11.png');
+        this.load.image('one', 'assets/memory/images/haz1.png');
         this.load.image('two', 'assets/memory/images/haz2.png');
         this.load.image('three', 'assets/memory/images/haz3.png');
         this.load.image('four', 'assets/memory/images/haz4.png');
@@ -479,8 +479,5 @@ export default class Scene1 extends Phaser.Scene {
             });
         });
     }
-
-
-
 
 }
