@@ -16,7 +16,8 @@ var arr = [1,1,2
     ,5,6,6]
 var i;
 
-export default class Scene1 extends Phaser.Scene {
+export default class Scene1 extends Phaser.Scene 
+{
 
     constructor(config) {
         super(config);
@@ -385,14 +386,14 @@ export default class Scene1 extends Phaser.Scene {
                     this.shuffle(arr);
                     this.scene.restart();
                 }, 3000);
-            }
+           }
         }
-
     }
-
-    shuffle(array) {
+    shuffle(array) 
+    {
         array.sort(() => Math.random() - 0.5);
     }
+
     clickedIma()
     {
         counter++;

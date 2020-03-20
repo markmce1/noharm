@@ -21,6 +21,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('false', 'assets/quiz/images/false.png');
         this.load.image('fall', 'assets/quiz/images/couldfall.png');
         this.load.image('box', 'assets/quiz/images/box.png');
+        this.load.image('quizbg', 'assets/quiz/images/quizbg.png');
         this.load.image('bg2', 'assets/space/bg3.png');
         this.load.image('start', 'assets/quiz/images/start.png');
         this.load.image('pause','assets/quiz/images/pause.png');
@@ -71,6 +72,8 @@ export default class Scene1 extends Phaser.Scene {
         //this.add.image(300, 200, 'bg');
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#3498db");
         this.add.image(200,45,'bg2');
+        
+        this.add.image(width/2, height/2, 'quizbg');
 
 
         scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
