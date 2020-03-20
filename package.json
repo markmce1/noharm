@@ -1,8 +1,8 @@
 {
   "name": "NoHarm",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "0.5",
+  "author": "Mark McEneaney",
+  "homepage": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -62,7 +62,7 @@
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
   },
-  "description": "An Ionic project",
+  "description": "No Harm On The farm Farm safety Games",
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {},
