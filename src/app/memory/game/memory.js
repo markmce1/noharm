@@ -376,13 +376,14 @@ export default class Scene1 extends Phaser.Scene {
                 allchecked = 0;
                 checker = [0,0,0,0,0,0,0,0,0,0,0,0];
                 var endGame = this.add.text(width/2 - 100, 200, 'Level won!', { fontSize: '32px', fill: '#000' });
-                setInterval(() => {
+                setTimeout(() => {
                     endGame.setText("");
                     roundText.setText("Round: " + round);
                     checktwo =0;
                     checkone = 0;
                     clicked =0;
                     this.shuffle(arr);
+                    this.scene.restart();
                 }, 3000);
             }
         }
