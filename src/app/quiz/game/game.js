@@ -1,12 +1,15 @@
 import * as Phaser from 'phaser';
 var start;
 var score = 0;
-var round = 0;
+var round = 1;
 var correct = 0;
 var question;
 var question2;
 var roundText;
 var scoreText;
+var width = window.innerWidth;
+var height = window.innerHeight;
+var arr = [1,2,3,4,5,6];
 export default class Scene1 extends Phaser.Scene {
     
     preload() {
@@ -16,6 +19,8 @@ export default class Scene1 extends Phaser.Scene {
         this.load.audio('correct', 'assets/quiz/sounds/correct.wav');
         this.load.audio('wrong', 'assets/quiz/sounds/wrong.wav');
         //images
+        
+        this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
         this.load.image('bg', 'assets/quiz/images/bg.jpg');
         this.load.image('true', 'assets/quiz/images/true.png');
         this.load.image('false', 'assets/quiz/images/false.png');
@@ -25,9 +30,11 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('bg2', 'assets/space/bg3.png');
         this.load.image('start', 'assets/quiz/images/start.png');
         this.load.image('pause','assets/quiz/images/pause.png');
-        this.load.image('resumeBut', 'assets/quiz/images/resume.png');
-        this.load.image('homeBut', 'assets/quiz/images/homeBut.png');
-        this.load.image('restartBut','assets/quiz/images/restart.png' );
+
+        this.load.image('resumeBut', 'assets/gui/resume.png');
+        this.load.image('restartBut', 'assets/gui/restart.png');
+        this.load.image('homeBut', 'assets/gui/homeBut.png');
+
         this.load.image('pauseBG','assets/gui/pauseBG.png' );
         this.load.image('continueBut', 'assets/quiz/images/continue.png');
         
@@ -56,6 +63,10 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('Q4ans3', 'assets/quiz/images/Q4ans3.png');
         this.load.image('Q4ans4', 'assets/quiz/images/Q4ans4.png');
 
+        this.load.image('acc','assets/quiz/images/acc.png' );
+        this.load.image('acc2','assets/quiz/images/acc2.png' );
+        this.load.image('acc2small','assets/quiz/images/acc2small2.png' );
+
         this.load.image('Q5ans1', 'assets/quiz/images/Q5ans1.png');
         this.load.image('Q5ans2', 'assets/quiz/images/Q5ans2.png');
         this.load.image('Q5ans3', 'assets/quiz/images/Q5ans3.png');
@@ -63,17 +74,49 @@ export default class Scene1 extends Phaser.Scene {
 
         
         this.load.image('accident', 'assets/quiz/images/accident.jpg');
+        
+        this.load.image('accidentsmall', 'assets/quiz/images/accidentsmall.jpg');
 
 
+    }
+    questionrandomiser(){
+        if(round == 6)
+        {
+            round = 20;
+            this.finish()
+        }
+        if(arr[round - 1] == 1)
+        {
+            this.round1()
+        }
+        if(arr[round - 1]== 2)
+        {
+            this.round2()
+        }
+        if(arr[round - 1] == 3)
+        {
+            this.round3()
+        }
+        if(arr[round - 1] == 4)
+        {
+            this.round4()
+        }
+        if(arr[round - 1] == 5)
+        {
+            this.round5()
+        }
+        if(arr[round - 1] == 6)
+        {
+            this.round6()
+        }
     }
 
     create()
     {
-        //this.add.image(300, 200, 'bg');
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#3498db");
-        this.add.image(200,45,'bg2');
-        
+        this.shuffle(arr);
+
         this.add.image(width/2, height/2, 'quizbg');
+        this.add.image(width/2,45,'bg2');
 
 
         scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
@@ -96,10 +139,24 @@ export default class Scene1 extends Phaser.Scene {
             });
         
         });
-        this.play = this.add.image(200, 350, 'start');
-        this.play.setInteractive();
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
+        
+        this.play = this.add.image(width/2, height/2, 'start');
+
+        setTimeout(() => {
+            this.play.setInteractive();
+        }, 750);
         this.play.on('pointerdown', () => {
-            this.round1();
+            this.pauseBG.setVisible(false);
+            this.play.setVisible(false);
+            round++;
+            this.questionrandomiser();
         });
     }
     disableinter(){
@@ -123,11 +180,13 @@ export default class Scene1 extends Phaser.Scene {
     interactive(){    
         if(round != 0){
 
-        
-        this.box1.setInteractive();
-        this.box2.setInteractive();
-        this.box3.setInteractive();
-        this.box4.setInteractive();
+            setTimeout(() => {
+                this.box1.setInteractive();
+                this.box2.setInteractive();
+                this.box3.setInteractive();
+                this.box4.setInteractive();
+            }, 750);
+    
         }
 
     }
@@ -137,19 +196,25 @@ export default class Scene1 extends Phaser.Scene {
 
         this.disableinter();
 
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
 
-        this.resume = this.add.image(200, 275, 'resumeBut');
+        this.resume = this.add.image(width/2, height/2 - 100, 'resumeBut');
         this.resume.setInteractive();
 
-        this.restart = this.add.image(200, 350, 'restartBut');
+        this.restart = this.add.image(width/2, height/2, 'restartBut');
         this.restart.setInteractive();
 
         this.restart.on('pointerdown', ()=> {
             this.scene.restart();
         });
 
-        this.home = this.add.image(200,425, 'homeBut' );
+        this.home = this.add.image(width/2, height/2 + 100, 'homeBut' );
         this.home.setInteractive();
 
         this.home.on('pointerdown', ()=> {
@@ -178,30 +243,39 @@ export default class Scene1 extends Phaser.Scene {
 
     round1()
     {
-        round++;
+
         
         roundText.setText('Round: ' + round);
         this.play.destroy(true);
 
-        question = this.add.text(75, 140, 'What is the danger?', { fontSize: '22px', fill: '#000' });
+        
+        if(width  > 400)
+        {
+            question = this.add.text(width/2 - 100, height/7+30, 'What is the danger?', { fontSize: '32px', fill: '#000' });
+        }else
+        {
+            question = this.add.text(width/8, height/7+30, 'What is the danger?', { fontSize: '22px', fill: '#000' });
+        }
 
-        this.fall = this.add.image(200, 325, 'fall');
-        this.box1 = this.add.image(100, 450, 'ans1');
-        this.box2 = this.add.image(300, 450, 'ans2');
-        this.box3 = this.add.image(100, 550, 'ans3');
-        this.box4 = this.add.image(300, 550, 'ans4');
+        this.fall = this.add.image(width/2,height/2, 'fall');
+        this.box1 = this.add.image(width/4, height/2 + 150, 'ans1');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'ans2');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'ans3');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'ans4');
 
-        this.box1.setInteractive();
-        this.box2.setInteractive();
-        this.box3.setInteractive();
-        this.box4.setInteractive();
+        setTimeout(() => {
+            this.box1.setInteractive();
+            this.box2.setInteractive();
+            this.box3.setInteractive();
+            this.box4.setInteractive();
+        }, 750);
+
 
         this.box1.once('pointerdown', () => {
 
             //right answers
             console.log('correct');
             score = score + 100;
-            round++;
             correct = 1;
             this.round1inter();
             this.sound.play('correct');
@@ -211,7 +285,6 @@ export default class Scene1 extends Phaser.Scene {
     
                 //wrong answers
                 console.log('wrong1');
-                round++;
                 this.round1inter();
     
             });
@@ -219,7 +292,6 @@ export default class Scene1 extends Phaser.Scene {
             this.box3.once('pointerdown', () => {
     
                 //wrong answers
-                round++;
                 console.log('wrong2');
                 this.round1inter();
                 
@@ -229,7 +301,6 @@ export default class Scene1 extends Phaser.Scene {
             this.box4.once('pointerdown', () => {
     
                 //wrong answers
-                round++;
                 console.log('wrong3');
                 this.round1inter();
                 
@@ -239,28 +310,44 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     round1inter(){
-    
-        this.fall.destroy(true);
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
-        question.setText('');
-        this.fall = this.add.image(200, 325, 'fall');
+        round++;
+
         this.destroy();
-        var ansText = this.add.text(120, 400, 'This is man', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(120, 425, 'could fall.', { fontSize: '12px', fill: '#000' });
-        this.continue = this.add.image(190, 500, 'continueBut');
+        
+        this.fall.destroy(true);
+
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+            
+        }
+        
+        this.fall = this.add.image(width/2,height/2, 'fall');  
+
+        question.setText('');
+        var ansText = this.add.text(width/2 - 75, height/8 *3-25, 'This is man', { fontSize: '12px', fill: '#000' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3, 'could fall.', { fontSize: '12px', fill: '#000' });
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
         if(correct == 1){
-            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
             this.sound.play('wrong');
         }
 
-        this.continue.setInteractive();
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
 
         this.continue.once('pointerdown', () => {
-            this.round2();
+            
+            this.fall.destroy(true);
+            this.questionrandomiser();
             this.pauseBG.destroy(true);
             ansText.setText('');
             ansText2.setText('');
@@ -273,20 +360,36 @@ export default class Scene1 extends Phaser.Scene {
 
     round2()
     {
-        
-        question.setText('');
+    
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
-        this.slurry = this.add.image(200, 325, 'slurry');
-        question = this.add.text(35, 120, 'Is spreading slurry allowed', { fontSize: '22px', fill: '#000' });
-        question2 = this.add.text(100, 145, 'in the rain?', { fontSize: '22px', fill: '#000' });
-        this.fall.destroy(true);
-        this.destroy();
+        this.slurry = this.add.image(width/2, height/2, 'slurry');
+
+
+        if(width  > 400)
+        {
+            question = this.add.text(width/2 - 200, height/7, 'Is spreading slurry in the', { fontSize: '32px', fill: '#000' });
+            question2 = this.add.text(width/2 - 200, height/7 + 50, 'rain allowed near lakes?', { fontSize: '32px', fill: '#000' });
+        }else
+        {
+            question = this.add.text(width/8-40, height/7+25, 'Is spreading slurry in the', { fontSize: '22px', fill: '#000' });
+            question2 = this.add.text(width/8-40, height/7 + 50, 'rain allowed near lakes?', { fontSize: '22px', fill: '#000' });
+        }
+
+
         //create more boxes
-        this.box1 = this.add.image(100, 450, 'true');
-        this.box2 = this.add.image(300, 450, 'false');
-        this.box1.setInteractive();
-        this.box2.setInteractive();
+        this.box1 = this.add.image(width/4, height/2 + 150, 'true');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'false');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'ans3');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'ans4');
+        this.box3.setVisible(false);
+        this.box4.setVisible(false);
+
+        setTimeout(() => {
+            this.box1.setInteractive();
+            this.box2.setInteractive();
+        
+        }, 250);
         this.box1.once('pointerdown', () => {
             //wrong answers
             console.log('wrong1');
@@ -303,33 +406,58 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     round2inter(){
+        this.destroy();        
         
-
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
         this.slurry.destroy(true);
-        this.slurrySmall = this.add.image(200, 325, 'slurrySmall');
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+            
+
+        }
+
+                
+        if(width  < 400)
+        {
+            this.slurrySmall = this.add.image(width/2, height/2, 'slurrySmall');
+            var ansText = this.add.text(120, 350, '', { fontSize: '12px', fill: '#000' });
+            var ansText2 = this.add.text(width/2 - 75, height/8 *3-50, 'You should never spread', { fontSize: '12px', fill: '#000' });
+            var ansText3 = this.add.text(width/2 - 75, height/8 *3-25, 'slurry in the rain', { fontSize: '12px', fill: '#000' });
+            var ansText4 = this.add.text(width/2 - 75, height/8 *3, 'especially near lakes.  ', { fontSize: '12px', fill: '#000' });
+            var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000' });
+        }
+        else{
+            
+            this.slurry = this.add.image(width/2, height/2, 'slurry');
+            var ansText = this.add.text(120, 350, '', { fontSize: '12px', fill: '#000' });
+            var ansText2 = this.add.text(width/2 - 75, height/8 *3-125, 'You should never spread', { fontSize: '12px', fill: '#000' });
+            var ansText3 = this.add.text(width/2 - 75, height/8 *3-100, 'slurry in the rain', { fontSize: '12px', fill: '#000' });
+            var ansText4 = this.add.text(width/2 - 75, height/8 *3-75, 'especially near lakes.  ', { fontSize: '12px', fill: '#000' });
+            var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000' });
+        }
         this.destroy();
         question.setText('');//change to a question
         question2.setText('');
-        var ansText = this.add.text(120, 350, '', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(120, 375, 'You should never spread', { fontSize: '12px', fill: '#000' });
-        var ansText3 = this.add.text(120, 400, 'slurry in the rain', { fontSize: '12px', fill: '#000' });
-        var ansText4 = this.add.text(120, 425, 'especially near lakes.  ', { fontSize: '12px', fill: '#000' });
-        var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000' });
-        this.continue = this.add.image(190, 500, 'continueBut');
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
         if(correct == 1){
-            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
             this.sound.play('wrong');
         }
 
-        this.continue.setInteractive();
+
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
 
         this.continue.once('pointerdown', () => {
-            this.round3();
+            this.questionrandomiser();
             this.pauseBG.destroy(true);
             ansText.setText('');
             ansText2.setText('');
@@ -337,47 +465,58 @@ export default class Scene1 extends Phaser.Scene {
             ansText4.setText('');
             ansText5.setText('');
             rightORwrong.setText('');
-            this.slurrySmall.destroy(true);
+            if(width  > 400)
+            {
+                this.slurry.destroy(true);
+            }else
+            {
+    
+                this.slurrySmall.destroy(true);
+            }
             this.continue.destroy(true);
         });
 
         
+
     }
     round3()
     {
-        question.setText('');
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
-        this.destroy();
-        question = this.add.text(75, 120, 'What is this?', { fontSize: '22px', fill: '#000' });
-        question2.setText('');
 
-        this.pto = this.add.image(200, 325, 'pto');
+        if(width  > 400)
+        {
+            question = this.add.text(width/2 - 200,height/7 + 50, 'What is this?', { fontSize: '32px', fill: '#000' });
+        }else
+        {
 
-        this.box1 = this.add.image(100, 450, 'Q3ans1');
-        this.box2 = this.add.image(300, 450, 'Q3ans2');
-        this.box3 = this.add.image(100, 550, 'Q3ans3');
-        this.box4 = this.add.image(300, 550, 'Q3ans4');
+            question = this.add.text(width/8, height/7 + 50,  'What is this?', { fontSize: '22px', fill: '#000' });
+        }
+
+
+
+        this.pto = this.add.image(width/2, height/2, 'pto');
+
+        this.box1 = this.add.image(width/4, height/2 + 150, 'Q3ans1');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'Q3ans2');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'Q3ans3');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'Q3ans4');
 
         this.interactive();
         this.box1.once('pointerdown', () => {
-            round++;
             this.round3inter();
         });  
         this.box2.once('pointerdown', () => {
-            round++;
             this.round3inter();
         });
         this.box3.once('pointerdown', () => {
             console.log('correct');
             score = score + 100;
-            round++;
             correct = 1;
             this.sound.play('correct');
             this.round3inter();
         });
         this.box4.once('pointerdown', () => {
-            round++;
             this.round3inter();
         });
 
@@ -386,32 +525,63 @@ export default class Scene1 extends Phaser.Scene {
 
     round3inter(){
 
-        question.setText('');
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
-        this.ptoSmall = this.add.image(200,295, 'ptoSmall');
-        this.pto.destroy(true);
         this.destroy();
-        question.setText('');//change to a question
-        var ansText = this.add.text(120, 350, 'This is a', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(120, 375, 'Power Take off shaft.', { fontSize: '12px', fill: '#000' });
-        var ansText3 = this.add.text(120, 400, 'It is usually on the ', { fontSize: '12px', fill: '#000' });
-        var ansText4 = this.add.text(120, 425, 'back of a tractor.', { fontSize: '12px', fill: '#000' });
-        var ansText5 = this.add.text(120, 450, 'It should be covered', { fontSize: '12px', fill: '#000' });
-        this.continue = this.add.image(190, 500, 'continueBut');
-
-        if(correct == 1){
-            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
-            correct = 0;
-        }else{
-            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
-
+        round++;
+        this.pto.destroy(true);        
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
+        if(width  > 400)
+        {
+            var ansText = this.add.text(width/2 - 125, height/8 *3-75, '', { fontSize: '12px', fill: '#000' });
+            var ansText2 = this.add.text(width/2 - 125, height/8 *3-75, 'This is a Power Take off shaft.', { fontSize: '12px', fill: '#000' });
+            var ansText3 = this.add.text(width/2 - 125, height/8 *3-75, '', { fontSize: '12px', fill: '#000' });
+            var ansText4 = this.add.text(width/2 - 125, height/8 *3-50, 'It is usually on the back of a tractor.', { fontSize: '12px', fill: '#000' });
+            var ansText5 = this.add.text(width/2 - 125, height/8 *3-25,'It should be covered', { fontSize: '12px', fill: '#000' });
+            this.pto = this.add.image(width/2, height/2, 'pto');
+        }else
+        {
+            var ansText = this.add.text(width/2 - 75, height/8 *3-50, 'This is a', { fontSize: '12px', fill: '#000' });
+            var ansText2 = this.add.text(width/2 - 75, height/8 *3-25, 'Power Take off shaft.', { fontSize: '12px', fill: '#000' });
+            var ansText3 = this.add.text(width/2 - 75, height/8 *3, 'It is usually on the ', { fontSize: '12px', fill: '#000' });
+            var ansText4 = this.add.text(width/2 - 75, height/8 *3+25, 'back of a tractor.', { fontSize: '12px', fill: '#000' });
+            var ansText5 = this.add.text(width/2 - 75, height/8 *3+50,'It should be covered', { fontSize: '12px', fill: '#000' });
+            this.ptoSmall = this.add.image(width/2, height/2 + 75,'ptoSmall');
         }
 
-        this.continue.setInteractive();
+        question.setText('');
+        
+
+        this.destroy();
+        question.setText('');//change to a question
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
+        if(correct == 1){
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            this.sound.play('wrong');
+        }
+
+
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
 
         this.continue.once('pointerdown', () => {
-            this.round4();
-            this.ptoSmall.destroy(true);
+        
+            this.questionrandomiser();
+            if(width < 400)
+            {
+                
+                this.ptoSmall.destroy(true);
+            }else{
+                this.pto.destroy(true);
+            }
             this.pauseBG.destroy(true);
             ansText.setText('');
             ansText2.setText('');
@@ -426,19 +596,24 @@ export default class Scene1 extends Phaser.Scene {
     }
     round4()
     {
-        question.setText('');
-        this.pto.destroy(true);
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
-        this.destroy();
-        question = this.add.text(55, 120, 'What does this sign mean?', { fontSize: '22px', fill: '#000' });
 
-        this.elecfence = this.add.image(200, 325, 'elecfence');
+        if(width  > 400)
+        {
+            question = this.add.text(width/2 - 200,height/7 + 50,'What does this sign mean?', { fontSize: '32px', fill: '#000' });
+        }else
+        {
+            question = this.add.text(width/8- 50, height/7 + 25,  'What does this sign mean?', { fontSize: '22px', fill: '#000' });
+        }
 
-        this.box1 = this.add.image(100, 450, 'Q4ans1');
-        this.box2 = this.add.image(300, 450, 'Q4ans2');
-        this.box3 = this.add.image(100, 550, 'Q4ans3');
-        this.box4 = this.add.image(300, 550, 'Q4ans4');
+
+
+        this.elecfence = this.add.image(width/2, height/2,'elecfence');
+        this.box1 = this.add.image(width/4, height/2 + 150, 'Q4ans1');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'Q4ans2');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'Q4ans3');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'Q4ans4');
 
         this.interactive();
         this.box1.once('pointerdown', () => {
@@ -465,28 +640,55 @@ export default class Scene1 extends Phaser.Scene {
     }
     round4inter(){
         question.setText('');
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
-        this.smallele = this.add.image(200, 325, 'smallele');
+        round++;
         this.elecfence.destroy(true);
+        
+        this.destroy();        
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+
+        }
+
+        if(width  < 400)
+        {
+            this.smallele = this.add.image(width/2, height/2, 'smallele');
+
+        }
+        else{
+            
+            this.elecfence = this.add.image(width/2, height/2,'elecfence');
+        }
         this.destroy();
         question.setText('');
-        var ansText = this.add.text(120, 400, 'This sign means that', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(120, 425, 'the fence is electrified', { fontSize: '12px', fill: '#000' });
-        this.continue = this.add.image(190, 500, 'continueBut');
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,'This sign means that', { fontSize: '12px', fill: '#000' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25, 'the fence is electrified', { fontSize: '12px', fill: '#000' });
+
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         if(correct == 1){
-            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
             this.sound.play('wrong');
         }
 
-
-        this.continue.setInteractive();
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
 
         this.continue.once('pointerdown', () => {
-            this.round5();
-            this.smallele.destroy(true);
+            this.questionrandomiser();
+            if(width  < 400)
+            {
+                this.smallele.destroy(true);
+            }
+            else{
+                this.elecfence.destroy(true);
+            }
             this.pauseBG.destroy(true);
             ansText.setText('');
             ansText2.setText('');
@@ -498,30 +700,27 @@ export default class Scene1 extends Phaser.Scene {
     }
     round5()
     {
-        
-        question.setText('');
-        
-        question2.setText('');
-        this.destroy();
-        round ++;
         scoreText.setText('Score: ' + score);
-        roundText.setText('Round: ' + round);
-        this.elecfence.destroy(true);        
-        question = this.add.text(35, 120, 'What is the most common', { fontSize: '22px', fill: '#000' });
-        question2 = this.add.text(35, 140, 'accident on a farm', { fontSize: '22px', fill: '#000' });
-
-        //this. = this.add.image(200, 325, '');
-        //insert something here
+        roundText.setText('Round: ' + round);    
         
-
-        this.box1 = this.add.image(100, 450, 'Q5ans1');
-        this.box2 = this.add.image(300, 450, 'Q5ans2');
-        this.box3 = this.add.image(100, 550, 'Q5ans3');
-        this.box4 = this.add.image(300, 550, 'Q5ans4');
+        this.acc = this.add.image(width/2,height/2, 'acc');
+        if(width  > 400)
+        {
+            question = this.add.text(width/2-200, height/7 + 50, 'What is the most common', { fontSize: '32px', fill: '#000' });
+            question2 = this.add.text(width/2-200, height/7 + 75, 'accident on a farm', { fontSize: '32px', fill: '#000' });
+        }else
+        {
+            question = this.add.text(width/8, height/7+25, 'What is the most common', { fontSize: '22px', fill: '#000' });
+            question2 = this.add.text(width/8, height/7 + 50, 'accident on a farm', { fontSize: '22px', fill: '#000' });
+        }
+ 
+        this.box1 = this.add.image(width/4, height/2 + 150, 'Q5ans1');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'Q5ans2');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'Q5ans3');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'Q5ans4');
 
         this.interactive();
         this.box1.once('pointerdown', () => {
-            round++;
             this.round5inter();
             this.sound.play('wrong');
             
@@ -530,17 +729,14 @@ export default class Scene1 extends Phaser.Scene {
             console.log('correct');
             score = score + 100;
             this.sound.play('correct');
-            round++;
             correct=1;
             this.round5inter();
         });
         this.box3.once('pointerdown', () => {
-            round++;
             this.round5inter();
             this.sound.play('wrong');
         });
         this.box4.once('pointerdown', () => {
-            round++;
             this.round5inter();
             this.sound.play('wrong');
         });
@@ -548,35 +744,62 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     round5inter(){
-
-        question.setText('');
-        
-        question2.setText('');  
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
+        round ++;
         this.destroy();
+        this.acc.destroy(true);
         question.setText('');
-        var ansText = this.add.text(120, 400, 'Vechicular accidents are', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(120, 425, 'the most common accident ', { fontSize: '12px', fill: '#000' });
-        var ansText3 = this.add.text(120, 450, 'on a farm', { fontSize: '12px', fill: '#000' });
-        this.continue = this.add.image(190, 500, 'continueBut');
         
-        if(correct == 1){
-            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
-            correct = 0;
-        }else{
-            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+        question2.setText('');        
+        
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
+        if(width < 400)
+        {
+            
+            this.acc2 = this.add.image(width/2,height/2, 'acc2small');  
+        }else
+        {
+            
+        this.acc2 = this.add.image(width/2,height/2, 'acc2');  
         }
 
-        this.continue.setInteractive();
+        this.destroy();
+        question.setText('');
+
+
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Vechicular accidents are', { fontSize: '12px', fill: '#000' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,'the most common accident ', { fontSize: '12px', fill: '#000' });
+        var ansText3 = this.add.text(width/2 - 75, height/8 *3,'on a farm', { fontSize: '12px', fill: '#000' });
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
+        
+        if(correct == 1){
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            this.sound.play('wrong');
+        }
+
+
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
 
         this.continue.once('pointerdown', () => {
-            this.round6();
+            this.questionrandomiser();
             this.pauseBG.destroy(true);
             ansText.setText('');
             ansText2.setText('');
             ansText3.setText('')
             rightORwrong.setText('');
             this.continue.destroy(true);
+            
+            this.acc2.destroy(true);
         });
 
         
@@ -584,28 +807,37 @@ export default class Scene1 extends Phaser.Scene {
 
     round6()
     {
-        
-        
-        question.setText('');
-        
-        question2.setText('');
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
         //this..destroy(true);
-        this.destroy();
 
-        question = this.add.text(35, 120, 'Are farm accidents', { fontSize: '22px', fill: '#000' });
-        question2 = this.add.text(35, 140, 'on the rise?', { fontSize: '22px', fill: '#000' });
+        if(width  > 400)
+        {
+            question = this.add.text(width/2-100, height/7, 'Are farm accidents', { fontSize: '22px', fill: '#000' });
+            question2 = this.add.text(width/2-100, height/7+30, 'on the rise?', { fontSize: '22px', fill: '#000' });
+        }else
+        {
+            question = this.add.text(width/8, height/7+ 25, 'Are farm accidents', { fontSize: '22px', fill: '#000' });
+            question2 = this.add.text(width/8, height/7+50, 'on the rise?', { fontSize: '22px', fill: '#000' });
+        }
 
-        this.accident = this.add.image(200, 325, 'accident');
 
-        this.box3 = this.add.image(100, 450, 'true');
-        this.box4 = this.add.image(300, 450, 'false');
 
-        this.box3.setInteractive();
-        this.box4.setInteractive();
+        this.accident = this.add.image(width/2, height/2,'accident');
 
-        this.box3.once('pointerdown', () => {
+        this.box1 = this.add.image(width/4, height/2 + 150, 'true');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'false');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'ans3');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'ans4');
+            this.box3.setVisible(false);
+            this.box4.setVisible(false);
+        setTimeout(() => {
+            this.box1.setInteractive();
+            this.box2.setInteractive();
+        }, 750);
+
+
+        this.box1.once('pointerdown', () => {
             score = score +100;  
             this.sound.play('correct');
             this.accident.destroy(true);
@@ -614,7 +846,7 @@ export default class Scene1 extends Phaser.Scene {
             this.box4.destroy(true);
             this.round6inter();
         });
-        this.box4.once('pointerdown', () => {
+        this.box2.once('pointerdown', () => {
             this.round6inter();
         });
     }
@@ -622,60 +854,86 @@ export default class Scene1 extends Phaser.Scene {
     round6inter(){
 
         this.accident.destroy(true);
-        
+        round++;
         
         question.setText('');
-        question2.setText('');
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
+        question2.setText('');        
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
+        if(width > 400)
+        {
+            this.accident = this.add.image(width/2, height/2,'accident');
+        }
+        else{
+            
+            this.accident = this.add.image(width/2, height/2,'accidentsmall');
+        }
+
         //show an aul pie chart here
-        this.box3.destroy(true);
-        this.box4.destroy(true);
+        this.box1.destroy(true);
+        this.box2.destroy(true);
         question.setText('');
-        var ansText = this.add.text(120, 400, 'Farm accidents have', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(120, 425, 'risen by 5%', { fontSize: '12px', fill: '#000' });
-        this.continue = this.add.image(190, 500, 'continueBut');
+
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Farm accidents have', { fontSize: '12px', fill: '#000' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,  'risen by 13%', { fontSize: '12px', fill: '#000' });
+        var ansText3 = this.add.text(width/2 - 75, height/8 *3, '-Teagasc 2018', { fontSize: '9px', fill: '#000' });
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
         if(correct == 1){
-            var rightORwrong = this.add.text(145, 200, 'Correct!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(145, 200, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
             this.sound.play('wrong');
         }
 
-        this.continue.setInteractive();
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
+
         this.continue.once('pointerdown', () => {
-            this.finish();
-            this.smallele.destroy(true);
+            this.questionrandomiser();
+            this.accident.destroy(true);
             this.pauseBG.destroy(true);
             ansText.setText('');
             ansText2.setText('');
+            ansText3.setText('');
             rightORwrong.setText('');
             this.continue.destroy(true);
         });
 
         
     }
+    shuffle(array) 
+    {
+        array.sort(() => Math.random() - 0.5);
+    }
+
 
     finish()
     {
         question.setText('');
         question2.setText('');
         scoreText.setText('Score: ' + score);
-        roundText.setText('Round: ' + round);
         //this..destroy(true);
 
         question.setText('Congrats you got : ' + score);
+                
 
 
-        this.home = this.add.image(200,450, 'homeBut' );
+        this.home = this.add.image(width/2,height/2 + 100, 'homeBut' );
         this.home.setInteractive();
 
         this.home.on('pointerdown', ()=> {
             location.href = "/home"
         });
 
-        this.restart = this.add.image(200, 350, 'restartBut');
+        this.restart = this.add.image(width/2,height/2, 'restartBut');
         this.restart.setInteractive();
 
         this.restart.on('pointerdown', ()=> {

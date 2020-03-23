@@ -51,9 +51,7 @@ export default class Scene1 extends Phaser.Scene
         this.add.image(width/2, height/2, 'grass');
 
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#00FF00" );
-
-        this.add.image(200,45,'bg');
-
+        this.add.image(width/2,45,'bg');
         const frames = ['','one', 'two', 'three', 'four', 'five', 'six'];
         //make onecard, two card array
         this.shuffle(arr);
@@ -461,7 +459,7 @@ export default class Scene1 extends Phaser.Scene
     }
     resume1()
     {
-        setInterval(() => {
+        setTimeout(() => {
             
         this.setinter();
         }, 200);
