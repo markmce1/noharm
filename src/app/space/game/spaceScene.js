@@ -146,7 +146,12 @@ class EnemyLaser extends Phaser.GameObjects.Sprite {
             }, 3000);
         }
     }
-    preUpdate(time, delta) {//handles movement of the keys
+    preUpdate(time, delta) {
+        if (paused == 1)
+        {
+            return
+        }
+        //handles movement of the keys
         if(this.active == false){return;}
         super.preUpdate(time, delta);
         this.y -= this.speed;

@@ -1,9 +1,10 @@
 var width = window.innerWidth;
 var height =window.innerHeight;
-var timeSurvived ;
+var timeSurvived;
+var elaspedTime;
 var time = 0;
 var start = 1;
-var paused = false
+var paused = 0;
 var hitvar =0;
 var i;
 
@@ -111,7 +112,12 @@ class EnemyLaser extends Phaser.GameObjects.Sprite {
         hitvar = 1;   
 
     }
-    preUpdate(time, delta) {//handles movement of the keys
+    preUpdate(time, delta) {
+        if (paused == 1)
+        {
+            return
+        }
+        //handles movement of the keys
         if(this.active == false){return;}
         super.preUpdate(time, delta);
         this.y -= this.speed;
@@ -264,14 +270,15 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     timeloop(){
-        this.timeThing = this.timer.addEvent({
-            delay: 1000,
-            loop: true,
-            callback: () => {
-               this.timeSurvived.setText((this.timer.now / 1000).toFixed(0))
-            },
-            paused: false
-          })
+        this.elapsedTime = 0;
+        this.timeThing = this.time.addEvent({
+          delay: 1000,
+          loop: true,
+          callback: () => {
+            this.elapsedTime++
+            timeSurvived.setText('Time: ' + this.elapsedTime)
+          }
+        })
 
     }
 
@@ -292,7 +299,8 @@ export default class Scene1 extends Phaser.Scene {
     }  
 
     pause1(){
-        paused = true;
+        paused = 1;
+        this.timeThing.paused = true;
         if(width  > 1000 && height > 720)
         {
             this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
@@ -333,6 +341,8 @@ export default class Scene1 extends Phaser.Scene {
         this.moveLeftButton.setInteractive();
         this.moveRightButton.setInteractive();
         
+        this.timeThing.paused = false
+        
         this.home.destroy();
         this.pauseBut.once('pointerdown',()=>{
             this.pause1();
@@ -359,6 +369,9 @@ export default class Scene1 extends Phaser.Scene {
         if(hitvar == 1)
         {
             hitvar =0;
+
+            
+            this.timeThing.paused = true;
             if(width  > 1000 && height > 720)
             {
                 this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
