@@ -7,6 +7,7 @@ var start = 1;
 var paused = 0;
 var hitvar =0;
 var i;
+var startedmusic = 0;
 
 
 class tractor extends Phaser.GameObjects.Sprite  {
@@ -164,29 +165,32 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('pauseBG','assets/gui/pauseBG.png' );
         this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
         this.load.image('bg','assets/dodge/images/bg.png');
-        this.load.image('bull','assets/dodge/images/bull.png');
-
-        
+        this.load.image('bull','assets/dodge/images/bull.png'); 
         this.load.image('electric','assets/dodge/images/electric.png');
-        
-        this.load.image('danger','assets/dodge/images/danger.png');
-        
+        this.load.image('danger','assets/dodge/images/danger.png'); 
         this.load.image('death','assets/dodge/images/death.png');
-
-
         this.load.image('rightBut', 'assets/space/rightBut.png');
         this.load.image('leftBut', 'assets/space/leftBut.png');
-        
         this.load.image('pause','assets/space/pause.png');
-        
         this.load.image('bg1', 'assets/space/bg3.png');
         this.load.image('left','assets/dodge/images/tractorleft.png');
         this.load.image('right','assets/dodge/images/tractorright.png');
+
+        this.load.audio('alexCh','assets/music/alexCh.wav' );
 
     }
 
 
     create(){
+
+
+        if(startedmusic == 0)
+        {
+            
+            this.sound.play('alexCh', { loop: true });
+
+            startedmusic = 1;
+        }
 
         this.enemies2 = new Array();
         

@@ -10,6 +10,8 @@ var scoreText;
 var width = window.innerWidth;
 var height = window.innerHeight;
 var arr = [1,2,3,4,5,6];
+
+var startedmusic = 0;
 export default class Scene1 extends Phaser.Scene {
     
     preload() {
@@ -21,7 +23,6 @@ export default class Scene1 extends Phaser.Scene {
         //images
         
         this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
-        this.load.image('bg', 'assets/quiz/images/bg.jpg');
         this.load.image('true', 'assets/quiz/images/true.png');
         this.load.image('false', 'assets/quiz/images/false.png');
         this.load.image('fall', 'assets/quiz/images/couldfall.png');
@@ -78,6 +79,9 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('accidentsmall', 'assets/quiz/images/accidentsmall.jpg');
 
 
+        this.load.audio('alexCh','assets/music/alexCh.wav' );
+
+
     }
     questionrandomiser(){
         if(round == 6)
@@ -113,6 +117,17 @@ export default class Scene1 extends Phaser.Scene {
 
     create()
     {
+
+
+        if(startedmusic == 0)
+        {
+            
+            this.sound.play('alexCh', { loop: true });
+
+            startedmusic = 1;
+        }
+        
+
         this.shuffle(arr);
 
         this.add.image(width/2, height/2, 'quizbg');

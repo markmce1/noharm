@@ -22,10 +22,15 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('back','assets/gui/back.png' );
         this.load.image('credits','assets/gui/credits.png' );
         this.load.image('settings','assets/gui/settings.png' );
+        this.load.image('leaderboards','assets/gui/leaderboards.png' );
+
+        this.load.audio('alexz','assets/music/alexz.mp3' );
 
 
     }
     create() {
+
+        this.sound.play('alexz', { loop: true })
 
         
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#3498db");
@@ -46,9 +51,10 @@ export default class Scene1 extends Phaser.Scene {
         this.settings = this.add.image(width/2 , height/2 , 'settings' );
         
         
-        this.credits= this.add.image(width/2 , height/2 + 100, 'credits' );
+        this.leaderboards= this.add.image(width/2 , height/2 + 100, 'leaderboards' );
 
-        //add in RPG if made
+        this.credits= this.add.image(width/2 , height/2 + 200, 'credits' );
+
 
         this.guides.once('pointerdown', ()=> {
             this.guidesfunc();
@@ -59,10 +65,15 @@ export default class Scene1 extends Phaser.Scene {
         });
 
         this.credits.once('pointerdown', ()=> {
+            this.creditsfunc();
 
         });
 
         this.settings.once('pointerdown', ()=> {
+
+        });
+
+        this.leaderboards.once('pointerdown', ()=> {
 
         });
 
@@ -72,9 +83,35 @@ export default class Scene1 extends Phaser.Scene {
             this.guides.setInteractive();
             this.credits.setInteractive();
             this.settings.setInteractive();
+            this.leaderboards.setInteractive();
         }, 200);
         
 
+
+    }
+
+    creditsfunc(){
+        this.guides.destroy();
+        this.play.destroy();
+        this.settings.destroy();
+        this.credits.destroy();
+        this.leaderboards.destroy();
+
+
+        var starttext = this.add.text(width/2- 150, height/2 - 200, 'Games made by Mark McEneaney', { fontSize: '18px', fill: '#000' });
+        var starttext2 = this.add.text(width/2- 150, height/2 - 150, 'Music by Eric taylor', { fontSize: '12px', fill: '#000' });
+        var starttext3 = this.add.text(width/2- 150, height/2 - 125, 'Alex McCulloch and Alexandr Zhelanov', { fontSize: '12px', fill: '#000' });
+        var starttext4 = this.add.text(width/2- 150, height/2 - 100, 'Sounds by Leszek_Szary ', { fontSize: '12px', fill: '#000' });
+
+        this.back = this.add.image(width/2, height/2 + 200, 'back');
+
+        this.back.once('pointerdown', ()=> {
+            this.home();
+            this.starttext3.destroy();
+            this.starttext2.destroy();
+            this.starttext.destroy();
+        });
+        
 
     }
 
@@ -85,6 +122,7 @@ export default class Scene1 extends Phaser.Scene {
         this.play.destroy();
         this.settings.destroy();
         this.credits.destroy();
+        this.leaderboards.destroy();
 
         
         this.back = this.add.image(width/2, height/2 + 200, 'back');

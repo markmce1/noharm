@@ -16,6 +16,8 @@ var start = 0;
 var paused = 0;
 var hitvar = 0;
 
+var startedmusic = 0;
+
 
 ///////////////////////////////////////////////////////
 
@@ -213,9 +215,20 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
 
         
+        this.load.audio('erict','assets/music/erict.mp3' );
+
+        
     }
 
     create() {
+
+        if(startedmusic == 0)
+        {
+
+            this.sound.play('erict', { loop: true })
+            startedmusic = 1;
+        }
+
          
         this.add.image(width/2, height/2, 'grass');
         this.bg = this.add.image(width/2,45,'bg');
