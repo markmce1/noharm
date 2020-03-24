@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'memory',
     loadChildren: () => import('./memory/memory.module').then( m => m.MemoryPageModule)
   },
+  {
+    path: 'dodge',
+    loadChildren: () => import('./dodge/dodge.module').then( m => m.DodgePageModule)
+  },
 
 
 

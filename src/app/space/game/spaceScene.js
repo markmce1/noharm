@@ -16,6 +16,8 @@ var start = 0;
 var paused = 0;
 var hitvar = 0;
 
+var startedmusic = 0;
+
 
 ///////////////////////////////////////////////////////
 
@@ -126,7 +128,7 @@ class EnemyLaser extends Phaser.GameObjects.Sprite {
         super(scene, x, y);
         this.setTexture('cow');
         this.setPosition(x, y);
-        this.speed = -5;
+        this.speed = -2.5;
         this.scene = scene;
         scene.physics.world.enable(this);
         scene.physics.add.collider(this, scene.myTractor, this.handleHit, null, this);//Adds Collision
@@ -138,9 +140,20 @@ class EnemyLaser extends Phaser.GameObjects.Sprite {
         lives --; 
         scorecount = 0;
         hitvar = 1;
-        //scene restart
+        paused = 1;
+        if(lives > 0)
+        {
+            setTimeout(() => {
+                paused = 0;
+            }, 3000);
+        }
     }
-    preUpdate(time, delta) {//handles movement of the keys
+    preUpdate(time, delta) {
+        if (paused == 1)
+        {
+            return
+        }
+        //handles movement of the keys
         if(this.active == false){return;}
         super.preUpdate(time, delta);
         this.y -= this.speed;
@@ -183,31 +196,44 @@ export default class Scene1 extends Phaser.Scene {
         this.load.audio('click1', 'assets/space/sounds/click.wav');
         //images loaded
         this.load.image('tractor', 'assets/space/tractor1.png');
-        this.load.image('resumeBut', 'assets/space/resume.png');
-        this.load.image('homeBut', 'assets/space/homeBut.png');
         this.load.image('key', 'assets/space/key.png');
         this.load.image('enemy1', 'assets/space/gate2sh.png');
-        this.load.image('grass', 'assets/space/grass2.png');
+        //this.load.image('grass', 'assets/space/grass2.png');
+        this.load.image('grass','assets/dodge/images/bg.png');
         this.load.image('rightBut', 'assets/space/rightBut.png');
         this.load.image('leftBut', 'assets/space/leftBut.png');
         this.load.image('shoot', 'assets/space/shoot.png'); 
         this.load.image('pause','assets/space/pause.png');
-        this.load.image('restartBut','assets/space/restart.png');
         this.load.image('bg', 'assets/space/bg3.png');
-        this.load.image('pauseBG','assets/gui/pauseBG.png' );
         this.load.image('cow', 'assets/space/cow.png' )
+
+        this.load.image('resumeBut', 'assets/gui/resume.png');
+        this.load.image('restartBut', 'assets/gui/restart.png');
+        this.load.image('homeBut', 'assets/gui/homeBut.png');
+        
+        this.load.image('pauseBG','assets/gui/pauseBG.png' );
+        this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
+
+        
+        this.load.audio('erict','assets/music/erict.mp3' );
+
+        
     }
 
     create() {
 
-        
-        this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#32CD32");
-        
-        
-        
+        if(startedmusic == 0)
+        {
+
+            this.sound.play('erict', { loop: true })
+            startedmusic = 1;
+        }
+
+         
         this.add.image(width/2, height/2, 'grass');
-        this.add.image(width/2,45,'bg');
-        this.myTractor = new tractor(this, width/2,height - 200);
+        this.bg = this.add.image(width/2,45,'bg');
+        this.bg.setDepth(1);
+        this.myTractor = new tractor(this, width/2,height - 175);
         this.add.existing(this.myTractor);
         this.enemies = this.physics.add.group();
         this.enemies2 = new Array();
@@ -239,8 +265,11 @@ export default class Scene1 extends Phaser.Scene {
     this.topLeft = this.enemies2[0];
     this.bottomRight = this.enemies2[23];
     //////////////////////////////pausing here//////////////////////////////////////////////////////////////////////////
+
     this.pauseBut = this.add.image(width/2+ w,25, 'pause');
+ 
     this.pauseBut.setInteractive();
+    this.pauseBut.setDepth(2);
 
     this.pauseBut.once('pointerdown',()=>{
             this.pause1();
@@ -289,8 +318,11 @@ export default class Scene1 extends Phaser.Scene {
 
     
     scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
+    scoreText.setDepth(2);
     roundText = this.add.text(16 ,48 ,'Round: ' + round, { fontSize: '32px', fill: '#000' });
     livesText = this.add.text(width/2+ (w - 50), 48, 'Lives: ' + lives, { fontSize: '32px', fill: '#000' });
+    roundText.setDepth(2);
+    livesText.setDepth(2);
 
     if(start == 1){
         this.shootloop();
@@ -301,8 +333,23 @@ export default class Scene1 extends Phaser.Scene {
     
     if(start ==0){
 
-        this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+            var starttext = this.add.text(width/2- 175, height/2 - 150, 'The farmer needs your help!', { fontSize: '22px', fill: '#000' });
+            var starttext2 = this.add.text(width/2- 175, height/2 - 125, 'Shoot the gates to lock them.', { fontSize: '22px', fill: '#000' });
+            var starttext3 = this.add.text(width/2- 175, height/2 - 100, 'Avoid the cows they let out!', { fontSize: '22px', fill: '#000' });
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+            
         var starttext = this.add.text(width/2- 100, height/2 - 100, 'The farmer needs your help!', { fontSize: '12px', fill: '#000' });
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'Shoot the gates to lock them.', { fontSize: '12px', fill: '#000' });
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'Avoid the cows they let out!', { fontSize: '12px', fill: '#000' });
+        }
+        
+
+
         this.start = this.add.image(width/2, height/2, 'resumeBut');
         this.start.setInteractive();
         this.moveLeftButton.disableInteractive();
@@ -328,6 +375,8 @@ export default class Scene1 extends Phaser.Scene {
         this.pauseBG.setVisible(false);
         this.start.setVisible(false);
         starttext.setText('');
+        starttext2.setText('');
+        starttext3.setText('');
         start = 1;
         
     });
@@ -354,8 +403,15 @@ export default class Scene1 extends Phaser.Scene {
 
 
     pause1(){
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
         
-        this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        
         this.enemies.setVelocityX(0);
         this.resume = this.add.image(width/2, height/2 - 100,'resumeBut');
         this.resume.setInteractive();
@@ -424,20 +480,24 @@ export default class Scene1 extends Phaser.Scene {
             this.myTractor.fireLasers();
         }
         if(hitvar == 1){
+            this.isShooting = false;
+            this.isMovingLeft = false;
+            this.isMovingRight = false;
             this.enemies.setVelocityX(0);
             this.enemies.setVelocityY(0);
+            this.myTractor
             this.moveLeftButton.disableInteractive();
             this.moveRightButton.disableInteractive();
-            this.shootButton.disableInteractive();
-
-            
-            
-            timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
+            this.shootButton.disableInteractive();                
+            if(lives >0)
+            {
+                setTimeout(() => {
+                    this.scene.restart()
+                }, 3000);
+            }
             hitvar = 0;
             scorecount =0;
-
         }
-
 
         this.myTractor.update();
 
@@ -469,15 +529,31 @@ export default class Scene1 extends Phaser.Scene {
             if(this.bottomRight.body.y  >= height -275){
                 var endGame = this.add.text(100, 200, 'Lost a life', { fontSize: '32px', fill: '#000' });
                 lives --;
+                livesText.setText("Lives: " + lives);
                 scorecount = 0;
-                this.scene.restart();
-                timedevent = this.time.delayedCall(3000, function() {this.scene.restart()}, [], this);
+                paused = 1;
+                if(lives > 0)
+                {
+                    setTimeout(() => {
+                        this.scene.restart()
+                        paused = 0;
+                    }, 3000);
+                }
             }
             if(lives == 0){
+                lives = -1;        
+                if(width  > 1000 && height > 720)
+                {
+                    this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+                }else
+                {
+                    this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+                }
                 var endGame = this.add.text(width/2 - 125, 200, 'Game over', { fontSize: '32px', fill: '#000' });
                 var endGame2 = this.add.text(width/2 - 125, 250, 'Press the button', { fontSize: '32px', fill: '#000' });
                 var endGame3 = this.add.text(width/2 - 125,300, 'to retry', { fontSize: '32px', fill: '#000' });
-                this.resume = this.add.image(width/2, height/2, 'resumeBut');
+                this.resume = this.add.image(width/2, height/2, 'restartBut');
+                
                 this.resume.setInteractive();
                 this.resume.on('pointerdown', () => {
                     this.scene.restart();
@@ -488,10 +564,6 @@ export default class Scene1 extends Phaser.Scene {
                 speed = 1;
                 lives = 3;//PUT A MESSAGE ABOUT THIS HERE FINAL ROUND AND SCORE SHOULD BE PRINTED HERE
                 scorecount =0;
-                endGame.destroy();
-                endGame2.destroy();
-                endGame3.destroy();//CHANGE THIS TO A BUTTON LIKE I SAID
-
                 //var endGame = this.add.text(1500, 2000, 'Game over', { fontSize: '32px', fill: '#000' });
                 //setText you fool
 
@@ -508,6 +580,10 @@ export default class Scene1 extends Phaser.Scene {
             this.moveLeftButton.disableInteractive();
             this.moveRightButton.disableInteractive();
             this.shootButton.disableInteractive();
+            this.isShooting = false;
+            this.isMovingLeft = false;
+            this.isMovingRight = false;
+            
             timedevent= this.time.delayedCall(3000,function(){this.scene.restart()}, [],this);
         }
     }

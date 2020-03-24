@@ -15,6 +15,7 @@ var arr = [1,1,2
     ,4,4,5
     ,5,6,6]
 var i;
+var startedmusic =0;
 
 export default class Scene1 extends Phaser.Scene 
 {
@@ -36,24 +37,33 @@ export default class Scene1 extends Phaser.Scene
         this.load.image('bg', 'assets/space/bg3.png');
 
         this.load.image('pause','assets/quiz/images/pause.png');
-        this.load.image('resumeBut', 'assets/quiz/images/resume.png');
-        this.load.image('homeBut', 'assets/quiz/images/homeBut.png');
-        this.load.image('restartBut','assets/quiz/images/restart.png' );
+        this.load.image('resumeBut', 'assets/gui/resume.png');
+        this.load.image('homeBut', 'assets/gui/homeBut.png');
+        this.load.image('restartBut','assets/gui/restart.png' );
         this.load.image('pauseBG','assets/gui/pauseBG.png' );
         
+        this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
+        
         this.load.image('grass', 'assets/space/grass2.png');
+        
+        this.load.audio('erict2','assets/music/erict2.mp3' );
 
 
         this.load.audio('flip' , 'assets/memory/sounds/cardflip.wav');
     }
     create() {
 
+
+        if(startedmusic == 0)
+        {
+            this.sound.play('erict2', { loop: true });
+            startedmusic = 1;
+        }
+
         this.add.image(width/2, height/2, 'grass');
 
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#00FF00" );
-
-        this.add.image(200,45,'bg');
-
+        this.add.image(width/2,45,'bg');
         const frames = ['','one', 'two', 'three', 'four', 'five', 'six'];
         //make onecard, two card array
         this.shuffle(arr);
@@ -62,7 +72,8 @@ export default class Scene1 extends Phaser.Scene
         var w = width /4;
         var h = height/4 - height/8 + 65;
         
-        this.pauseBut = this.add.image(300,25, 'pause');
+
+        this.pauseBut = this.add.image(width/2+  width / 6,25, 'pause');
         this.pauseBut.setInteractive();
 
         this.pauseBut.once('pointerdown',()=>{
@@ -286,6 +297,8 @@ export default class Scene1 extends Phaser.Scene
 
     counterflip()
     {
+
+        
         this.disableinter();
 
         if(checktwo != checkone)
@@ -439,19 +452,25 @@ export default class Scene1 extends Phaser.Scene
 
         this.disableinter();
 
-        this.pauseBG = this.add.image(200,  350, 'pauseBG');
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
 
-        this.resume = this.add.image(200, 275, 'resumeBut');
+        this.resume = this.add.image(width/2, height/2 - 100, 'resumeBut');
         this.resume.setInteractive();
 
-        this.restart = this.add.image(200, 350, 'restartBut');
+        this.restart = this.add.image(width/2, height/2, 'restartBut');
         this.restart.setInteractive();
 
         this.restart.on('pointerdown', ()=> {
             this.scene.restart();
         });
 
-        this.home = this.add.image(200,425, 'homeBut' );
+        this.home = this.add.image(width/2, height/2 + 100, 'homeBut' );
         this.home.setInteractive();
 
         this.home.on('pointerdown', ()=> {
@@ -461,7 +480,7 @@ export default class Scene1 extends Phaser.Scene
     }
     resume1()
     {
-        setInterval(() => {
+        setTimeout(() => {
             
         this.setinter();
         }, 200);
