@@ -15,8 +15,8 @@ var lives =3 ;
 var start = 0;
 var paused = 0;
 var hitvar = 0;
-
 var startedmusic = 0;
+var hit = 0;
 
 
 ///////////////////////////////////////////////////////
@@ -211,11 +211,14 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('restartBut', 'assets/gui/restart.png');
         this.load.image('homeBut', 'assets/gui/homeBut.png');
         
+        this.load.image('submitBut', 'assets/gui/submit.png');
+        
         this.load.image('pauseBG','assets/gui/pauseBG.png' );
         this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
 
         
         this.load.audio('erict','assets/music/erict.mp3' );
+
 
         
     }
@@ -526,19 +529,25 @@ export default class Scene1 extends Phaser.Scene {
                     }
                 }
             }
-            if(this.bottomRight.body.y  >= height -275){
+            if(this.bottomRight.body.y  >= height -275 && hit == 0){
+                hit = 1;
                 var endGame = this.add.text(100, 200, 'Lost a life', { fontSize: '32px', fill: '#000' });
                 lives --;
-                livesText.setText("Lives: " + lives);
                 scorecount = 0;
+                livesText.setText("Lives: " + lives);
+                this.enemies.setVelocityX(0);
                 paused = 1;
                 if(lives > 0)
                 {
                     setTimeout(() => {
-                        this.scene.restart()
-                        paused = 0;
-                    }, 3000);
+                        hit =0;
+                        paused =0;
+                        this.scene.restart();
+                        //stop movement
+    
+                    }, 300);
                 }
+
             }
             if(lives == 0){
                 lives = -1;        
@@ -549,16 +558,36 @@ export default class Scene1 extends Phaser.Scene {
                 {
                     this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
                 }
-                var endGame = this.add.text(width/2 - 125, 200, 'Game over', { fontSize: '32px', fill: '#000' });
-                var endGame2 = this.add.text(width/2 - 125, 250, 'Press the button', { fontSize: '32px', fill: '#000' });
-                var endGame3 = this.add.text(width/2 - 125,300, 'to retry', { fontSize: '32px', fill: '#000' });
-                this.resume = this.add.image(width/2, height/2, 'restartBut');
+                
+                livesText.setText("Lives: " + lives);
+                var endGame = this.add.text(width/2 - 125, height/2 - 200, 'Game over', { fontSize: '32px', fill: '#000' });
+                var endGame2 = this.add.text(width/2 - 125, height/2 -250, 'Press the button', { fontSize: '32px', fill: '#000' });
+                var endGame3 = this.add.text(width/2 - 125,height/2 -300, 'to retry', { fontSize: '32px', fill: '#000' });
+
+                this.submit = this.add.image(width/2, height/2 + 200, 'submitBut');
+
+                const elem = document.getElementById('text');
+                let elem_prime = elem.cloneNode(true)
+                elem_prime.style.display = 'visible';
+                this.add.dom(width/2, height/2, elem_prime);
+
+                
+                this.submit.setInteractive();
+                this.submit.on('pointerdown', () => {
+                    //firebase shite here
+                    
+                });
+
+                this.resume = this.add.image(width/2, height/2 + 200, 'restartBut');
                 
                 this.resume.setInteractive();
                 this.resume.on('pointerdown', () => {
                     this.scene.restart();
+                    hit = 0;
                     
                 });
+
+
                 score = 0;
                 round = 1;
                 speed = 1;

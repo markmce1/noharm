@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "YOUR_DATABASE_URL",
+    apiKey: "AIzaSyCLuB5fKIO1n0070M9f5W5G199RYvS2rrA",
+    authDomain: "no-harm-on-the-farm.firebaseapp.com",
+    databaseURL: "https://no-harm-on-the-farm.firebaseio.com",
     projectId: "no-harm-on-the-farm",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_SENDER_ID"
+    storageBucket: "no-harm-on-the-farm.appspot.com",
+    messagingSenderId: "693625494685",
   }
 };
 /*

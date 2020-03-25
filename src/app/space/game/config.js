@@ -4,6 +4,7 @@ import * as Phaser from 'phaser';
 var width = window.innerWidth;
 var height = window.innerHeight;
 var config ={
+
     scale:{
     mode: Phaser.Scale.FIT,
     },
