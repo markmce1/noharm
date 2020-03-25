@@ -1,5 +1,22 @@
+import * as firebase from "firebase/app"
+import "firebase/firestore"
+
 var width = window.innerWidth;
 var height = window.innerHeight;
+
+
+const config = {
+    // your firebase config
+  
+      apiKey: "AIzaSyCLuB5fKIO1n0070M9f5W5G199RYvS2rrA",
+      authDomain: "no-harm-on-the-farm.firebaseapp.com",
+      databaseURL: "https://no-harm-on-the-farm.firebaseio.com",
+      projectId: "no-harm-on-the-farm",
+      storageBucket: "no-harm-on-the-farm.appspot.com",
+      messagingSenderId: "693625494685",
+    
+  }
+  firebase.initializeApp(config)
 
 export default class Scene1 extends Phaser.Scene {
 
@@ -108,11 +125,70 @@ export default class Scene1 extends Phaser.Scene {
 
         });
 
-                
+
+
+        this.gate= this.add.image(width/2, height/2 - 200,'gate');
+
+        this.quiz = this.add.image(width/2 , height/2, 'quiz' );
+
+        this.memory = this.add.image(width/2, height/2 - 100, 'memory');
+
+        this.dodge = this.add.image(width/2, height/2 + 100, 'dodge');
+
+
         setTimeout(() => {
+            this.gate.setInteractive();
+            this.quiz.setInteractive();
+            this.memory.setInteractive();
             this.back.setInteractive();
+            this.dodge.setInteractive();
         }, 200);
+
+
+        this.quiz.once('pointerdown', ()=> {
+
+        });
+
+        this.gate.once('pointerdown', ()=> {
+
+            var scoreArr=[];
+            this.ridofgames();
+            const db = firebase.firestore()
+            db.collection("Leaderboards").doc('LockThatGate').collection('scores').orderBy("score", "desc").limit(10).get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+    
+                    const data = doc.data();
+                    scoreArr.push(data);
+                });
+            console.log(scoreArr);
+            });
+            console.log(scoreArr);
+
+                console.log(scoreArr);
+
+                var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name, { fontSize: '18px', fill: '#000' });
+                var starttext2 = this.add.text(width/2- 150, height/2 - 150, 'Music by Eric taylor', { fontSize: '12px', fill: '#000' });
+                var starttext3 = this.add.text(width/2- 150, height/2 - 125, 'Alex McCulloch and Alexandr Zhelanov', { fontSize: '12px', fill: '#000' });
+                var starttext4 = this.add.text(width/2- 150, height/2 - 100, 'Sounds by Leszek_Szary ', { fontSize: '12px', fill: '#000' });
         
+
+
+        });
+
+        this.memory.once('pointerdown', ()=> {
+
+        });
+
+        this.dodge.once('pointerdown', ()=> {
+
+        });
+
+
+        
+
+
     }
 
     settingsfunc(){
@@ -249,11 +325,7 @@ export default class Scene1 extends Phaser.Scene {
         this.back.once('pointerdown', ()=> {
             this.home();
 
-            this.gate.destroy();
-            this.quiz.destroy();
-            this.memory.destroy();
-            this.back.destroy();
-            this.dodge.destroy();
+        this.ridofgames();
         });
 
     }
@@ -264,6 +336,15 @@ export default class Scene1 extends Phaser.Scene {
         this.settings.destroy();
         this.credits.destroy();
         this.leaderboards.destroy();
+    }
+
+    ridofgames(){
+        
+        this.gate.destroy();
+        this.quiz.destroy();
+        this.memory.destroy();
+        this.back.destroy();
+        this.dodge.destroy();
     }
 
 

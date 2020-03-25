@@ -1,4 +1,8 @@
-//need screen width and height in here too
+
+import * as firebase from "firebase/app"
+import "firebase/firestore"
+
+
 var score= 0;
 var scoreText;
 var roundText; //just stuff for set Texts
@@ -11,12 +15,25 @@ var height =window.innerHeight;
 var scorecount = 0;
 var round = 1;
 var speed = 1;
-var lives =3 ;
+var lives = 3;
 var start = 0;
 var paused = 0;
 var hitvar = 0;
 var startedmusic = 0;
 var hit = 0;
+
+const config = {
+  // your firebase config
+
+    apiKey: "AIzaSyCLuB5fKIO1n0070M9f5W5G199RYvS2rrA",
+    authDomain: "no-harm-on-the-farm.firebaseapp.com",
+    databaseURL: "https://no-harm-on-the-farm.firebaseio.com",
+    projectId: "no-harm-on-the-farm",
+    storageBucket: "no-harm-on-the-farm.appspot.com",
+    messagingSenderId: "693625494685",
+  
+}
+firebase.initializeApp(config)
 
 
 ///////////////////////////////////////////////////////
@@ -586,6 +603,8 @@ export default class Scene1 extends Phaser.Scene {
                     this.add.dom(width/2, height/2, elem);
                     this.resume.setVisible(false);
                     this.submitscore.setVisible(false);
+
+                    const myVar = document.getElementById('name-input');
                     endGame.setText('Enter your first name');
                     endGame2.setText('and your score will');
                     endGame3.setText('be submitted to');
@@ -593,10 +612,12 @@ export default class Scene1 extends Phaser.Scene {
                     
                     this.submit = this.add.image(width/2, height/2 + 100, 'submitBut');
                     this.submit.setInteractive();
-                    this.submit.on('pointerdown', () => {
+                    this.submit.once('pointerdown', () => {
+                        console.log(myVar);
                         // will do firebase and kick back to main menu
+                        const db = firebase.firestore()
+                        db.collection('Leaderboards').doc('LockThatGate').collection('scores').add({ score: score, name: myVar.value})
 
-                        location.href = "/home"
 
 
                     });
