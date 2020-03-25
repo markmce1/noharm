@@ -23,6 +23,12 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('credits','assets/gui/credits.png' );
         this.load.image('settings','assets/gui/settings.png' );
         this.load.image('leaderboards','assets/gui/leaderboards.png' );
+        
+        this.load.image('embrace','assets/gui/embrace.png' );
+        
+        this.load.image('hsa','assets/gui/hsa.png' );
+
+        this.load.image('ifa','assets/gui/ifa.png' );
 
         this.load.audio('alexz','assets/music/alexz.mp3' );
 
@@ -42,7 +48,6 @@ export default class Scene1 extends Phaser.Scene {
     }
     
     home(){
-
         this.guides = this.add.image(width/2, height/2 - 100, 'guides');
 
         this.play = this.add.image(width/2 , height/2 - 200, 'play' );
@@ -71,9 +76,11 @@ export default class Scene1 extends Phaser.Scene {
 
         this.settings.once('pointerdown', ()=> {
 
+           this.settingsfunc();
         });
 
         this.leaderboards.once('pointerdown', ()=> {
+            this.leaderboardsfunc();
 
         });
 
@@ -90,12 +97,42 @@ export default class Scene1 extends Phaser.Scene {
 
     }
 
+    leaderboardsfunc(){
+
+        this.newmenu();
+    
+        this.back = this.add.image(width/2, height/2 + 200, 'back');
+    
+        this.back.once('pointerdown', ()=> {
+            this.home();
+
+        });
+
+                
+        setTimeout(() => {
+            this.back.setInteractive();
+        }, 200);
+        
+    }
+
+    settingsfunc(){
+        this.newmenu();
+
+        this.back = this.add.image(width/2, height/2 + 200, 'back');
+
+        this.back.once('pointerdown', ()=> {
+            this.home();
+
+        });
+
+                
+        setTimeout(() => {
+            this.back.setInteractive();
+        }, 200);
+    }
+
     creditsfunc(){
-        this.guides.destroy();
-        this.play.destroy();
-        this.settings.destroy();
-        this.credits.destroy();
-        this.leaderboards.destroy();
+        this.newmenu();
 
 
         var starttext = this.add.text(width/2- 150, height/2 - 200, 'Games made by Mark McEneaney', { fontSize: '18px', fill: '#000' });
@@ -107,10 +144,17 @@ export default class Scene1 extends Phaser.Scene {
 
         this.back.once('pointerdown', ()=> {
             this.home();
-            this.starttext3.destroy();
-            this.starttext2.destroy();
-            this.starttext.destroy();
+            
+            starttext4.setVisible(false);
+            starttext3.setVisible(false);
+            starttext2.setVisible(false);
+            starttext.setVisible(false);
         });
+
+                
+        setTimeout(() => {
+            this.back.setInteractive();
+        }, 200);
         
 
     }
@@ -118,34 +162,53 @@ export default class Scene1 extends Phaser.Scene {
     //clear homescreen function
 
     guidesfunc(){
-        this.guides.destroy();
-        this.play.destroy();
-        this.settings.destroy();
-        this.credits.destroy();
-        this.leaderboards.destroy();
+        this.newmenu();
 
         
         this.back = this.add.image(width/2, height/2 + 200, 'back');
+        this.ifa = this.add.image(width/2, height/2, 'ifa');
+        this.embrace = this.add.image(width/2, height/2 - 100, 'embrace');
+        this.hsa = this.add.image(width/2, height/2 - 200, 'hsa');
+
 
 
         
         setTimeout(() => {
             this.back.setInteractive();
+            this.ifa.setInteractive();
+            this.hsa.setInteractive();
+            this.embrace.setInteractive();
+
         }, 200);
 
         this.back.once('pointerdown', ()=> {
             this.home();
 
             this.back.destroy();
+            this.ifa.destroy();
+            this.hsa.destroy();
+            this.embrace.destroy();
+
         });
+
+        this.ifa.once('pointerdown', ()=> {
+
+        });
+        this.hsa.once('pointerdown', ()=> {
+
+        });
+        this.embrace.once('pointerdown', ()=> {
+
+        });
+
+
     }
 
     games(){
         
-        this.guides.destroy();
-        this.play.destroy();
-        this.settings.destroy();
-        this.credits.destroy();
+        this.newmenu();
+        
+        this.leaderboards.destroy();
 
         this.gate= this.add.image(width/2, height/2 - 200,'gate');
 
@@ -193,6 +256,14 @@ export default class Scene1 extends Phaser.Scene {
             this.dodge.destroy();
         });
 
+    }
+
+    newmenu(){
+        this.guides.destroy();
+        this.play.destroy();
+        this.settings.destroy();
+        this.credits.destroy();
+        this.leaderboards.destroy();
     }
 
 

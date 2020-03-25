@@ -211,7 +211,10 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('restartBut', 'assets/gui/restart.png');
         this.load.image('homeBut', 'assets/gui/homeBut.png');
         
-        this.load.image('submitBut', 'assets/gui/submit.png');
+        
+        this.load.image('start', 'assets/gui/start.png');
+        this.load.image('submitBut', 'assets/gui/submits.png');
+        this.load.image('submit', 'assets/gui/submit.png');
         
         this.load.image('pauseBG','assets/gui/pauseBG.png' );
         this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
@@ -353,7 +356,7 @@ export default class Scene1 extends Phaser.Scene {
         
 
 
-        this.start = this.add.image(width/2, height/2, 'resumeBut');
+        this.start = this.add.image(width/2, height/2, 'start');
         this.start.setInteractive();
         this.moveLeftButton.disableInteractive();
         this.moveRightButton.disableInteractive();
@@ -550,35 +553,59 @@ export default class Scene1 extends Phaser.Scene {
 
             }
             if(lives == 0){
+                livesText.setText("Lives: " + lives);
                 lives = -1;        
                 if(width  > 1000 && height > 720)
                 {
                     this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+
+                    var endGame = this.add.text(width/2 - 125, height/2 - 200, 'Game over', { fontSize: '22px', fill: '#000' });
+                    var endGame2 = this.add.text(width/2 - 125, height/2 -150, 'Press the button', { fontSize: '22px', fill: '#000' });
+                    var endGame3 = this.add.text(width/2 - 125,height/2 -100, 'to retry', { fontSize: '22px', fill: '#000' });
+                    var endGame4 = this.add.text(width/2 - 125,height/2 -50, 'Your score was '+ score, { fontSize: '22px', fill: '#000' });
                 }else
                 {
                     this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+
+                    var endGame = this.add.text(width/2 - 105, height/2 - 150, 'Game over', { fontSize: '17px', fill: '#000' });
+                    var endGame2 = this.add.text(width/2 - 105, height/2 -125, 'Press the button', { fontSize: '17px', fill: '#000' });
+                    var endGame3 = this.add.text(width/2 - 105,height/2 -100, 'to retry', { fontSize: '17px', fill: '#000' });
+                    var endGame4 = this.add.text(width/2 - 105,height/2 -75, 'Your score was '+ score, { fontSize: '17px', fill: '#000' });
                 }
                 
-                livesText.setText("Lives: " + lives);
-                var endGame = this.add.text(width/2 - 125, height/2 - 200, 'Game over', { fontSize: '32px', fill: '#000' });
-                var endGame2 = this.add.text(width/2 - 125, height/2 -250, 'Press the button', { fontSize: '32px', fill: '#000' });
-                var endGame3 = this.add.text(width/2 - 125,height/2 -300, 'to retry', { fontSize: '32px', fill: '#000' });
 
-                this.submit = this.add.image(width/2, height/2 + 200, 'submitBut');
 
-                const elem = document.getElementById('text');
-                let elem_prime = elem.cloneNode(true)
-                elem_prime.style.display = 'visible';
-                this.add.dom(width/2, height/2, elem_prime);
-
+                this.submitscore = this.add.image(width/2, height/2 + 50, 'submitBut');
                 
-                this.submit.setInteractive();
-                this.submit.on('pointerdown', () => {
+                this.submitscore.setInteractive();
+                this.submitscore.on('pointerdown', () => {
                     //firebase shite here
+
+                    const elem = document.getElementById('text');//text box shite
+                    elem.style.display = 'visible';
+                    this.add.dom(width/2, height/2, elem);
+                    this.resume.setVisible(false);
+                    this.submitscore.setVisible(false);
+                    endGame.setText('Enter your first name');
+                    endGame2.setText('and your score will');
+                    endGame3.setText('be submitted to');
+                    endGame4.setText('the learboards');
+                    
+                    this.submit = this.add.image(width/2, height/2 + 100, 'submitBut');
+                    this.submit.setInteractive();
+                    this.submit.on('pointerdown', () => {
+                        // will do firebase and kick back to main menu
+
+                        location.href = "/home"
+
+
+                    });
+
+
                     
                 });
 
-                this.resume = this.add.image(width/2, height/2 + 200, 'restartBut');
+                this.resume = this.add.image(width/2, height/2 + 125, 'restartBut');
                 
                 this.resume.setInteractive();
                 this.resume.on('pointerdown', () => {
