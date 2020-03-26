@@ -147,41 +147,217 @@ export default class Scene1 extends Phaser.Scene {
 
         this.quiz.once('pointerdown', ()=> {
 
+            var scoreArr=[];
+            this.ridofgames();
+            var i =0;
+            const db = firebase.firestore()
+            db.collection("Leaderboards").doc('quiz').collection('scores').orderBy("score", "desc").limit(10).get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+                    i++
+                    console.log(i)
+                    
+                    const data = doc.data();
+                    scoreArr.push(data);
+                    if(i == 10)
+                    {                
+                    var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
+                    var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
+                    var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
+                    var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
+                    var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
+                    var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
+                    var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
+                    var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
+                    var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
+                    var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+
+                    }
+                });
+            console.log(scoreArr);
+
+            });
+
+            this.back = this.add.image(width/2, height/2 + 200, 'back');
+
+            this.back.once('pointerdown', ()=> {
+                this.leaderboardsfunc();
+                starttext.setText('');
+                starttext2.setText('');
+                starttext3.setText('');
+                starttext4.setText('');
+
+            });
+    
+                    
+            setTimeout(() => {
+                this.back.setInteractive();
+            }, 200);
+
+
         });
 
-        this.gate.once('pointerdown', ()=> {
+        this.gate.once('pointerdown', async ()=> {
 
             var scoreArr=[];
             this.ridofgames();
+            var i =0;
             const db = firebase.firestore()
-            db.collection("Leaderboards").doc('LockThatGate').collection('scores').orderBy("score", "desc").limit(10).get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
+            db.collection("Leaderboards").doc('LockThatGate').collection('scores').orderBy("score", "desc").limit(10).get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
                     console.log(doc.id, " => ", doc.data());
-    
+                    i++
+                    console.log(i)
+                    
                     const data = doc.data();
                     scoreArr.push(data);
+                    if(i == 10)
+                    {                
+                    var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
+                    var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
+                    var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
+                    var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
+                    var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
+                    var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
+                    var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
+                    var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
+                    var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
+                    var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+            
+                        
+                    }
                 });
             console.log(scoreArr);
             });
             console.log(scoreArr);
+            
+            this.back = this.add.image(width/2, height/2 + 200, 'back');
 
-                console.log(scoreArr);
+            this.back.once('pointerdown', ()=> {
+                this.leaderboardsfunc();
+                starttext.setText('');
+                starttext2.setText('');
+                starttext3.setText('');
+                starttext4.setText('');
 
-                var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name, { fontSize: '18px', fill: '#000' });
-                var starttext2 = this.add.text(width/2- 150, height/2 - 150, 'Music by Eric taylor', { fontSize: '12px', fill: '#000' });
-                var starttext3 = this.add.text(width/2- 150, height/2 - 125, 'Alex McCulloch and Alexandr Zhelanov', { fontSize: '12px', fill: '#000' });
-                var starttext4 = this.add.text(width/2- 150, height/2 - 100, 'Sounds by Leszek_Szary ', { fontSize: '12px', fill: '#000' });
-        
+            });
+    
+                    
+            setTimeout(() => {
+                this.back.setInteractive();
+            }, 200);
+
 
 
         });
+
+        
 
         this.memory.once('pointerdown', ()=> {
 
+
+            var scoreArr=[];
+            this.ridofgames();
+            var i =0;
+            const db = firebase.firestore()
+            db.collection("Leaderboards").doc('Memorygame').collection('scores').orderBy("score", "desc").limit(10).get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+                    i++
+                    console.log(i)
+                    
+                    const data = doc.data();
+                    scoreArr.push(data);
+                    if(i == 10)
+                    {                
+                    var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
+                    var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
+                    var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
+                    var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
+                    var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
+                    var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
+                    var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
+                    var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
+                    var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
+                    var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+            
+                        
+                    }
+                });
+            console.log(scoreArr);
+            });
+            console.log(scoreArr);
+            
+            this.back = this.add.image(width/2, height/2 + 200, 'back');
+
+            this.back.once('pointerdown', ()=> {
+                this.leaderboardsfunc();
+                starttext.setText('');
+                starttext2.setText('');
+                starttext3.setText('');
+                starttext4.setText('');
+
+            });
+    
+                    
+            setTimeout(() => {
+                this.back.setInteractive();
+            }, 200);
         });
 
         this.dodge.once('pointerdown', ()=> {
+
+            var scoreArr=[];
+            this.ridofgames();
+            var i =0;
+            const db = firebase.firestore()
+            db.collection("Leaderboards").doc('Dodge').collection('scores').orderBy("score", "desc").limit(10).get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+                    i++
+                    console.log(i)
+                    
+                    const data = doc.data();
+                    scoreArr.push(data);
+                    if(i == 10)
+                    {                
+                    var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Time: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
+                    var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Time: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
+                    var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Time: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
+                    var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Time: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
+                    var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Time: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
+                    var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Time: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
+                    var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Time: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
+                    var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Time: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
+                    var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Time: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
+                    var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Time: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+            
+                        
+                    }
+                });
+            console.log(scoreArr);
+            });
+            console.log(scoreArr);
+            
+            this.back = this.add.image(width/2, height/2 + 200, 'back');
+
+            this.back.once('pointerdown', ()=> {
+                this.leaderboardsfunc();
+                starttext.setText('');
+                starttext2.setText('');
+                starttext3.setText('');
+                starttext4.setText('');
+
+            });
+    
+                    
+            setTimeout(() => {
+                this.back.setInteractive();
+            }, 200);
 
         });
 

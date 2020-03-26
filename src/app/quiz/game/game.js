@@ -1,3 +1,6 @@
+import * as firebase from "firebase/app"
+import "firebase/firestore"
+
 import * as Phaser from 'phaser';
 var start;
 var score = 0;
@@ -12,6 +15,20 @@ var height = window.innerHeight;
 var arr = [1,2,3,4,5,6];
 
 var startedmusic = 0;
+
+const config = {
+    // your firebase config
+  
+      apiKey: "AIzaSyCLuB5fKIO1n0070M9f5W5G199RYvS2rrA",
+      authDomain: "no-harm-on-the-farm.firebaseapp.com",
+      databaseURL: "https://no-harm-on-the-farm.firebaseio.com",
+      projectId: "no-harm-on-the-farm",
+      storageBucket: "no-harm-on-the-farm.appspot.com",
+      messagingSenderId: "693625494685",
+    
+  }
+  firebase.initializeApp(config)
+
 export default class Scene1 extends Phaser.Scene {
     
     preload() {
@@ -30,6 +47,9 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('quizbg', 'assets/quiz/images/quizbg.png');
         this.load.image('bg2', 'assets/space/bg3.png');
         this.load.image('start', 'assets/quiz/images/start.png');
+        this.load.image('submits', 'assets/gui/submits.png');
+        
+        this.load.image('submit', 'assets/gui/submit.png');
         this.load.image('pause','assets/quiz/images/pause.png');
 
         this.load.image('resumeBut', 'assets/gui/resume.png');
@@ -938,6 +958,57 @@ export default class Scene1 extends Phaser.Scene {
         //this..destroy(true);
 
         question.setText('Congrats you got : ' + score);
+
+        
+        this.submitscore = this.add.image(width/2, height/2, 'submits');
+                
+        this.submitscore.setInteractive();
+        this.submitscore.on('pointerdown', () => {
+            //firebase shite here
+
+            if(width  > 1000 && height > 720)
+            {
+                this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+            }else
+            {
+                this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+            }
+            question.setText('');
+
+            const elem = document.getElementById('text');//text box shite
+            elem.style.display = 'visible';
+            this.add.dom(width/2, height/2, elem);
+            this.restart.setVisible(false);
+            this.home.setVisible(false);
+            this.submitscore.setVisible(false);
+            const myVar = document.getElementById('name-input');
+
+            if(width  > 1000 && height > 720)
+            {
+                var starttext = this.add.text(width/2- 175, height/2 - 150, 'You got hit by the electrical', { fontSize: '22px', fill: '#000' });
+                var starttext2 = this.add.text(width/2- 175, height/2 - 125, 'Danger sign. This sign means', { fontSize: '22px', fill: '#000' });
+                var starttext3 = this.add.text(width/2- 175, height/2 - 100, 'there is an electric fence up.', { fontSize: '22px', fill: '#000' });
+                var starttext4 = this.add.text(width/2- 175, height/2 - 75, 'Do not touch the fence.', { fontSize: '12px', fill: '#000' });
+            }else
+            {
+                var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
+                var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
+            }
+
+            this.submit = this.add.image(width/2, height/2 + 100, 'submit');
+            this.submit.setInteractive();
+            this.submit.once('pointerdown', () => {
+                console.log(myVar);
+                // will do firebase and kick back to main menu
+                const db = firebase.firestore()
+                db.collection('Leaderboards').doc('quiz').collection('scores').add({ score: score, name: myVar.value})
+                setTimeout(() => {
+                    location.href = "/home"
+                }, 2000);
+            }); 
+        });
                 
 
 
@@ -948,7 +1019,7 @@ export default class Scene1 extends Phaser.Scene {
             location.href = "/home"
         });
 
-        this.restart = this.add.image(width/2,height/2, 'restartBut');
+        this.restart = this.add.image(width/2,height/2 - 100, 'restartBut');
         this.restart.setInteractive();
 
         this.restart.on('pointerdown', ()=> {

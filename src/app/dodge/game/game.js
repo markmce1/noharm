@@ -1,3 +1,6 @@
+import * as firebase from "firebase/app"
+import "firebase/firestore"
+
 var width = window.innerWidth;
 var height =window.innerHeight;
 var timeSurvived;
@@ -8,6 +11,20 @@ var paused = 0;
 var hitvar =0;
 var i;
 var startedmusic = 0;
+
+const config = {
+    // your firebase config
+  
+      apiKey: "AIzaSyCLuB5fKIO1n0070M9f5W5G199RYvS2rrA",
+      authDomain: "no-harm-on-the-farm.firebaseapp.com",
+      databaseURL: "https://no-harm-on-the-farm.firebaseio.com",
+      projectId: "no-harm-on-the-farm",
+      storageBucket: "no-harm-on-the-farm.appspot.com",
+      messagingSenderId: "693625494685",
+    
+  }
+  firebase.initializeApp(config)
+
 
 
 class tractor extends Phaser.GameObjects.Sprite  {
@@ -178,6 +195,10 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.audio('alexCh','assets/music/alexCh.wav' );
 
+        this.load.image('submits', 'assets/gui/submits.png');
+        
+        this.load.image('submit', 'assets/gui/submit.png');
+
     }
 
 
@@ -283,7 +304,6 @@ export default class Scene1 extends Phaser.Scene {
             timeSurvived.setText('Time: ' + this.elapsedTime)
           }
         })
-
     }
 
     shootloop(){
@@ -357,6 +377,77 @@ export default class Scene1 extends Phaser.Scene {
         });
     }
 
+    hitfunc(){
+        this.timeThing.paused = true;
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+
+            var endGame = this.add.text(width/2 - 125, height/2 - 200, 'Game over', { fontSize: '22px', fill: '#000' });
+            var endGame2 = this.add.text(width/2 - 125, height/2 -150, 'Press the button', { fontSize: '22px', fill: '#000' });
+            var endGame3 = this.add.text(width/2 - 125,height/2 -100, 'to retry', { fontSize: '22px', fill: '#000' });
+            var endGame4 = this.add.text(width/2 - 125,height/2 -50, 'Your time was '+ this.elapsedTime, { fontSize: '22px', fill: '#000' });
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+
+            var endGame = this.add.text(width/2 - 105, height/2 - 150, 'Game over', { fontSize: '17px', fill: '#000' });
+            var endGame2 = this.add.text(width/2 - 105, height/2 -125, 'Press the button', { fontSize: '17px', fill: '#000' });
+            var endGame3 = this.add.text(width/2 - 105,height/2 -100, 'to retry', { fontSize: '17px', fill: '#000' });
+            var endGame4 = this.add.text(width/2 - 105,height/2 -75, 'Your time was '+ this.elapsedTime, { fontSize: '17px', fill: '#000' });
+        }
+        
+
+
+        this.submitscore = this.add.image(width/2, height/2 + 50, 'submits');
+        
+        this.submitscore.setInteractive();
+        this.submitscore.on('pointerdown', () => {
+            //firebase shite here
+
+            const elem = document.getElementById('text');//text box shite
+            elem.style.display = 'visible';
+            this.add.dom(width/2, height/2, elem);
+            this.resume.setVisible(false);
+            this.submitscore.setVisible(false);
+
+            const myVar = document.getElementById('name-input');
+            endGame.setText('Enter your first name');
+            endGame2.setText('and your score will');
+            endGame3.setText('be submitted to');
+            endGame4.setText('the leaderboards');
+            
+            this.submit = this.add.image(width/2, height/2 + 100, 'submit');
+            this.submit.setInteractive();
+            this.submit.once('pointerdown', () => {
+                console.log(myVar);
+                // will do firebase and kick back to main menu
+                const db = firebase.firestore()
+                db.collection('Leaderboards').doc('Dodge').collection('scores').add({ score: this.elapsedTime, name: myVar.value})
+                setTimeout(() => {
+                    location.href = "/home"
+                }, 2000);
+            });    
+        });
+
+
+        setTimeout(() => {
+            this.resume.setInteractive();
+        }, 200);
+        this.resume = this.add.image(width/2, height/2 + 125, 'restartBut');
+        
+        this.resume.on('pointerdown', () => {
+
+            this.scene.restart();
+            time =0;
+            paused = 0;
+            
+            this.moveLeftButton.setInteractive();
+            this.moveRightButton.setInteractive();
+        });
+
+    }
+
     update(){
 
         if (this.isMovingLeft) {//left
@@ -424,6 +515,7 @@ export default class Scene1 extends Phaser.Scene {
             if(i == 3)
             {
                 //death 
+                
                 if(width  > 1000 && height > 720)
                 {
                     this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
@@ -443,6 +535,7 @@ export default class Scene1 extends Phaser.Scene {
             if(i == 4)
             {
                 //danger
+                
                 if(width  > 1000 && height > 720)
                 {
                     this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
@@ -470,12 +563,9 @@ export default class Scene1 extends Phaser.Scene {
             this.moveRightButton.disableInteractive();
     
             this.restart.on('pointerdown', ()=> {
-                this.scene.restart();
-                time =0;
-                paused = 0;
-                
-                this.moveLeftButton.setInteractive();
-                this.moveRightButton.setInteractive();
+                this.hitfunc();
+
+
 
             });
         }

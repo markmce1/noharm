@@ -373,7 +373,7 @@ export default class Scene1 extends Phaser.Scene {
         
 
 
-        this.start = this.add.image(width/2, height/2, 'start');
+        this.start = this.add.image(width/2, height/2 + 50, 'start');
         this.start.setInteractive();
         this.moveLeftButton.disableInteractive();
         this.moveRightButton.disableInteractive();
@@ -608,7 +608,7 @@ export default class Scene1 extends Phaser.Scene {
                     endGame.setText('Enter your first name');
                     endGame2.setText('and your score will');
                     endGame3.setText('be submitted to');
-                    endGame4.setText('the learboards');
+                    endGame4.setText('the leaderboards');
                     
                     this.submit = this.add.image(width/2, height/2 + 100, 'submitBut');
                     this.submit.setInteractive();
@@ -617,13 +617,10 @@ export default class Scene1 extends Phaser.Scene {
                         // will do firebase and kick back to main menu
                         const db = firebase.firestore()
                         db.collection('Leaderboards').doc('LockThatGate').collection('scores').add({ score: score, name: myVar.value})
-
-
-
-                    });
-
-
-                    
+                        setTimeout(() => {
+                            location.href = "/home"
+                        }, 2000);
+                    });    
                 });
 
                 this.resume = this.add.image(width/2, height/2 + 125, 'restartBut');
