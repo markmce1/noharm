@@ -13,6 +13,8 @@ var scoreText;
 var width = window.innerWidth;
 var height = window.innerHeight;
 var arr = [1,2,3,4,5,6];
+var scoremultiplier = 1;
+var multipliertext;
 
 var startedmusic = 0;
 
@@ -64,6 +66,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('ans3', 'assets/quiz/images/ans3.png');
         this.load.image('ans4', 'assets/quiz/images/ans4.png');
 
+        this.load.image('help', 'assets/gui/help.png');
         this.load.image('pto', 'assets/quiz/images/pto.jpg');
         this.load.image('ptoSmall', 'assets/quiz/images/ptoSmall.jpg');
 
@@ -163,7 +166,9 @@ export default class Scene1 extends Phaser.Scene {
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
 
-        this.pauseBut = this.add.image(300,25, 'pause');
+        this.pauseBut = this.add.image(width/2+ width/6+ 30,25, 'pause');
+
+        multipliertext = this.add.text(width/2 ,48 ,'Score *:' +scoremultiplier, { fontSize: '32px', fill: '#000' });
         this.pauseBut.setInteractive();
 
         this.pauseBut.once('pointerdown',()=>{
@@ -174,20 +179,41 @@ export default class Scene1 extends Phaser.Scene {
             });
         
         });
+
         if(width  > 1000 && height > 720)
         {
             this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+            var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
+            var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000' });
+            var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000' });
+            var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000' });
+            var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000' });
+            var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000' });
+
         }else
         {
             this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+            var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
+            var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000' });
+            var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000' });
+            var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000' });
+            var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000' });
+            var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000' });
+
         }
         
-        this.play = this.add.image(width/2, height/2, 'start');
+        this.play = this.add.image(width/2, height/2 + 100, 'start');
 
         setTimeout(() => {
             this.play.setInteractive();
         }, 750);
         this.play.on('pointerdown', () => {
+            starttext.setText('');
+            starttext2.setText('');
+            starttext3.setText('');
+            starttext4.setText('');
+            starttext5.setText('');
+            starttext6.setText('');
             this.pauseBG.setVisible(false);
             this.play.setVisible(false);
             round++;
@@ -239,17 +265,24 @@ export default class Scene1 extends Phaser.Scene {
             this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
         }
 
-        this.resume = this.add.image(width/2, height/2 - 100, 'resumeBut');
+        this.resume = this.add.image(width/2, height/2 - 150, 'resumeBut');
         this.resume.setInteractive();
 
-        this.restart = this.add.image(width/2, height/2, 'restartBut');
+        this.restart = this.add.image(width/2, height/2 - 50, 'restartBut');
         this.restart.setInteractive();
 
         this.restart.on('pointerdown', ()=> {
             this.scene.restart();
         });
 
-        this.home = this.add.image(width/2, height/2 + 100, 'homeBut' );
+        this.help = this.add.image(width/2, height/2 + 150, 'help');
+        this.help.setInteractive();
+    
+        this.help.on('pointerdown', ()=> {
+            this.help1();
+        });
+
+        this.home = this.add.image(width/2, height/2 + 50, 'homeBut' );
         this.home.setInteractive();
 
         this.home.on('pointerdown', ()=> {
@@ -257,12 +290,56 @@ export default class Scene1 extends Phaser.Scene {
         });
 
     }
+
+
+
+
+help1(){
+
+    this.resume.setVisible(false);
+    this.restart.setVisible(false);
+    this.help.setVisible(false);
+    this.home.setVisible(false);
+
+    if(width  > 1000 && height > 720)
+    {
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000' });
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000' });
+        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000' });
+        var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000' });
+        var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000' });
+    }else
+    {
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000' });
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000' });
+        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000' });
+        var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000' });
+        var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000' });
+    }
+
+    this.resume = this.add.image(width/2, height/2 + 100,'resumeBut');
+    this.resume.setInteractive();
+    this.resume.on('pointerdown', () => {
+        this.resume1();
+        starttext.setText('');
+        starttext2.setText('');
+        starttext3.setText('');
+        starttext4.setText('');
+        starttext5.setText('');
+        starttext6.setText('');
+    });
+
+}
     resume1()
     {
         this.resume.setVisible(false);
         this.home.setVisible(false);
         this.restart.setVisible(false);
         this.pauseBG.setVisible(false);
+        
+        this.help.setVisible(false);
         
         this.pauseBG.setVisible(false);
 
@@ -279,8 +356,9 @@ export default class Scene1 extends Phaser.Scene {
     round1()
     {
 
-        
+        scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
+        multipliertext.setText('Score *:'+scoremultiplier);
         this.play.destroy(true);
 
         
@@ -310,36 +388,32 @@ export default class Scene1 extends Phaser.Scene {
 
             //right answers
             console.log('correct');
-            score = score + 100;
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
             correct = 1;
             this.round1inter();
             this.sound.play('correct');
         });
             
         this.box2.once('pointerdown', () => {
-    
                 //wrong answers
                 console.log('wrong1');
                 this.round1inter();
-    
+                scoremultiplier = 1;
             });
             
             this.box3.once('pointerdown', () => {
-    
                 //wrong answers
                 console.log('wrong2');
                 this.round1inter();
-                
-    
+                scoremultiplier = 1;
             });
             
             this.box4.once('pointerdown', () => {
-    
                 //wrong answers
                 console.log('wrong3');
                 this.round1inter();
-                
-    
+                scoremultiplier = 1;
             });
 
     }
@@ -398,6 +472,7 @@ export default class Scene1 extends Phaser.Scene {
     
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
+        multipliertext.setText('Score *:'+scoremultiplier);
         this.slurry = this.add.image(width/2, height/2, 'slurry');
 
 
@@ -429,11 +504,13 @@ export default class Scene1 extends Phaser.Scene {
             //wrong answers
             console.log('wrong1');
             round++;
+            scoremultiplier = 1;
             this.round2inter();
         });  
         this.box2.once('pointerdown', () => {  
             correct = 1;
-            score = score + 100;
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
             round++;
             this.round2inter();
             this.sound.play('correct');
@@ -518,6 +595,8 @@ export default class Scene1 extends Phaser.Scene {
     {
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
+        
+        multipliertext.setText('Score *:'+scoremultiplier);
 
         if(width  > 400)
         {
@@ -540,19 +619,23 @@ export default class Scene1 extends Phaser.Scene {
         this.interactive();
         this.box1.once('pointerdown', () => {
             this.round3inter();
+            scoremultiplier = 1;
         });  
         this.box2.once('pointerdown', () => {
             this.round3inter();
+            scoremultiplier = 1;
         });
         this.box3.once('pointerdown', () => {
             console.log('correct');
-            score = score + 100;
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
             correct = 1;
             this.sound.play('correct');
             this.round3inter();
         });
         this.box4.once('pointerdown', () => {
             this.round3inter();
+            scoremultiplier = 1;
         });
 
 
@@ -585,7 +668,7 @@ export default class Scene1 extends Phaser.Scene {
             var ansText3 = this.add.text(width/2 - 75, height/8 *3, 'It is usually on the ', { fontSize: '12px', fill: '#000' });
             var ansText4 = this.add.text(width/2 - 75, height/8 *3+25, 'back of a tractor.', { fontSize: '12px', fill: '#000' });
             var ansText5 = this.add.text(width/2 - 75, height/8 *3+50,'It should be covered', { fontSize: '12px', fill: '#000' });
-            this.ptoSmall = this.add.image(width/2, height/2 + 75,'ptoSmall');
+            this.ptoSmall = this.add.image(width/2, height/2 + 55,'ptoSmall');
         }
 
         question.setText('');
@@ -633,13 +716,15 @@ export default class Scene1 extends Phaser.Scene {
     {
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
+        
+        multipliertext.setText('Score *:'+scoremultiplier);
 
         if(width  > 400)
         {
             question = this.add.text(width/2 - 200,height/7 + 50,'What does this sign mean?', { fontSize: '32px', fill: '#000' });
         }else
         {
-            question = this.add.text(width/8- 50, height/7 + 25,  'What does this sign mean?', { fontSize: '22px', fill: '#000' });
+            question = this.add.text(width/8- 40, height/7 + 25,  'What does this sign mean?', { fontSize: '22px', fill: '#000' });
         }
 
 
@@ -653,21 +738,25 @@ export default class Scene1 extends Phaser.Scene {
         this.interactive();
         this.box1.once('pointerdown', () => {
             this.round4inter();
+            scoremultiplier = 1;
             this.sound.play('wrong');
         });  
         this.box2.once('pointerdown', () => {
             this.round4inter();
+            scoremultiplier = 1;
             this.sound.play('wrong');
             
         });
         this.box3.once('pointerdown', () => {
-            score = score + 100;
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
             this.sound.play('correct');
             correct = 1;
             this.round4inter();
         });
         this.box4.once('pointerdown', () => {
             this.round4inter();
+            scoremultiplier = 1;
             this.sound.play('wrong');
         });
         
@@ -738,6 +827,8 @@ export default class Scene1 extends Phaser.Scene {
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);    
         
+        multipliertext.setText('Score *:'+scoremultiplier);
+        
         this.acc = this.add.image(width/2,height/2, 'acc');
         if(width  > 400)
         {
@@ -757,22 +848,26 @@ export default class Scene1 extends Phaser.Scene {
         this.interactive();
         this.box1.once('pointerdown', () => {
             this.round5inter();
+            scoremultiplier = 1;
             this.sound.play('wrong');
             
         });  
         this.box2.once('pointerdown', () => {
             console.log('correct');
-            score = score + 100;
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
             this.sound.play('correct');
             correct=1;
             this.round5inter();
         });
         this.box3.once('pointerdown', () => {
             this.round5inter();
+            scoremultiplier = 1;
             this.sound.play('wrong');
         });
         this.box4.once('pointerdown', () => {
             this.round5inter();
+            scoremultiplier = 1;
             this.sound.play('wrong');
         });
 
@@ -844,6 +939,8 @@ export default class Scene1 extends Phaser.Scene {
     {
         scoreText.setText('Score: ' + score);
         roundText.setText('Round: ' + round);
+        
+        multipliertext.setText('Score *:'+scoremultiplier);
         //this..destroy(true);
 
         if(width  > 400)
@@ -873,7 +970,8 @@ export default class Scene1 extends Phaser.Scene {
 
 
         this.box1.once('pointerdown', () => {
-            score = score +100;  
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
             this.sound.play('correct');
             this.accident.destroy(true);
             correct = 1;
@@ -883,6 +981,7 @@ export default class Scene1 extends Phaser.Scene {
         });
         this.box2.once('pointerdown', () => {
             this.round6inter();
+            scoremultiplier = 1;
         });
     }
 
@@ -985,10 +1084,10 @@ export default class Scene1 extends Phaser.Scene {
 
             if(width  > 1000 && height > 720)
             {
-                var starttext = this.add.text(width/2- 175, height/2 - 150, 'You got hit by the electrical', { fontSize: '22px', fill: '#000' });
-                var starttext2 = this.add.text(width/2- 175, height/2 - 125, 'Danger sign. This sign means', { fontSize: '22px', fill: '#000' });
-                var starttext3 = this.add.text(width/2- 175, height/2 - 100, 'there is an electric fence up.', { fontSize: '22px', fill: '#000' });
-                var starttext4 = this.add.text(width/2- 175, height/2 - 75, 'Do not touch the fence.', { fontSize: '12px', fill: '#000' });
+                var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
+                var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
             }else
             {
                 var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });

@@ -60,10 +60,12 @@ export default class Scene1 extends Phaser.Scene
         this.load.image('homeBut', 'assets/gui/homeBut.png');
         this.load.image('restartBut','assets/gui/restart.png' );
         this.load.image('pauseBG','assets/gui/pauseBG.png' );
+        this.load.image('help', 'assets/gui/help.png');
         
         this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
         
-        this.load.image('grass', 'assets/space/grass2.png');
+        this.load.image('grass', 'assets/memory/images/bg.png');
+        
         
         this.load.audio('erict2','assets/music/erict2.mp3' );
 
@@ -486,10 +488,19 @@ export default class Scene1 extends Phaser.Scene
                     this.submitscore.setVisible(false);
 
                     const myVar = document.getElementById('name-input');
-                    endGame.setText('Enter your first name');
-                    endGame2.setText('and your score will');
-                    endGame3.setText('be submitted to');
-                    endGame4.setText('the leaderboards');
+                    if(width  > 1000 && height > 720)
+                    {
+                        var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
+                        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000' });
+                        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
+                        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
+                    }else
+                    {
+                        var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
+                        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000' });
+                        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
+                        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
+                    }
                     
                     this.submit = this.add.image(width/2, height/2 + 100, 'submit');
                     this.submit.setInteractive();
@@ -566,17 +577,26 @@ export default class Scene1 extends Phaser.Scene
             this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
         }
 
-        this.resume = this.add.image(width/2, height/2 - 100, 'resumeBut');
+        this.resume = this.add.image(width/2, height/2 - 150, 'resumeBut');
         this.resume.setInteractive();
 
-        this.restart = this.add.image(width/2, height/2, 'restartBut');
+        this.restart = this.add.image(width/2, height/2 - 50, 'restartBut');
         this.restart.setInteractive();
 
         this.restart.on('pointerdown', ()=> {
             this.scene.restart();
         });
 
-        this.home = this.add.image(width/2, height/2 + 100, 'homeBut' );
+        
+        this.help = this.add.image(width/2, height/2 + 150, 'help');
+        this.help.setInteractive();
+
+        this.help.on('pointerdown', ()=> {
+            this.help1();
+        });
+
+
+        this.home = this.add.image(width/2, height/2 + 50, 'homeBut' );
         this.home.setInteractive();
 
         this.home.on('pointerdown', ()=> {
@@ -584,6 +604,44 @@ export default class Scene1 extends Phaser.Scene
         });
 
     }
+
+
+
+help1(){
+
+    this.resume.setVisible(false);
+    this.restart.setVisible(false);
+    this.help.setVisible(false);
+    this.home.setVisible(false);
+
+    if(width  > 1000 && height > 720)
+    {
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to match the correct', { fontSize: '12px', fill: '#000' });
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'cards. Match them all', { fontSize: '12px', fill: '#000' });
+        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Within the time limit', { fontSize: '12px', fill: '#000' });
+        var starttext5 = this.add.text(width/2- 100, height/2, 'to win!', { fontSize: '12px', fill: '#000' });
+    }else
+    {
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to match the correct', { fontSize: '12px', fill: '#000' });
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'cards. Match them all', { fontSize: '12px', fill: '#000' });
+        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Within the time limit', { fontSize: '12px', fill: '#000' });
+        var starttext5 = this.add.text(width/2- 100, height/2, 'to win!', { fontSize: '12px', fill: '#000' });
+    }
+
+    this.resume = this.add.image(width/2, height/2 + 100,'resumeBut');
+    this.resume.setInteractive();
+    this.resume.on('pointerdown', () => {
+        this.resume1();
+        starttext.setText('');
+        starttext2.setText('');
+        starttext3.setText('');
+        starttext4.setText('');
+        starttext5.setText('');
+    });
+
+}
     resume1()
     {
         this.timeThing.paused = false
@@ -593,6 +651,8 @@ export default class Scene1 extends Phaser.Scene
         }, 200);
         this.resume.setVisible(false);
         this.home.setVisible(false);
+        
+        this.help.setVisible(false);
         this.restart.setVisible(false);
         this.pauseBG.setVisible(false);
         

@@ -192,6 +192,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('bg1', 'assets/space/bg3.png');
         this.load.image('left','assets/dodge/images/tractorleft.png');
         this.load.image('right','assets/dodge/images/tractorright.png');
+        this.load.image('help', 'assets/gui/help.png');
 
         this.load.audio('alexCh','assets/music/alexCh.wav' );
 
@@ -209,10 +210,11 @@ export default class Scene1 extends Phaser.Scene {
         {
             
             this.sound.play('alexCh', { loop: true });
-
+            this.help1();
             startedmusic = 1;
         }
 
+        
         this.enemies2 = new Array();
         
         this.enemies = this.physics.add.group();
@@ -333,16 +335,28 @@ export default class Scene1 extends Phaser.Scene {
             this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
         }
         
-        this.resume = this.add.image(width/2, height/2 - 100,'resumeBut');
+        this.resume = this.add.image(width/2, height/2 - 150,'resumeBut');
         this.resume.setInteractive();
         this.moveLeftButton.disableInteractive();
         this.moveRightButton.disableInteractive();
 
-        this.home = this.add.image(width/2 , height/2 + 100, 'homeBut' );
+        this.home = this.add.image(width/2 , height/2 + 50, 'homeBut' );
         this.home.setInteractive();
       
-        this.restart = this.add.image(width/2, height/2, 'restartBut');
+        this.restart = this.add.image(width/2, height/2 - 50, 'restartBut');
         this.restart.setInteractive();
+        
+        this.help = this.add.image(width/2, height/2 + 150, 'help');
+        this.help.setInteractive();
+
+        this.help.once('pointerdown', ()=> {
+            this.resume.setVisible(false);
+            this.restart.setVisible(false);
+            this.help.setVisible(false);
+            this.home.setVisible(false);
+            this.help1();
+        });
+
 
         this.restart.on('pointerdown', ()=> {
             this.scene.restart();
@@ -357,11 +371,44 @@ export default class Scene1 extends Phaser.Scene {
     }
 
 
+
+help1(){
+
+
+
+    if(width  > 1000 && height > 720)
+    {
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is avoid the hazards', { fontSize: '12px', fill: '#000' });
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'to survive as long', { fontSize: '12px', fill: '#000' });
+        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'as you can', { fontSize: '12px', fill: '#000' });
+    }else
+    {
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is avoid the hazards', { fontSize: '12px', fill: '#000' });
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'to survive as long', { fontSize: '12px', fill: '#000' });
+        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'as you can', { fontSize: '12px', fill: '#000' });
+    }
+
+    this.resume = this.add.image(width/2, height/2 + 100,'resumeBut');
+    this.resume.setInteractive();
+    this.resume.on('pointerdown', () => {
+        this.resume1();
+        starttext.setText('');
+        starttext2.setText('');
+        starttext3.setText('');
+        starttext4.setText('');
+    });
+
+}
+
+
     resume1(){//resume function for the pause menu
         paused = 0;
         this.resume.setVisible(false);
         this.pauseBG.setVisible(false);
         this.restart.setVisible(false);
+        this.help.setVisible(false);
         this.moveLeftButton.setInteractive();
         this.moveRightButton.setInteractive();
         
@@ -412,10 +459,19 @@ export default class Scene1 extends Phaser.Scene {
             this.submitscore.setVisible(false);
 
             const myVar = document.getElementById('name-input');
-            endGame.setText('Enter your first name');
-            endGame2.setText('and your score will');
-            endGame3.setText('be submitted to');
-            endGame4.setText('the leaderboards');
+            if(width  > 1000 && height > 720)
+            {
+                var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your time will', { fontSize: '12px', fill: '#000' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
+                var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
+            }else
+            {
+                var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your time will', { fontSize: '12px', fill: '#000' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
+                var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
+            }
             
             this.submit = this.add.image(width/2, height/2 + 100, 'submit');
             this.submit.setInteractive();

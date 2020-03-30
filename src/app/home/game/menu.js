@@ -20,8 +20,6 @@ const config = {
 
 export default class Scene1 extends Phaser.Scene {
 
-
-
     constructor(config) {
         super(config);
     }
@@ -37,6 +35,8 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('memory','assets/gui/memory.png' );
         this.load.image('dodge','assets/gui/dodge.png' );
         this.load.image('back','assets/gui/back.png' );
+        
+        this.load.image('suggest','assets/gui/suggest.png' );
         this.load.image('credits','assets/gui/credits.png' );
         this.load.image('settings','assets/gui/settings.png' );
         this.load.image('leaderboards','assets/gui/leaderboards.png' );
@@ -100,7 +100,6 @@ export default class Scene1 extends Phaser.Scene {
             this.leaderboardsfunc();
 
         });
-
                 
         setTimeout(() => {
             this.play.setInteractive();
@@ -109,8 +108,6 @@ export default class Scene1 extends Phaser.Scene {
             this.settings.setInteractive();
             this.leaderboards.setInteractive();
         }, 200);
-        
-
 
     }
 
@@ -124,9 +121,6 @@ export default class Scene1 extends Phaser.Scene {
             this.home();
 
         });
-
-
-
         this.gate= this.add.image(width/2, height/2 - 200,'gate');
 
         this.quiz = this.add.image(width/2 , height/2, 'quiz' );
@@ -134,7 +128,6 @@ export default class Scene1 extends Phaser.Scene {
         this.memory = this.add.image(width/2, height/2 - 100, 'memory');
 
         this.dodge = this.add.image(width/2, height/2 + 100, 'dodge');
-
 
         setTimeout(() => {
             this.gate.setInteractive();
@@ -162,35 +155,29 @@ export default class Scene1 extends Phaser.Scene {
                     scoreArr.push(data);
                     if(i == 10)
                     {                
-                    var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
-                    var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
-                    var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
-                    var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
-                    var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
-                    var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
-                    var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
-                    var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
-                    var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
-                    var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+                        var starttext = this.add.text(width/2- 140, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
+                        var starttext2 = this.add.text(width/2- 140, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
+                        var starttext3 = this.add.text(width/2- 140, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
+                        var starttext4 = this.add.text(width/2- 140, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
+                        var starttext5 = this.add.text(width/2- 140, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
+                        var starttext6 = this.add.text(width/2- 140, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
+                        var starttext7 = this.add.text(width/2- 140, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
+                        var starttext8 = this.add.text(width/2- 140, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
+                        var starttext9 = this.add.text(width/2- 140, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
+                        var starttext10 = this.add.text(width/2- 140, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
 
                     }
                 });
-            console.log(scoreArr);
-
             });
 
             this.back = this.add.image(width/2, height/2 + 200, 'back');
 
             this.back.once('pointerdown', ()=> {
                 this.leaderboardsfunc();
-                starttext.setText('');
-                starttext2.setText('');
-                starttext3.setText('');
-                starttext4.setText('');
+                this.unprintlead();
 
             });
-    
-                    
+         
             setTimeout(() => {
                 this.back.setInteractive();
             }, 200);
@@ -215,18 +202,17 @@ export default class Scene1 extends Phaser.Scene {
                     scoreArr.push(data);
                     if(i == 10)
                     {                
-                    var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
-                    var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
-                    var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
-                    var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
-                    var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
-                    var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
-                    var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
-                    var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
-                    var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
-                    var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
-            
-                        
+                        var starttext = this.add.text(width/2- 140, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
+                        var starttext2 = this.add.text(width/2- 140, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
+                        var starttext3 = this.add.text(width/2- 140, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
+                        var starttext4 = this.add.text(width/2- 140, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
+                        var starttext5 = this.add.text(width/2- 140, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
+                        var starttext6 = this.add.text(width/2- 140, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
+                        var starttext7 = this.add.text(width/2- 140, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
+                        var starttext8 = this.add.text(width/2- 140, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
+                        var starttext9 = this.add.text(width/2- 140, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
+                        var starttext10 = this.add.text(width/2- 140, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+
                     }
                 });
             console.log(scoreArr);
@@ -237,10 +223,7 @@ export default class Scene1 extends Phaser.Scene {
 
             this.back.once('pointerdown', ()=> {
                 this.leaderboardsfunc();
-                starttext.setText('');
-                starttext2.setText('');
-                starttext3.setText('');
-                starttext4.setText('');
+                this.unprintlead();
 
             });
     
@@ -252,19 +235,13 @@ export default class Scene1 extends Phaser.Scene {
 
 
         });
-
-        
-
         this.memory.once('pointerdown', ()=> {
-
-
             var scoreArr=[];
             this.ridofgames();
             var i =0;
             const db = firebase.firestore()
             db.collection("Leaderboards").doc('Memorygame').collection('scores').orderBy("score", "desc").limit(10).get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    // doc.data() is never undefined for query doc snapshots
                     console.log(doc.id, " => ", doc.data());
                     i++
                     console.log(i)
@@ -273,17 +250,17 @@ export default class Scene1 extends Phaser.Scene {
                     scoreArr.push(data);
                     if(i == 10)
                     {                
-                    var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
-                    var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
-                    var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
-                    var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
-                    var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
-                    var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
-                    var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
-                    var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
-                    var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
-                    var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
-            
+                        var starttext = this.add.text(width/2- 140, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
+                        var starttext2 = this.add.text(width/2- 140, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
+                        var starttext3 = this.add.text(width/2- 140, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
+                        var starttext4 = this.add.text(width/2- 140, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
+                        var starttext5 = this.add.text(width/2- 140, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
+                        var starttext6 = this.add.text(width/2- 140, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
+                        var starttext7 = this.add.text(width/2- 140, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
+                        var starttext8 = this.add.text(width/2- 140, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
+                        var starttext9 = this.add.text(width/2- 140, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
+                        var starttext10 = this.add.text(width/2- 140, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+
                         
                     }
                 });
@@ -295,10 +272,7 @@ export default class Scene1 extends Phaser.Scene {
 
             this.back.once('pointerdown', ()=> {
                 this.leaderboardsfunc();
-                starttext.setText('');
-                starttext2.setText('');
-                starttext3.setText('');
-                starttext4.setText('');
+                this.unprintlead();
 
             });
     
@@ -325,18 +299,16 @@ export default class Scene1 extends Phaser.Scene {
                     scoreArr.push(data);
                     if(i == 10)
                     {                
-                    var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Time: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
-                    var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Time: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
-                    var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Time: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
-                    var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Time: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
-                    var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Time: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
-                    var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Time: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
-                    var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Time: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
-                    var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Time: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
-                    var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Time: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
-                    var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Time: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
-            
-                        
+                        var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Time: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
+                        var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Time: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
+                        var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Time: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
+                        var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Time: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
+                        var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Time: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
+                        var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Time: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
+                        var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Time: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
+                        var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Time: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
+                        var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Time: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
+                        var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Time: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
                     }
                 });
             console.log(scoreArr);
@@ -347,10 +319,7 @@ export default class Scene1 extends Phaser.Scene {
 
             this.back.once('pointerdown', ()=> {
                 this.leaderboardsfunc();
-                starttext.setText('');
-                starttext2.setText('');
-                starttext3.setText('');
-                starttext4.setText('');
+                this.unprintlead();
 
             });
     
@@ -396,11 +365,8 @@ export default class Scene1 extends Phaser.Scene {
 
         this.back.once('pointerdown', ()=> {
             this.home();
-            
-            starttext4.setVisible(false);
-            starttext3.setVisible(false);
-            starttext2.setVisible(false);
-            starttext.setVisible(false);
+
+            this.unprintlead();
         });
 
                 
@@ -409,6 +375,20 @@ export default class Scene1 extends Phaser.Scene {
         }, 200);
         
 
+    }
+
+    unprintlead(){
+        
+        starttext10.settext('');
+        starttext9.settext('');
+        starttext8.settext('');
+        starttext7.settext('');
+        starttext6.settext('');
+        starttext5.settext('');
+        starttext4.settext('');
+        starttext3.settext('');
+        starttext2.settext('');
+        starttext.settext('');
     }
 
     //clear homescreen function
@@ -421,6 +401,7 @@ export default class Scene1 extends Phaser.Scene {
         this.ifa = this.add.image(width/2, height/2, 'ifa');
         this.embrace = this.add.image(width/2, height/2 - 100, 'embrace');
         this.hsa = this.add.image(width/2, height/2 - 200, 'hsa');
+        this.suggest = this.add.image(width/2, height/2  +100, 'suggest');
 
 
 
@@ -430,6 +411,7 @@ export default class Scene1 extends Phaser.Scene {
             this.ifa.setInteractive();
             this.hsa.setInteractive();
             this.embrace.setInteractive();
+            this.suggest.setInteractive();
 
         }, 200);
 
@@ -440,21 +422,80 @@ export default class Scene1 extends Phaser.Scene {
             this.ifa.destroy();
             this.hsa.destroy();
             this.embrace.destroy();
+            this.suggest.destroy();
+
+        });
+        this.suggest.once('pointerdown', ()=> {
+            var url = 'https://docs.google.com/forms/d/e/1FAIpQLScCaF4fV-0g4gh-a_vsNLn5TxSiZptuJPJm7SQDRgRLyIk8Dw/viewform';
+        
+            var s = window.open(url, '_blank');
+        
+            if (s && s.focus)
+            {
+                s.focus();
+            }
+            else if (!s)
+            {
+                window.location.href = url;
+            }
 
         });
 
-        this.ifa.once('pointerdown', ()=> {
+        this.ifa.on('pointerdown', ()=> {
+
+            var url = 'https://www.ifa.ie/wp-content/uploads/2013/10/Stay_safe_on_the_farm_with_jessy.pdf';
+        
+            var s = window.open(url, '_blank');
+        
+            if (s && s.focus)
+            {
+                s.focus();
+            }
+            else if (!s)
+            {
+                window.location.href = url;
+            }
+        });
+        this.hsa.on('pointerdown', ()=> {
+
+           // https://www.hsa.ie/eng/education/teacher_support_and_classroom_resources/farm_safety_presentation_-_primary/farm_safety_presentation.pdf
+
+           var url = 'https://www.hsa.ie/eng/education/teacher_support_and_classroom_resources/farm_safety_presentation_-_primary/farm_safety_presentation.pdf';
+        
+           var s = window.open(url, '_blank');
+       
+           if (s && s.focus)
+           {
+               s.focus();
+           }
+           else if (!s)
+           {
+               window.location.href = url;
+           }
+
 
         });
-        this.hsa.once('pointerdown', ()=> {
+        this.embrace.on('pointerdown', ()=> {
+            //https://embracefarm.com/farm-safety/
+
+            var url = 'https://embracefarm.com/farm-safety/';
+        
+            var s = window.open(url, '_blank');
+        
+            if (s && s.focus)
+            {
+                s.focus();
+            }
+            else if (!s)
+            {
+                window.location.href = url;
+            }
 
         });
-        this.embrace.once('pointerdown', ()=> {
-
-        });
-
 
     }
+
+
 
     games(){
         
@@ -472,7 +513,6 @@ export default class Scene1 extends Phaser.Scene {
 
         this.dodge = this.add.image(width/2, height/2 + 100, 'dodge');
 
-
         setTimeout(() => {
             this.gate.setInteractive();
             this.quiz.setInteractive();
@@ -480,7 +520,6 @@ export default class Scene1 extends Phaser.Scene {
             this.back.setInteractive();
             this.dodge.setInteractive();
         }, 200);
-
 
         this.quiz.once('pointerdown', ()=> {
             location.href = "/quiz"
@@ -503,7 +542,6 @@ export default class Scene1 extends Phaser.Scene {
 
         this.ridofgames();
         });
-
     }
 
     newmenu(){
@@ -515,15 +553,10 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     ridofgames(){
-        
         this.gate.destroy();
         this.quiz.destroy();
         this.memory.destroy();
         this.back.destroy();
         this.dodge.destroy();
     }
-
-
-
-
 }
