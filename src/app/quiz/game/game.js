@@ -1057,9 +1057,30 @@ help1(){
         //this..destroy(true);
 
         question.setText('Congrats you got : ' + score);
+        if(score < 300)
+        {
+            if(width  > 1000 && height > 720)
+            {
+                var starttext = this.add.text(width/2- 100, height/2 - 150, 'If you would like to', { fontSize: '12px', fill: '#000' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 125, 'improve your score by', { fontSize: '12px', fill: '#000' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 100, 'reading up more, use the', { fontSize: '12px', fill: '#000' });
+                var starttext4 = this.add.text(width/2- 100, height/2 - 75, 'guides in the main menu', { fontSize: '12px', fill: '#000' });
+
+            }else
+            {
+                var starttext = this.add.text(width/2- 100, height/2 - 150, 'If you would like to', { fontSize: '12px', fill: '#000' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 125, 'improve your score by', { fontSize: '12px', fill: '#000' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 100, 'reading up more, use the', { fontSize: '12px', fill: '#000' });
+                var starttext4 = this.add.text(width/2- 100, height/2 - 75, 'guides in the main menu', { fontSize: '12px', fill: '#000' });
+
+            }
+
+
+
+        }
 
         
-        this.submitscore = this.add.image(width/2, height/2, 'submits');
+        this.submitscore = this.add.image(width/2, height/2 + 100, 'submits');
                 
         this.submitscore.setInteractive();
         this.submitscore.on('pointerdown', () => {
@@ -1111,14 +1132,14 @@ help1(){
                 
 
 
-        this.home = this.add.image(width/2,height/2 + 100, 'homeBut' );
+        this.home = this.add.image(width/2,height/2 + 200, 'homeBut' );
         this.home.setInteractive();
 
         this.home.on('pointerdown', ()=> {
             location.href = "/home"
         });
 
-        this.restart = this.add.image(width/2,height/2 - 100, 'restartBut');
+        this.restart = this.add.image(width/2,height/2, 'restartBut');
         this.restart.setInteractive();
 
         this.restart.on('pointerdown', ()=> {

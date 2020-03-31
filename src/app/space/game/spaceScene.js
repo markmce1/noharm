@@ -658,6 +658,11 @@ export default class Scene1 extends Phaser.Scene {
                 
                 this.submitscore.setInteractive();
                 this.submitscore.on('pointerdown', () => {
+                    endGame.setText('');
+                    endGame2.setText('');
+                    endGame3.setText('');
+                    endGame4.setText('');
+
                     //firebase shite here
 
                     const elem = document.getElementById('text');//text box shite
