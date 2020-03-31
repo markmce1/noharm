@@ -15,9 +15,6 @@ const routes: Routes = [
   {
     path: 'quiz',
     loadChildren: () => import('./quiz/quiz.module').then( m => m.QuizPageModule)
-  },  {
-    path: 'flap',
-    loadChildren: () => import('./flap/flap.module').then( m => m.FlapPageModule)
   },
   {
     path: 'guide',

@@ -452,6 +452,7 @@ help1(){
         this.submitscore.on('pointerdown', () => {
             //firebase shite here
 
+
             const elem = document.getElementById('text');//text box shite
             elem.style.display = 'visible';
             this.add.dom(width/2, height/2, elem);
@@ -461,12 +462,22 @@ help1(){
             const myVar = document.getElementById('name-input');
             if(width  > 1000 && height > 720)
             {
+
+                endGame.setText('');
+                endGame2.setText('');
+                endGame3.setText('');
+                endGame4.setText('');
+                
                 var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
                 var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your time will', { fontSize: '12px', fill: '#000' });
                 var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
                 var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
             }else
             {
+                endGame.setText('');
+                endGame2.setText('');
+                endGame3.setText('');
+                endGame4.setText('');
                 var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
                 var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your time will', { fontSize: '12px', fill: '#000' });
                 var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
@@ -540,12 +551,15 @@ help1(){
                     var starttext = this.add.text(width/2- 175, height/2 - 150, 'You got hit by a bull sign', { fontSize: '22px', fill: '#000' });
                     var starttext2 = this.add.text(width/2- 175, height/2 - 125, 'This sign means theres a bull', { fontSize: '22px', fill: '#000' });
                     var starttext3 = this.add.text(width/2- 175, height/2 - 100, 'nearby if you see this sign', { fontSize: '22px', fill: '#000' });
+                    var starttext4 = this.add.text(width/2- 100, height/2 - 25, '', { fontSize: '12px', fill: '#000' });
                 }else
                 {
                     this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
                     var starttext = this.add.text(width/2- 100, height/2 - 100, 'You got hit by a bull sign', { fontSize: '12px', fill: '#000' });
                     var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'This sign means theres a bull', { fontSize: '12px', fill: '#000' });
                     var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'nearby if you see this sign', { fontSize: '12px', fill: '#000' });
+                    var starttext4 = this.add.text(width/2- 100, height/2 - 25, '', { fontSize: '12px', fill: '#000' });
+               
                 }
             }
             if(i == 2)
@@ -598,12 +612,14 @@ help1(){
                     var starttext = this.add.text(width/2- 175, height/2 - 150, 'This is a general danger', { fontSize: '22px', fill: '#000' });
                     var starttext2 = this.add.text(width/2- 175, height/2 - 125, 'sign. Watch out for any', { fontSize: '22px', fill: '#000' });
                     var starttext3 = this.add.text(width/2- 175, height/2 - 100, 'dangers!', { fontSize: '22px', fill: '#000' });
+                    var starttext4 = this.add.text(width/2- 100, height/2 - 25, '', { fontSize: '12px', fill: '#000' });
                 }else
                 {
                     this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
                     var starttext = this.add.text(width/2- 100, height/2 - 100, 'This is a general danger', { fontSize: '12px', fill: '#000' });
                     var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'sign. Watch out for any', { fontSize: '12px', fill: '#000' });
                     var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'dangers!', { fontSize: '12px', fill: '#000' });
+                    var starttext4 = this.add.text(width/2- 100, height/2 - 25, '', { fontSize: '12px', fill: '#000' });
                 }
             }
 
