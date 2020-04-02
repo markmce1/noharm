@@ -251,7 +251,6 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     create() {
-        this.scale.lockOrientation('portrait');
         if(startedmusic == 0)
         {
 

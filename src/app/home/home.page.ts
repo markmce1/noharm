@@ -7,6 +7,9 @@ import config from './game/config';
 import Scene1 from './game/menu';
 
 
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+
+
 
 @Component({
   selector: 'app-home',
@@ -15,8 +18,10 @@ import Scene1 from './game/menu';
 })
 export class HomePage {
 
-  constructor() {
 
+  constructor(private screenOrientation: ScreenOrientation) { }
+  ngOnInit() {
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     const game = new Phaser.Game(config);
     game.scene.add('scene1', Scene1, true, { x: 400, y: 300});
   }
