@@ -1,8 +1,20 @@
 import * as firebase from "firebase/app"
 import "firebase/firestore"
 
+import WebFontFile from './webfontfile'
+
 var width = window.innerWidth;
 var height = window.innerHeight;
+var starttext;
+var starttext2;
+var starttext3;
+var starttext4;
+var starttext5;
+var starttext6;
+var starttext7;
+var starttext8;
+var starttext9;
+var starttext10;
 
 
 const config = {
@@ -49,10 +61,14 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.audio('alexz','assets/music/alexz.mp3' );
 
+                //fonts
+                const fonts = new WebFontFile(this.load, [ 'Noto Sans', 'PT Sans Narrow' ] )
+                this.load.addFile(fonts)
+
 
     }
     create() {
-
+        this.scale.lockOrientation('portrait');
         this.sound.play('alexz', { loop: true })
 
         
@@ -70,12 +86,12 @@ export default class Scene1 extends Phaser.Scene {
         this.play = this.add.image(width/2 , height/2 - 200, 'play' );
 
         
-        this.settings = this.add.image(width/2 , height/2 , 'settings' );
+        //this.settings = this.add.image(width/2 , height/2 , 'settings' );
         
         
-        this.leaderboards= this.add.image(width/2 , height/2 + 100, 'leaderboards' );
+        this.leaderboards= this.add.image(width/2 , height/2 , 'leaderboards' );
 
-        this.credits= this.add.image(width/2 , height/2 + 200, 'credits' );
+        this.credits= this.add.image(width/2 , height/2 + 100, 'credits' );
 
 
         this.guides.once('pointerdown', ()=> {
@@ -91,10 +107,10 @@ export default class Scene1 extends Phaser.Scene {
 
         });
 
-        this.settings.once('pointerdown', ()=> {
+        /*this.settings.once('pointerdown', ()=> {
 
            this.settingsfunc();
-        });
+        }); */
 
         this.leaderboards.once('pointerdown', ()=> {
             this.leaderboardsfunc();
@@ -105,7 +121,7 @@ export default class Scene1 extends Phaser.Scene {
             this.play.setInteractive();
             this.guides.setInteractive();
             this.credits.setInteractive();
-            this.settings.setInteractive();
+           // this.settings.setInteractive();
             this.leaderboards.setInteractive();
         }, 200);
 
@@ -118,6 +134,7 @@ export default class Scene1 extends Phaser.Scene {
         this.back = this.add.image(width/2, height/2 + 200, 'back');
     
         this.back.once('pointerdown', ()=> {
+            this.ridofgames();
             this.home();
 
         });
@@ -155,16 +172,16 @@ export default class Scene1 extends Phaser.Scene {
                     scoreArr.push(data);
                     if(i == 10)
                     {                
-                        var starttext = this.add.text(width/2- 140, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
-                        var starttext2 = this.add.text(width/2- 140, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
-                        var starttext3 = this.add.text(width/2- 140, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
-                        var starttext4 = this.add.text(width/2- 140, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
-                        var starttext5 = this.add.text(width/2- 140, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
-                        var starttext6 = this.add.text(width/2- 140, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
-                        var starttext7 = this.add.text(width/2- 140, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
-                        var starttext8 = this.add.text(width/2- 140, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
-                        var starttext9 = this.add.text(width/2- 140, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
-                        var starttext10 = this.add.text(width/2- 140, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+                        starttext = this.add.text(width/2- 140, height/2 - 225, '1st place: Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '20px', fill: '#000' , fontFamily:'"PT Sans Narrow"' });
+                        starttext2 = this.add.text(width/2- 140, height/2 - 175, '2nd place: Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                        starttext3 = this.add.text(width/2- 140, height/2 - 150, '3rd place: Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '16px', fill: '#000' , fontFamily:'"PT Sans Narrow"'});
+                        starttext4 = this.add.text(width/2- 140, height/2 - 125, '4th place: Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext5 = this.add.text(width/2- 140, height/2 - 100, '5th place: Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext6 = this.add.text(width/2- 140, height/2 - 75, '6th place: Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext7 = this.add.text(width/2- 140, height/2 - 50, '7th place: Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                        starttext8 = this.add.text(width/2- 140, height/2 - 25, '8th place: Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                        starttext9 = this.add.text(width/2- 140, height/2, '9th place: Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext10 = this.add.text(width/2- 140, height/2 + 25, '10th place: Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '16px', fill: '#000' , fontFamily:'"PT Sans Narrow"'});
 
                     }
                 });
@@ -174,7 +191,16 @@ export default class Scene1 extends Phaser.Scene {
 
             this.back.once('pointerdown', ()=> {
                 this.leaderboardsfunc();
-                this.unprintlead();
+                starttext10.setText('');
+                starttext9.setText('');
+                starttext8.setText('');
+                starttext7.setText('');
+                starttext6.setText('');
+                starttext5.setText('');
+                starttext4.setText('');
+                starttext3.setText('');
+                starttext2.setText('');
+                starttext.setText('');
 
             });
          
@@ -202,16 +228,16 @@ export default class Scene1 extends Phaser.Scene {
                     scoreArr.push(data);
                     if(i == 10)
                     {                
-                        var starttext = this.add.text(width/2- 140, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
-                        var starttext2 = this.add.text(width/2- 140, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
-                        var starttext3 = this.add.text(width/2- 140, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
-                        var starttext4 = this.add.text(width/2- 140, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
-                        var starttext5 = this.add.text(width/2- 140, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
-                        var starttext6 = this.add.text(width/2- 140, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
-                        var starttext7 = this.add.text(width/2- 140, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
-                        var starttext8 = this.add.text(width/2- 140, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
-                        var starttext9 = this.add.text(width/2- 140, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
-                        var starttext10 = this.add.text(width/2- 140, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+                        starttext = this.add.text(width/2- 140, height/2 - 225, '1st place: Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '20px', fill: '#000' , fontFamily:'"PT Sans Narrow"' });
+                        starttext2 = this.add.text(width/2- 140, height/2 - 175, '2nd place: Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                        starttext3 = this.add.text(width/2- 140, height/2 - 150, '3rd place: Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '16px', fill: '#000' , fontFamily:'"PT Sans Narrow"'});
+                        starttext4 = this.add.text(width/2- 140, height/2 - 125, '4th place: Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext5 = this.add.text(width/2- 140, height/2 - 100, '5th place: Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext6 = this.add.text(width/2- 140, height/2 - 75, '6th place: Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext7 = this.add.text(width/2- 140, height/2 - 50, '7th place: Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                        starttext8 = this.add.text(width/2- 140, height/2 - 25, '8th place: Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                        starttext9 = this.add.text(width/2- 140, height/2, '9th place: Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext10 = this.add.text(width/2- 140, height/2 + 25, '10th place: Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '16px', fill: '#000' , fontFamily:'"PT Sans Narrow"'});
 
                     }
                 });
@@ -223,7 +249,16 @@ export default class Scene1 extends Phaser.Scene {
 
             this.back.once('pointerdown', ()=> {
                 this.leaderboardsfunc();
-                this.unprintlead();
+                starttext10.setText('');
+                starttext9.setText('');
+                starttext8.setText('');
+                starttext7.setText('');
+                starttext6.setText('');
+                starttext5.setText('');
+                starttext4.setText('');
+                starttext3.setText('');
+                starttext2.setText('');
+                starttext.setText('');
 
             });
     
@@ -249,17 +284,17 @@ export default class Scene1 extends Phaser.Scene {
                     const data = doc.data();
                     scoreArr.push(data);
                     if(i == 10)
-                    {                
-                        var starttext = this.add.text(width/2- 140, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
-                        var starttext2 = this.add.text(width/2- 140, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
-                        var starttext3 = this.add.text(width/2- 140, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
-                        var starttext4 = this.add.text(width/2- 140, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
-                        var starttext5 = this.add.text(width/2- 140, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
-                        var starttext6 = this.add.text(width/2- 140, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
-                        var starttext7 = this.add.text(width/2- 140, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
-                        var starttext8 = this.add.text(width/2- 140, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
-                        var starttext9 = this.add.text(width/2- 140, height/2, 'Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
-                        var starttext10 = this.add.text(width/2- 140, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+                    {
+                    starttext = this.add.text(width/2- 140, height/2 - 225, '1st place: Name: ' + scoreArr[0].name + ' Score: ' + scoreArr[0].score, { fontSize: '20px', fill: '#000' , fontFamily:'"PT Sans Narrow"' });
+                    starttext2 = this.add.text(width/2- 140, height/2 - 175, '2nd place: Name: ' + scoreArr[1].name + ' Score: ' + scoreArr[1].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                    starttext3 = this.add.text(width/2- 140, height/2 - 150, '3rd place: Name: ' + scoreArr[2].name + ' Score: ' + scoreArr[2].score, { fontSize: '16px', fill: '#000' , fontFamily:'"PT Sans Narrow"'});
+                    starttext4 = this.add.text(width/2- 140, height/2 - 125, '4th place: Name: ' + scoreArr[3].name + ' Score: ' + scoreArr[3].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                    starttext5 = this.add.text(width/2- 140, height/2 - 100, '5th place: Name: ' + scoreArr[4].name + ' Score: ' + scoreArr[4].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                    starttext6 = this.add.text(width/2- 140, height/2 - 75, '6th place: Name: ' + scoreArr[5].name + ' Score: ' + scoreArr[5].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                    starttext7 = this.add.text(width/2- 140, height/2 - 50, '7th place: Name: ' + scoreArr[6].name + ' Score: ' + scoreArr[6].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                    starttext8 = this.add.text(width/2- 140, height/2 - 25, '8th place: Name: ' + scoreArr[7].name + ' Score: ' + scoreArr[7].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                    starttext9 = this.add.text(width/2- 140, height/2, '9th place: Name: ' + scoreArr[8].name + ' Score: ' + scoreArr[8].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                    starttext10 = this.add.text(width/2- 140, height/2 + 25, '10th place: Name: ' + scoreArr[9].name + ' Score: ' + scoreArr[9].score, { fontSize: '16px', fill: '#000' , fontFamily:'"PT Sans Narrow"'});
 
                         
                     }
@@ -272,7 +307,16 @@ export default class Scene1 extends Phaser.Scene {
 
             this.back.once('pointerdown', ()=> {
                 this.leaderboardsfunc();
-                this.unprintlead();
+                starttext10.setText('');
+                starttext9.setText('');
+                starttext8.setText('');
+                starttext7.setText('');
+                starttext6.setText('');
+                starttext5.setText('');
+                starttext4.setText('');
+                starttext3.setText('');
+                starttext2.setText('');
+                starttext.setText('');
 
             });
     
@@ -299,16 +343,16 @@ export default class Scene1 extends Phaser.Scene {
                     scoreArr.push(data);
                     if(i == 10)
                     {                
-                        var starttext = this.add.text(width/2- 150, height/2 - 200, 'Name: ' + scoreArr[0].name + ' Time: ' + scoreArr[0].score, { fontSize: '12px', fill: '#000' });
-                        var starttext2 = this.add.text(width/2- 150, height/2 - 175, 'Name: ' + scoreArr[1].name + ' Time: ' + scoreArr[1].score, { fontSize: '12px', fill: '#000' });
-                        var starttext3 = this.add.text(width/2- 150, height/2 - 150, 'Name: ' + scoreArr[2].name + ' Time: ' + scoreArr[2].score, { fontSize: '12px', fill: '#000' });
-                        var starttext4 = this.add.text(width/2- 150, height/2 - 125, 'Name: ' + scoreArr[3].name + ' Time: ' + scoreArr[3].score, { fontSize: '12px', fill: '#000' });
-                        var starttext5 = this.add.text(width/2- 150, height/2 - 100, 'Name: ' + scoreArr[4].name + ' Time: ' + scoreArr[4].score, { fontSize: '12px', fill: '#000' });
-                        var starttext6 = this.add.text(width/2- 150, height/2 - 75, 'Name: ' + scoreArr[5].name + ' Time: ' + scoreArr[5].score, { fontSize: '12px', fill: '#000' });
-                        var starttext7 = this.add.text(width/2- 150, height/2 - 50, 'Name: ' + scoreArr[6].name + ' Time: ' + scoreArr[6].score, { fontSize: '12px', fill: '#000' });
-                        var starttext8 = this.add.text(width/2- 150, height/2 - 25, 'Name: ' + scoreArr[7].name + ' Time: ' + scoreArr[7].score, { fontSize: '12px', fill: '#000' });
-                        var starttext9 = this.add.text(width/2- 150, height/2, 'Name: ' + scoreArr[8].name + ' Time: ' + scoreArr[8].score, { fontSize: '12px', fill: '#000' });
-                        var starttext10 = this.add.text(width/2- 150, height/2 + 25, 'Name: ' + scoreArr[9].name + ' Time: ' + scoreArr[9].score, { fontSize: '12px', fill: '#000' });
+                        starttext = this.add.text(width/2- 140, height/2 - 225, '1st place: Name: ' + scoreArr[0].name + ' Time: ' + scoreArr[0].score, { fontSize: '20px', fill: '#000' , fontFamily:'"PT Sans Narrow"' , color :'#FFFFFF'});
+                        starttext2 = this.add.text(width/2- 140, height/2 - 175, '2nd place: Name: ' + scoreArr[1].name + ' Time: ' + scoreArr[1].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                        starttext3 = this.add.text(width/2- 140, height/2 - 150, '3rd place: Name: ' + scoreArr[2].name + ' Time: ' + scoreArr[2].score, { fontSize: '16px', fill: '#000' , fontFamily:'"PT Sans Narrow"'});
+                        starttext4 = this.add.text(width/2- 140, height/2 - 125, '4th place: Name: ' + scoreArr[3].name + ' Time: ' + scoreArr[3].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext5 = this.add.text(width/2- 140, height/2 - 100, '5th place: Name: ' + scoreArr[4].name + ' Time: ' + scoreArr[4].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext6 = this.add.text(width/2- 140, height/2 - 75, '6th place: Name: ' + scoreArr[5].name + ' Time: ' + scoreArr[5].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext7 = this.add.text(width/2- 140, height/2 - 50, '7th place: Name: ' + scoreArr[6].name + ' Time: ' + scoreArr[6].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                        starttext8 = this.add.text(width/2- 140, height/2 - 25, '8th place: Name: ' + scoreArr[7].name + ' Time: ' + scoreArr[7].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"'});
+                        starttext9 = this.add.text(width/2- 140, height/2, '9th place: Name: ' + scoreArr[8].name + ' Time: ' + scoreArr[8].score, { fontSize: '16px', fill: '#000', fontFamily:'"PT Sans Narrow"' });
+                        starttext10 = this.add.text(width/2- 140, height/2 + 25, '10th place: Name: ' + scoreArr[9].name + ' Time: ' + scoreArr[9].score, { fontSize: '16px', fill: '#000' , fontFamily:'"PT Sans Narrow"'});
                     }
                 });
             console.log(scoreArr);
@@ -319,7 +363,16 @@ export default class Scene1 extends Phaser.Scene {
 
             this.back.once('pointerdown', ()=> {
                 this.leaderboardsfunc();
-                this.unprintlead();
+                starttext10.setText('');
+                starttext9.setText('');
+                starttext8.setText('');
+                starttext7.setText('');
+                starttext6.setText('');
+                starttext5.setText('');
+                starttext4.setText('');
+                starttext3.setText('');
+                starttext2.setText('');
+                starttext.setText('');
 
             });
     
@@ -356,17 +409,23 @@ export default class Scene1 extends Phaser.Scene {
         this.newmenu();
 
 
-        var starttext = this.add.text(width/2- 150, height/2 - 200, 'Games made by Mark McEneaney', { fontSize: '18px', fill: '#000' });
-        var starttext2 = this.add.text(width/2- 150, height/2 - 150, 'Music by Eric taylor', { fontSize: '12px', fill: '#000' });
-        var starttext3 = this.add.text(width/2- 150, height/2 - 125, 'Alex McCulloch and Alexandr Zhelanov', { fontSize: '12px', fill: '#000' });
-        var starttext4 = this.add.text(width/2- 150, height/2 - 100, 'Sounds by Leszek_Szary ', { fontSize: '12px', fill: '#000' });
+        starttext = this.add.text(width/2- 150, height/2 - 200, 'Games made by Mark McEneaney', { fontSize: '18px', fill: '#000' , fontFamily:'"Noto sans"'});
+        starttext2 = this.add.text(width/2- 150, height/2 - 150, 'Music by Eric taylor', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        starttext3 = this.add.text(width/2- 150, height/2 - 125, 'Alex McCulloch and Alexandr Zhelanov', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
+        starttext4 = this.add.text(width/2- 150, height/2 - 100, 'Sounds by Leszek_Szary ', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
 
         this.back = this.add.image(width/2, height/2 + 200, 'back');
 
         this.back.once('pointerdown', ()=> {
             this.home();
+            starttext4.setText('');
+            starttext3.setText('');
+            starttext2.setText('');
+            starttext.setText('');
+            
+            this.back.destroy();
 
-            this.unprintlead();
+
         });
 
                 
@@ -377,19 +436,7 @@ export default class Scene1 extends Phaser.Scene {
 
     }
 
-    unprintlead(){
-        
-        starttext10.settext('');
-        starttext9.settext('');
-        starttext8.settext('');
-        starttext7.settext('');
-        starttext6.settext('');
-        starttext5.settext('');
-        starttext4.settext('');
-        starttext3.settext('');
-        starttext2.settext('');
-        starttext.settext('');
-    }
+
 
     //clear homescreen function
 
@@ -547,7 +594,7 @@ export default class Scene1 extends Phaser.Scene {
     newmenu(){
         this.guides.destroy();
         this.play.destroy();
-        this.settings.destroy();
+        //this.settings.destroy();
         this.credits.destroy();
         this.leaderboards.destroy();
     }

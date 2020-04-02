@@ -2,6 +2,7 @@
 import * as firebase from "firebase/app"
 import "firebase/firestore"
 
+import WebFontFile from './webfontfile'
 
 var score= 0;
 var scoreText;
@@ -189,7 +190,7 @@ class EnemyLaser extends Phaser.GameObjects.Sprite {
 class Enemy1 extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {//accessed by function in scene1 to create enemies
         super(scene, x, y);
-        this.setTexture('enemy1');//sets texture. Change name later
+        this.setTexture('gate');//sets texture. 
         this.setPosition(x,y);//sets enemy position
         scene.physics.world.enable(this);//Makes them apply to the set physics
         this.gameObject = this;
@@ -218,40 +219,39 @@ export default class Scene1 extends Phaser.Scene {
         //images loaded
         this.load.image('tractor', 'assets/space/tractor1.png');
         this.load.image('key', 'assets/space/key.png');
-        this.load.image('enemy1', 'assets/space/gate2sh.png');
-        //this.load.image('grass', 'assets/space/grass2.png');
+        this.load.image('gate', 'assets/space/gate2sh.png');
         this.load.image('grass','assets/dodge/images/bg.png');
         this.load.image('rightBut', 'assets/space/rightBut.png');
         this.load.image('leftBut', 'assets/space/leftBut.png');
         this.load.image('shoot', 'assets/space/shoot.png'); 
         this.load.image('pause','assets/space/pause.png');
         this.load.image('bg', 'assets/space/bg3.png');
-        this.load.image('cow', 'assets/space/cow.png' )
-        
-        this.load.image('box', 'assets/space/box.png' )
-
+        this.load.image('cow', 'assets/space/cow.png');
+        this.load.image('box', 'assets/space/box.png');
         this.load.image('resumeBut', 'assets/gui/resume.png');
         this.load.image('restartBut', 'assets/gui/restart.png');
         this.load.image('homeBut', 'assets/gui/homeBut.png');
         this.load.image('help', 'assets/gui/help.png');
-        
-        
         this.load.image('start', 'assets/gui/start.png');
         this.load.image('submitBut', 'assets/gui/submits.png');
         this.load.image('submit', 'assets/gui/submit.png');
-        
         this.load.image('pauseBG','assets/gui/pauseBG.png' );
         this.load.image('largepauseBG','assets/gui/largepauseBG.png' );
-
-        
+        //music     
         this.load.audio('erict','assets/music/erict.mp3' );
+        
+        //fonts
+        
+        const fonts = new WebFontFile(this.load, ['Noto Sans', 'Anton'])
+        this.load.addFile(fonts)
+
 
 
         
     }
 
     create() {
-
+        this.scale.lockOrientation('portrait');
         if(startedmusic == 0)
         {
 
@@ -285,7 +285,6 @@ export default class Scene1 extends Phaser.Scene {
                 this.add.existing(this.enemy);
                 this.enemies.add(this.enemy);
                 this.enemies2.push(this.enemy);
-                //this.enemies2[arrCount].body.setVelocityX(-15 * speed);
                 arrCount++;
                 y = y + 50;
             }
@@ -347,10 +346,10 @@ export default class Scene1 extends Phaser.Scene {
     this.shootButton.setInteractive();
 
     
-    scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' , fontFamily: '"Anton"'});
     scoreText.setDepth(2);
-    roundText = this.add.text(16 ,48 ,'Round: ' + round, { fontSize: '32px', fill: '#000' });
-    livesText = this.add.text(width/2+ (w - 50), 48, 'Lives: ' + lives, { fontSize: '32px', fill: '#000' });
+    roundText = this.add.text(16 ,48 ,'Round: ' + round, { fontSize: '32px', fill: '#000', fontFamily: '"Anton"' });
+    livesText = this.add.text(width/2+ (w - 50), 48, 'Lives: ' + lives, { fontSize: '32px', fill: '#000' , fontFamily: '"Anton"'});
     roundText.setDepth(2);
     livesText.setDepth(2);
 
@@ -366,20 +365,24 @@ export default class Scene1 extends Phaser.Scene {
         if(width  > 1000 && height > 720)
         {
             this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
-            var starttext = this.add.text(width/2- 175, height/2 - 150, 'The farmer needs your help!', { fontSize: '22px', fill: '#000' });
-            var starttext2 = this.add.text(width/2- 175, height/2 - 125, 'Shoot the gates to lock them.', { fontSize: '22px', fill: '#000' });
-            var starttext3 = this.add.text(width/2- 175, height/2 - 100, 'Avoid the cows they let out!', { fontSize: '22px', fill: '#000' });
+            var starttext = this.add.text(width/2- 175, height/2 - 150, 'The farmer needs your help!', { fontSize: '22px', fill: '#000' , fontFamily: '"Noto Sans"'});
+            var starttext2 = this.add.text(width/2- 175, height/2 - 125, 'Shoot the gates to lock them.', { fontSize: '22px', fill: '#000' , fontFamily: '"Noto Sans"'});
+            var starttext3 = this.add.text(width/2- 175, height/2 - 100, 'Avoid the cows they let out!', { fontSize: '22px', fill: '#000' , fontFamily: '"Noto Sans"'});
+            var starttext4 = this.add.text(width/2- 175, height/2 - 75, 'Press the left and right', { fontSize: '22px', fill: '#000' , fontFamily: '"Noto Sans"'});
+            var starttext5 = this.add.text(width/2- 175, height/2 - 50, 'buttons to move in', { fontSize: '22px', fill: '#000' , fontFamily: '"Noto Sans"'});
+            var starttext6 = this.add.text(width/2- 175, height/2 - 25, 'that direction', { fontSize: '22px', fill: '#000' , fontFamily: '"Noto Sans"'});
         }else
         {
             this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
             
-        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The farmer needs your help!', { fontSize: '12px', fill: '#000' });
-        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'Shoot the gates to lock them.', { fontSize: '12px', fill: '#000' });
-        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'Avoid the cows they let out!', { fontSize: '12px', fill: '#000' });
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The farmer needs your help!', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'Shoot the gates to lock them.', { fontSize: '12px', fill: '#000' , fontFamily: '"Noto Sans"'});
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'Avoid the cows they let out!', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Press the left & right buttons', { fontSize: '12px', fill: '#000' , fontFamily: '"Noto Sans"'});
+        var starttext5 = this.add.text(width/2- 100, height/2 , 'to move in that direction', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+        var starttext6 = this.add.text(width/2- 175, height/2 - 25, '', { fontSize: '22px', fill: '#000', fontFamily: '"Noto Sans"' });
         }
-        
-
-
+ 
         this.start = this.add.image(width/2, height/2 + 50, 'start');
         this.start.setInteractive();
         this.moveLeftButton.disableInteractive();
@@ -400,13 +403,16 @@ export default class Scene1 extends Phaser.Scene {
         this.moveRightButton.setInteractive();
         this.shootButton.setInteractive();
         this.pauseBut.setInteractive();
-        
+        start = 1;
         this.enemies.setVelocityX(+15 * speed);
         this.pauseBG.setVisible(false);
         this.start.setVisible(false);
         starttext.setText('');
         starttext2.setText('');
         starttext3.setText('');
+        starttext4.setText('');
+        starttext5.setText('');
+        starttext6.setText('');
         start = 1;
         
     });
@@ -483,20 +489,20 @@ export default class Scene1 extends Phaser.Scene {
 
         if(width  > 1000 && height > 720)
         {
-            var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
-            var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to shoot all the gates', { fontSize: '12px', fill: '#000' });
-            var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'to close them. Use the left', { fontSize: '12px', fill: '#000' });
-            var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'and right arrows to move', { fontSize: '12px', fill: '#000' });
-            var starttext5 = this.add.text(width/2- 100, height/2, 'and the middle shoot button', { fontSize: '12px', fill: '#000' });
-            var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'to shoot', { fontSize: '12px', fill: '#000' });
+            var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+            var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to shoot all the gates', { fontSize: '12px', fill: '#000' , fontFamily: '"Noto Sans"'});
+            var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'to close them. Use the left', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+            var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'and right arrows to move', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+            var starttext5 = this.add.text(width/2- 100, height/2, 'and the middle shoot button', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+            var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'to shoot', { fontSize: '12px', fill: '#000' , fontFamily: '"Noto Sans"'});
         }else
         {
-            var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
-            var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to shoot all the gates', { fontSize: '12px', fill: '#000' });
-            var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'to close them. Use the left', { fontSize: '12px', fill: '#000' });
-            var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'and right arrows to move', { fontSize: '12px', fill: '#000' });
-            var starttext5 = this.add.text(width/2- 100, height/2, 'and the middle shoot button', { fontSize: '12px', fill: '#000' });
-            var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'to shoot', { fontSize: '12px', fill: '#000' });
+            var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+            var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to shoot all the gates', { fontSize: '12px', fill: '#000' , fontFamily: '"Noto Sans"'});
+            var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'to close them. Use the left', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+            var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'and right arrows to move', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+            var starttext5 = this.add.text(width/2- 100, height/2, 'and the middle shoot button', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+            var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'to shoot', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
         }
 
         this.resume = this.add.image(width/2, height/2 + 100,'resumeBut');
@@ -568,8 +574,8 @@ export default class Scene1 extends Phaser.Scene {
             this.shootButton.disableInteractive();       
             
             this.box = this.add.image(width/2, height/2 - 100,'box');
-            var endGame = this.add.text(width/2 - 115, 200, 'Hit by a cow!', { fontSize: '32px', fill: '#000' });
-            var endGame2 = this.add.text(width/2 - 115, 225, 'Lost a live', { fontSize: '32px', fill: '#000' });         
+            var endGame = this.add.text(width/2 - 115, 200, 'Hit by a cow!', { fontSize: '32px', fill: '#000', fontFamily: '"Noto Sans"' });
+            var endGame2 = this.add.text(width/2 - 115, 225, 'Lost a live', { fontSize: '32px', fill: '#000', fontFamily: '"Noto Sans"' });         
             if(lives >0)
             {
                 setTimeout(() => {
@@ -613,7 +619,7 @@ export default class Scene1 extends Phaser.Scene {
             }
             if(this.bottomRight.body.y  >= height -275 && hit == 0){
                 hit = 1;
-                var endGame = this.add.text(100, 200, 'Lost a life', { fontSize: '32px', fill: '#000' });
+                var endGame = this.add.text(100, 200, 'Lost a life', { fontSize: '32px', fill: '#000', fontFamily: '"Noto Sans"' });
                 lives --;
                 scorecount = 0;
                 livesText.setText("Lives: " + lives);
@@ -629,27 +635,30 @@ export default class Scene1 extends Phaser.Scene {
     
                     }, 300);
                 }
-
+                console.log(score + '1');
             }
             if(lives == 0){
+                
+                console.log(score + '2');
+                var score1 = score;
                 livesText.setText("Lives: " + lives);
                 lives = -1;        
                 if(width  > 1000 && height > 720)
                 {
                     this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
 
-                    var endGame = this.add.text(width/2 - 125, height/2 - 200, 'Game over', { fontSize: '22px', fill: '#000' });
-                    var endGame2 = this.add.text(width/2 - 125, height/2 -150, 'Press the button', { fontSize: '22px', fill: '#000' });
-                    var endGame3 = this.add.text(width/2 - 125,height/2 -100, 'to retry', { fontSize: '22px', fill: '#000' });
-                    var endGame4 = this.add.text(width/2 - 125,height/2 -50, 'Your score was '+ score, { fontSize: '22px', fill: '#000' });
+                    var endGame = this.add.text(width/2 - 125, height/2 - 200, 'Game over', { fontSize: '22px', fill: '#000', fontFamily: '"Noto Sans"' });
+                    var endGame2 = this.add.text(width/2 - 125, height/2 -150, 'Press the button', { fontSize: '22px', fill: '#000', fontFamily: '"Noto Sans"' });
+                    var endGame3 = this.add.text(width/2 - 125,height/2 -100, 'to retry', { fontSize: '22px', fill: '#000', fontFamily: '"Noto Sans"' });
+                    var endGame4 = this.add.text(width/2 - 125,height/2 -50, 'Your score was '+ score, { fontSize: '22px', fill: '#000', fontFamily: '"Noto Sans"' });
                 }else
                 {
                     this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
 
-                    var endGame = this.add.text(width/2 - 105, height/2 - 150, 'Game over', { fontSize: '17px', fill: '#000' });
-                    var endGame2 = this.add.text(width/2 - 105, height/2 -125, 'Press the button', { fontSize: '17px', fill: '#000' });
-                    var endGame3 = this.add.text(width/2 - 105,height/2 -100, 'to retry', { fontSize: '17px', fill: '#000' });
-                    var endGame4 = this.add.text(width/2 - 105,height/2 -75, 'Your score was '+ score, { fontSize: '17px', fill: '#000' });
+                    var endGame = this.add.text(width/2 - 105, height/2 - 150, 'Game over', { fontSize: '17px', fill: '#000', fontFamily: '"Noto Sans"' });
+                    var endGame2 = this.add.text(width/2 - 105, height/2 -125, 'Press the button', { fontSize: '17px', fill: '#000' , fontFamily: '"Noto Sans"'});
+                    var endGame3 = this.add.text(width/2 - 105,height/2 -100, 'to retry', { fontSize: '17px', fill: '#000' , fontFamily: '"Noto Sans"'});
+                    var endGame4 = this.add.text(width/2 - 105,height/2 -75, 'Your score was '+ score, { fontSize: '17px', fill: '#000', fontFamily: '"Noto Sans"' });
                 }
                 
 
@@ -658,6 +667,8 @@ export default class Scene1 extends Phaser.Scene {
                 
                 this.submitscore.setInteractive();
                 this.submitscore.on('pointerdown', () => {
+                    
+                console.log(score1 + '3');
                     endGame.setText('');
                     endGame2.setText('');
                     endGame3.setText('');
@@ -674,16 +685,16 @@ export default class Scene1 extends Phaser.Scene {
                     const myVar = document.getElementById('name-input');
                     if(width  > 1000 && height > 720)
                     {
-                        var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
-                        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000' });
-                        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
-                        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
+                        var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+                        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+                        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' , fontFamily: '"Noto Sans"'});
+                        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' , fontFamily: '"Noto Sans"'});
                     }else
                     {
-                        var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
-                        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000' });
-                        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
-                        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
+                        var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+                        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+                        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
+                        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000', fontFamily: '"Noto Sans"' });
                     }
                     this.submit = this.add.image(width/2, height/2 + 100, 'submitBut');
                     this.submit.setInteractive();
@@ -691,7 +702,7 @@ export default class Scene1 extends Phaser.Scene {
                         console.log(myVar);
                         // will do firebase and kick back to main menu
                         const db = firebase.firestore()
-                        db.collection('Leaderboards').doc('LockThatGate').collection('scores').add({ score: score, name: myVar.value})
+                        db.collection('Leaderboards').doc('LockThatGate').collection('scores').add({ score: score1, name: myVar.value})
                         setTimeout(() => {
                             location.href = "/home"
                         }, 2000);

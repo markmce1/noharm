@@ -1,5 +1,6 @@
 import * as firebase from "firebase/app"
 import "firebase/firestore"
+import WebFontFile from './webfontfile'
 
 import * as Phaser from 'phaser';
 var start;
@@ -104,6 +105,11 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.audio('alexCh','assets/music/alexCh.wav' );
 
+        //fonts
+        
+        const fonts = new WebFontFile(this.load, ['Noto Sans', 'Anton'])
+        this.load.addFile(fonts)
+
 
     }
     questionrandomiser(){
@@ -141,6 +147,7 @@ export default class Scene1 extends Phaser.Scene {
     create()
     {
 
+        this.scale.lockOrientation('portrait');
 
         if(startedmusic == 0)
         {
@@ -157,8 +164,8 @@ export default class Scene1 extends Phaser.Scene {
         this.add.image(width/2,45,'bg2');
 
 
-        scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000' });
-        roundText = this.add.text(16 ,48 ,'Round: ' + round, { fontSize: '32px', fill: '#000' });
+        scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#000', fontFamily:'"Anton"' });
+        roundText = this.add.text(16 ,48 ,'Round: ' + round, { fontSize: '32px', fill: '#000', fontFamily:'"Anton"' });
 
         score = 0;
         round = 0;
@@ -168,7 +175,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.pauseBut = this.add.image(width/2+ width/6+ 30,25, 'pause');
 
-        multipliertext = this.add.text(width/2 ,48 ,'Score *:' +scoremultiplier, { fontSize: '32px', fill: '#000' });
+        multipliertext = this.add.text(width/2 ,48 ,'Score *:' +scoremultiplier, { fontSize: '32px', fill: '#000' , fontFamily:'"Anton"'});
         this.pauseBut.setInteractive();
 
         this.pauseBut.once('pointerdown',()=>{
@@ -183,22 +190,22 @@ export default class Scene1 extends Phaser.Scene {
         if(width  > 1000 && height > 720)
         {
             this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
-            var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
-            var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000' });
-            var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000' });
-            var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000' });
-            var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000' });
-            var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000' });
+            var starttext = this.add.text(width/2- 125, height/2 - 100, 'The objective of the game', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext2 = this.add.text(width/2- 125, height/2 - 75, 'is to pick an answer to', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext3 = this.add.text(width/2- 125, height/2 - 50, 'the question', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext4 = this.add.text(width/2- 125, height/2 - 25, 'Get it right to get points', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext5 = this.add.text(width/2- 125, height/2, 'Getting it wrong means you', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext6 = this.add.text(width/2- 125, height/2 + 25, 'get zero points', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
 
         }else
         {
             this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
-            var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
-            var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000' });
-            var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000' });
-            var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000' });
-            var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000' });
-            var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000' });
+            var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get zero points', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
 
         }
         
@@ -303,20 +310,20 @@ help1(){
 
     if(width  > 1000 && height > 720)
     {
-        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
-        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000' });
-        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000' });
-        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000' });
-        var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000' });
-        var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000' });
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"'});
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
     }else
     {
-        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' });
-        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000' });
-        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000' });
-        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000' });
-        var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000' });
-        var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000' });
+        var starttext = this.add.text(width/2- 100, height/2 - 100, 'The objective of the game', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
+        var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'is to pick an answer to', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'the question', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
+        var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'Get it right to get points', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var starttext5 = this.add.text(width/2- 100, height/2, 'Getting it wrong means you', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
+        var starttext6 = this.add.text(width/2- 100, height/2 + 25, 'get no points', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
     }
 
     this.resume = this.add.image(width/2, height/2 + 100,'resumeBut');
@@ -364,10 +371,10 @@ help1(){
         
         if(width  > 400)
         {
-            question = this.add.text(width/2 - 100, height/7+30, 'What is the danger?', { fontSize: '32px', fill: '#000' });
+            question = this.add.text(width/2 - 100, height/7+30, 'What is the danger?', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
         }else
         {
-            question = this.add.text(width/8, height/7+30, 'What is the danger?', { fontSize: '22px', fill: '#000' });
+            question = this.add.text(width/8, height/7+30, 'What is the danger?', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
         }
 
         this.fall = this.add.image(width/2,height/2, 'fall');
@@ -437,15 +444,15 @@ help1(){
         this.fall = this.add.image(width/2,height/2, 'fall');  
 
         question.setText('');
-        var ansText = this.add.text(width/2 - 75, height/8 *3-25, 'This is man', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(width/2 - 75, height/8 *3, 'could fall.', { fontSize: '12px', fill: '#000' });
+        var ansText = this.add.text(width/2 - 75, height/8 *3-25, 'This is man', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3, 'could fall.', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
             this.sound.play('wrong');
         }
 
@@ -478,12 +485,12 @@ help1(){
 
         if(width  > 400)
         {
-            question = this.add.text(width/2 - 200, height/7, 'Is spreading slurry in the', { fontSize: '32px', fill: '#000' });
-            question2 = this.add.text(width/2 - 200, height/7 + 50, 'rain allowed near lakes?', { fontSize: '32px', fill: '#000' });
+            question = this.add.text(width/2 - 200, height/7, 'Is spreading slurry in the', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+            question2 = this.add.text(width/2 - 200, height/7 + 50, 'rain allowed near lakes?', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
         }else
         {
-            question = this.add.text(width/8-40, height/7+25, 'Is spreading slurry in the', { fontSize: '22px', fill: '#000' });
-            question2 = this.add.text(width/8-40, height/7 + 50, 'rain allowed near lakes?', { fontSize: '22px', fill: '#000' });
+            question = this.add.text(width/8-40, height/7+25, 'Is spreading slurry in the', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question2 = this.add.text(width/8-40, height/7 + 50, 'rain allowed near lakes?', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
         }
 
 
@@ -535,32 +542,48 @@ help1(){
         if(width  < 400)
         {
             this.slurrySmall = this.add.image(width/2, height/2, 'slurrySmall');
-            var ansText = this.add.text(120, 350, '', { fontSize: '12px', fill: '#000' });
-            var ansText2 = this.add.text(width/2 - 75, height/8 *3-50, 'You should never spread', { fontSize: '12px', fill: '#000' });
-            var ansText3 = this.add.text(width/2 - 75, height/8 *3-25, 'slurry in the rain', { fontSize: '12px', fill: '#000' });
-            var ansText4 = this.add.text(width/2 - 75, height/8 *3, 'especially near lakes.  ', { fontSize: '12px', fill: '#000' });
-            var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000' });
+            var ansText = this.add.text(120, 350, '', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
+            var ansText2 = this.add.text(width/2 - 75, height/8 *3-50, 'You should never spread', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText3 = this.add.text(width/2 - 75, height/8 *3-25, 'slurry in the rain', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText4 = this.add.text(width/2 - 75, height/8 *3, 'especially near lakes.  ', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
         }
         else{
             
             this.slurry = this.add.image(width/2, height/2, 'slurry');
             var ansText = this.add.text(120, 350, '', { fontSize: '12px', fill: '#000' });
-            var ansText2 = this.add.text(width/2 - 75, height/8 *3-125, 'You should never spread', { fontSize: '12px', fill: '#000' });
-            var ansText3 = this.add.text(width/2 - 75, height/8 *3-100, 'slurry in the rain', { fontSize: '12px', fill: '#000' });
-            var ansText4 = this.add.text(width/2 - 75, height/8 *3-75, 'especially near lakes.  ', { fontSize: '12px', fill: '#000' });
-            var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000' });
+            var ansText2 = this.add.text(width/2 - 75, height/8 *3-125, 'You should never spread', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
+            var ansText3 = this.add.text(width/2 - 75, height/8 *3-100, 'slurry in the rain', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"'});
+            var ansText4 = this.add.text(width/2 - 75, height/8 *3-75, 'especially near lakes.  ', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
         }
         this.destroy();
         question.setText('');//change to a question
         question2.setText('');
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
-        if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
-            correct = 0;
-        }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
-            this.sound.play('wrong');
+
+        if(width  < 400)
+        {
+            if(correct == 1){
+                var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+                correct = 0;
+            }else{
+                var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+                this.sound.play('wrong');
+            }
+    
+        }
+        else{
+            if(correct == 1){
+                var rightORwrong = this.add.text(width/2 - 100, height/8*3 - 175, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+                correct = 0;
+            }else{
+                var rightORwrong = this.add.text(width/2 - 100, height/8*3 - 175, 'Wrong!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+                this.sound.play('wrong');
+            }
+    
+
         }
 
 
@@ -600,11 +623,11 @@ help1(){
 
         if(width  > 400)
         {
-            question = this.add.text(width/2 - 200,height/7 + 50, 'What is this?', { fontSize: '32px', fill: '#000' });
+            question = this.add.text(width/2 - 200,height/7 + 50, 'What is this?', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
         }else
         {
 
-            question = this.add.text(width/8, height/7 + 50,  'What is this?', { fontSize: '22px', fill: '#000' });
+            question = this.add.text(width/8, height/7 + 50,  'What is this?', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
         }
 
 
@@ -655,19 +678,19 @@ help1(){
         }
         if(width  > 400)
         {
-            var ansText = this.add.text(width/2 - 125, height/8 *3-75, '', { fontSize: '12px', fill: '#000' });
-            var ansText2 = this.add.text(width/2 - 125, height/8 *3-75, 'This is a Power Take off shaft.', { fontSize: '12px', fill: '#000' });
-            var ansText3 = this.add.text(width/2 - 125, height/8 *3-75, '', { fontSize: '12px', fill: '#000' });
-            var ansText4 = this.add.text(width/2 - 125, height/8 *3-50, 'It is usually on the back of a tractor.', { fontSize: '12px', fill: '#000' });
-            var ansText5 = this.add.text(width/2 - 125, height/8 *3-25,'It should be covered', { fontSize: '12px', fill: '#000' });
+            var ansText = this.add.text(width/2 - 150, height/8 *3-75, '', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText2 = this.add.text(width/2 - 150, height/8 *3-75, 'This is a Power Take off shaft.', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText3 = this.add.text(width/2 - 150, height/8 *3-75, '', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText4 = this.add.text(width/2 - 150, height/8 *3-50, 'It is usually on the back of a tractor.', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText5 = this.add.text(width/2 - 150, height/8 *3-25,'It should be covered', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
             this.pto = this.add.image(width/2, height/2, 'pto');
         }else
         {
-            var ansText = this.add.text(width/2 - 75, height/8 *3-50, 'This is a', { fontSize: '12px', fill: '#000' });
-            var ansText2 = this.add.text(width/2 - 75, height/8 *3-25, 'Power Take off shaft.', { fontSize: '12px', fill: '#000' });
-            var ansText3 = this.add.text(width/2 - 75, height/8 *3, 'It is usually on the ', { fontSize: '12px', fill: '#000' });
-            var ansText4 = this.add.text(width/2 - 75, height/8 *3+25, 'back of a tractor.', { fontSize: '12px', fill: '#000' });
-            var ansText5 = this.add.text(width/2 - 75, height/8 *3+50,'It should be covered', { fontSize: '12px', fill: '#000' });
+            var ansText = this.add.text(width/2 - 75, height/8 *3-50, 'This is a', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText2 = this.add.text(width/2 - 75, height/8 *3-25, 'Power Take off shaft.', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText3 = this.add.text(width/2 - 75, height/8 *3, 'It is usually on the ', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText4 = this.add.text(width/2 - 75, height/8 *3+25, 'back of a tractor.', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText5 = this.add.text(width/2 - 75, height/8 *3+50,'It should be covered', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
             this.ptoSmall = this.add.image(width/2, height/2 + 55,'ptoSmall');
         }
 
@@ -678,10 +701,10 @@ help1(){
         question.setText('');//change to a question
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             this.sound.play('wrong');
         }
 
@@ -721,10 +744,10 @@ help1(){
 
         if(width  > 400)
         {
-            question = this.add.text(width/2 - 200,height/7 + 50,'What does this sign mean?', { fontSize: '32px', fill: '#000' });
+            question = this.add.text(width/2 - 200,height/7 + 50,'What does this sign mean?', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
         }else
         {
-            question = this.add.text(width/8- 40, height/7 + 25,  'What does this sign mean?', { fontSize: '22px', fill: '#000' });
+            question = this.add.text(width/8- 40, height/7 + 25,  'What does this sign mean?', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
         }
 
 
@@ -788,15 +811,15 @@ help1(){
         }
         this.destroy();
         question.setText('');
-        var ansText = this.add.text(width/2 - 75, height/8 *3-50,'This sign means that', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25, 'the fence is electrified', { fontSize: '12px', fill: '#000' });
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,'This sign means that', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25, 'the fence is electrified', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
 
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             this.sound.play('wrong');
         }
 
@@ -832,12 +855,12 @@ help1(){
         this.acc = this.add.image(width/2,height/2, 'acc');
         if(width  > 400)
         {
-            question = this.add.text(width/2-200, height/7 + 50, 'What is the most common', { fontSize: '32px', fill: '#000' });
-            question2 = this.add.text(width/2-200, height/7 + 75, 'accident on a farm', { fontSize: '32px', fill: '#000' });
+            question = this.add.text(width/2-200, height/7 + 50, 'What is the most common', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+            question2 = this.add.text(width/2-200, height/7 + 75, 'accident on a farm', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
         }else
         {
-            question = this.add.text(width/8, height/7+25, 'What is the most common', { fontSize: '22px', fill: '#000' });
-            question2 = this.add.text(width/8, height/7 + 50, 'accident on a farm', { fontSize: '22px', fill: '#000' });
+            question = this.add.text(width/8, height/7+25, 'What is the most common', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question2 = this.add.text(width/8, height/7 + 50, 'accident on a farm', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
         }
  
         this.box1 = this.add.image(width/4, height/2 + 150, 'Q5ans1');
@@ -902,16 +925,16 @@ help1(){
         question.setText('');
 
 
-        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Vechicular accidents are', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,'the most common accident ', { fontSize: '12px', fill: '#000' });
-        var ansText3 = this.add.text(width/2 - 75, height/8 *3,'on a farm', { fontSize: '12px', fill: '#000' });
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Vechicular accidents are', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,'the most common accident ', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText3 = this.add.text(width/2 - 75, height/8 *3,'on a farm', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             this.sound.play('wrong');
         }
 
@@ -945,12 +968,12 @@ help1(){
 
         if(width  > 400)
         {
-            question = this.add.text(width/2-100, height/7, 'Are farm accidents', { fontSize: '22px', fill: '#000' });
-            question2 = this.add.text(width/2-100, height/7+30, 'on the rise?', { fontSize: '22px', fill: '#000' });
+            question = this.add.text(width/2-100, height/7, 'Are farm accidents', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question2 = this.add.text(width/2-100, height/7+30, 'on the rise?', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
         }else
         {
-            question = this.add.text(width/8, height/7+ 25, 'Are farm accidents', { fontSize: '22px', fill: '#000' });
-            question2 = this.add.text(width/8, height/7+50, 'on the rise?', { fontSize: '22px', fill: '#000' });
+            question = this.add.text(width/8, height/7+ 25, 'Are farm accidents', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question2 = this.add.text(width/8, height/7+50, 'on the rise?', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
         }
 
 
@@ -1013,16 +1036,16 @@ help1(){
         this.box2.destroy(true);
         question.setText('');
 
-        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Farm accidents have', { fontSize: '12px', fill: '#000' });
-        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,  'risen by 13%', { fontSize: '12px', fill: '#000' });
-        var ansText3 = this.add.text(width/2 - 75, height/8 *3, '-Teagasc 2018', { fontSize: '9px', fill: '#000' });
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Farm accidents have', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,  'risen by 13%', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText3 = this.add.text(width/2 - 75, height/8 *3, '-Teagasc 2018', { fontSize: '9px', fill: '#000', fontFamily:'"Noto sans"' });
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             this.sound.play('wrong');
         }
 
@@ -1061,17 +1084,17 @@ help1(){
         {
             if(width  > 1000 && height > 720)
             {
-                var starttext = this.add.text(width/2- 100, height/2 - 150, 'If you would like to', { fontSize: '12px', fill: '#000' });
-                var starttext2 = this.add.text(width/2- 100, height/2 - 125, 'improve your score by', { fontSize: '12px', fill: '#000' });
-                var starttext3 = this.add.text(width/2- 100, height/2 - 100, 'reading up more, use the', { fontSize: '12px', fill: '#000' });
-                var starttext4 = this.add.text(width/2- 100, height/2 - 75, 'guides in the main menu', { fontSize: '12px', fill: '#000' });
+                var starttext = this.add.text(width/2- 100, height/2 - 150, 'If you would like to', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 125, 'improve your score by', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 100, 'reading up more, use the', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
+                var starttext4 = this.add.text(width/2- 100, height/2 - 75, 'guides in the main menu', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
 
             }else
             {
-                var starttext = this.add.text(width/2- 100, height/2 - 150, 'If you would like to', { fontSize: '12px', fill: '#000' });
-                var starttext2 = this.add.text(width/2- 100, height/2 - 125, 'improve your score by', { fontSize: '12px', fill: '#000' });
-                var starttext3 = this.add.text(width/2- 100, height/2 - 100, 'reading up more, use the', { fontSize: '12px', fill: '#000' });
-                var starttext4 = this.add.text(width/2- 100, height/2 - 75, 'guides in the main menu', { fontSize: '12px', fill: '#000' });
+                var starttext = this.add.text(width/2- 100, height/2 - 150, 'If you would like to', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 125, 'improve your score by', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 100, 'reading up more, use the', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext4 = this.add.text(width/2- 100, height/2 - 75, 'guides in the main menu', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
 
             }
 
@@ -1105,16 +1128,16 @@ help1(){
 
             if(width  > 1000 && height > 720)
             {
-                var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
-                var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000' });
-                var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
-                var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
+                var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
             }else
             {
-                var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000' });
-                var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000' });
-                var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000' });
-                var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' });
+                var starttext = this.add.text(width/2- 100, height/2 - 100, 'Enter your first name', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext2 = this.add.text(width/2- 100, height/2 - 75, 'and your score will', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext3 = this.add.text(width/2- 100, height/2 - 50, 'be submitted to', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+                var starttext4 = this.add.text(width/2- 100, height/2 - 25, 'the leaderboards', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
             }
 
             this.submit = this.add.image(width/2, height/2 + 100, 'submit');
