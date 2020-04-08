@@ -481,8 +481,10 @@ export default class Scene1 extends Phaser.Scene
 
 
                 this.submitscore = this.add.image(width/2, height/2 + 50, 'submits');
-                
-                this.submitscore.setInteractive();
+                setTimeout(() => {
+            
+                    this.submitscore.setInteractive();
+                }, 1000);
                 this.submitscore.on('pointerdown', () => {
                     //firebase shite here
 
