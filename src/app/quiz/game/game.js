@@ -13,7 +13,7 @@ var roundText;
 var scoreText;
 var width = window.innerWidth;
 var height = window.innerHeight;
-var arr = [1,2,3,4,5,6];
+var arr = [1,2,3,4,5,6,7,8,9,10];
 var scoremultiplier = 1;
 var multipliertext;
 
@@ -96,6 +96,27 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('Q5ans2', 'assets/quiz/images/Q5ans2.png');
         this.load.image('Q5ans3', 'assets/quiz/images/Q5ans3.png');
         this.load.image('Q5ans4', 'assets/quiz/images/Q5ans4.png');
+        
+        this.load.image('Q7ans1', 'assets/quiz/images/Q7ans1.png');
+        this.load.image('Q7ans2', 'assets/quiz/images/Q7ans2.png');
+        this.load.image('Q7ans3', 'assets/quiz/images/Q7ans3.png');
+        this.load.image('Q7ans4', 'assets/quiz/images/Q7ans4.png');
+        this.load.image('ladder', 'assets/quiz/images/ladder.jpg');
+
+                
+        this.load.image('A', 'assets/quiz/images/A.png');
+        this.load.image('B', 'assets/quiz/images/B.png');
+        this.load.image('C', 'assets/quiz/images/C.png');
+        this.load.image('D', 'assets/quiz/images/D.png');
+        this.load.image('cow', 'assets/quiz/images/cow1.png');
+        
+        this.load.image('bull', 'assets/quiz/images/bull.jpg');
+        this.load.image('Q9ans1', 'assets/quiz/images/Q9ans1.png');
+        this.load.image('Q9ans2', 'assets/quiz/images/Q9ans2.png');
+        this.load.image('Q9ans3', 'assets/quiz/images/Q9ans3.png');
+        this.load.image('Q9ans4', 'assets/quiz/images/Q9ans4.png');
+        this.load.image('weld', 'assets/quiz/images/weld.jpg')
+        this.load.image('weld2', 'assets/quiz/images/weld2.jpg')
 
         
         this.load.image('accident', 'assets/quiz/images/accident.jpg');
@@ -142,6 +163,23 @@ export default class Scene1 extends Phaser.Scene {
         {
             this.round6()
         }
+        if(arr[round - 1] == 7)
+        {
+            this.round7()
+        }
+        if(arr[round - 1] == 8)
+        {
+            this.round8()
+        }
+        if(arr[round - 1] == 9)
+        {
+            this.round9()
+        }
+        if(arr[round - 1] == 10)
+        {
+            this.round10()
+        }
+
     }
 
     create()
@@ -449,10 +487,10 @@ help1(){
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Wrong!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
             this.sound.play('wrong');
         }
 
@@ -543,18 +581,18 @@ help1(){
         {
             this.slurrySmall = this.add.image(width/2, height/2, 'slurrySmall');
             var ansText = this.add.text(120, 350, '', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
-            var ansText2 = this.add.text(width/2 - 75, height/8 *3-50, 'You should never spread', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
-            var ansText3 = this.add.text(width/2 - 75, height/8 *3-25, 'slurry in the rain', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
-            var ansText4 = this.add.text(width/2 - 75, height/8 *3, 'especially near lakes.  ', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText2 = this.add.text(width/2 - 100, height/8 *3-50, 'You should never spread', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText3 = this.add.text(width/2 - 100, height/8 *3-25, 'slurry in the rain', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText4 = this.add.text(width/2 - 100, height/8 *3, 'especially near lakes.  ', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
             var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
         }
         else{
             
             this.slurry = this.add.image(width/2, height/2, 'slurry');
             var ansText = this.add.text(120, 350, '', { fontSize: '12px', fill: '#000' });
-            var ansText2 = this.add.text(width/2 - 75, height/8 *3-125, 'You should never spread', { fontSize: '12px', fill: '#000' , fontFamily:'"Noto sans"'});
-            var ansText3 = this.add.text(width/2 - 75, height/8 *3-100, 'slurry in the rain', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"'});
-            var ansText4 = this.add.text(width/2 - 75, height/8 *3-75, 'especially near lakes.  ', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+            var ansText2 = this.add.text(width/2 - 75, height/8 *3-125, 'You should never spread', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
+            var ansText3 = this.add.text(width/2 - 75, height/8 *3-100, 'slurry in the rain', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"'});
+            var ansText4 = this.add.text(width/2 - 75, height/8 *3-75, 'especially near lakes.  ', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
             var ansText5 = this.add.text(120, 450, '', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
         }
         this.destroy();
@@ -576,10 +614,10 @@ help1(){
         }
         else{
             if(correct == 1){
-                var rightORwrong = this.add.text(width/2 - 100, height/8*3 - 175, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+                var rightORwrong = this.add.text(width/2 - 100, height/8*2-25, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
                 correct = 0;
             }else{
-                var rightORwrong = this.add.text(width/2 - 100, height/8*3 - 175, 'Wrong!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+                var rightORwrong = this.add.text(width/2 - 100, height/8*2 -25, 'Wrong!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
                 this.sound.play('wrong');
             }
     
@@ -701,10 +739,10 @@ help1(){
         question.setText('');//change to a question
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             this.sound.play('wrong');
         }
 
@@ -816,10 +854,10 @@ help1(){
 
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2-25, 'Correct!', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             this.sound.play('wrong');
         }
 
@@ -931,10 +969,10 @@ help1(){
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             this.sound.play('wrong');
         }
 
@@ -1042,10 +1080,10 @@ help1(){
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
         
         if(correct == 1){
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             correct = 0;
         }else{
-            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
             this.sound.play('wrong');
         }
 
@@ -1070,6 +1108,425 @@ help1(){
     {
         array.sort(() => Math.random() - 0.5);
     }
+
+    round7()
+    {
+        this.ladder = this.add.image(width/2, height/2,'ladder');
+        scoreText.setText('Score: ' + score);
+        roundText.setText('Round: ' + round);    
+        
+        multipliertext.setText('Score *:'+scoremultiplier);
+        
+        if(width  > 400)
+        {
+            question = this.add.text(width/2-200, height/7 + 50, 'What should you not do', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+            question2 = this.add.text(width/2-200, height/7 + 75, 'on a ladder', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+        }else
+        {
+            question = this.add.text(width/8, height/7+25, 'What should you not do', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question2 = this.add.text(width/8, height/7 + 50, 'on a ladder', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
+        }
+ 
+        this.box1 = this.add.image(width/4, height/2 + 150, 'Q7ans1');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'Q7ans2');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'Q7ans3');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'Q7ans4');
+
+        this.interactive();
+        this.box1.once('pointerdown', () => {
+            this.round7inter();
+            scoremultiplier = 1;
+            this.sound.play('wrong');
+        });  
+        this.box2.once('pointerdown', () => {
+            this.round7inter();
+            scoremultiplier = 1;
+            this.sound.play('wrong');
+        });
+        this.box3.once('pointerdown', () => {
+            console.log('correct');
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
+            this.sound.play('correct');
+            correct=1;
+            this.round7inter();
+
+        });
+        this.box4.once('pointerdown', () => {
+            this.round7inter();
+            scoremultiplier = 1;
+            this.sound.play('wrong');
+        });
+
+    }
+
+    round7inter(){
+        round ++;
+        this.ladder.destroy(true);
+        this.destroy();
+        question.setText('');
+        
+        question2.setText('');        
+        
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
+
+        this.ladder = this.add.image(width/2, height/2 + 40,'ladder');
+        this.destroy();
+        question.setText('');
+
+
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'You should always have', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,'someone nearby, while the ', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText3 = this.add.text(width/2 - 75, height/8 *3,'ladder is secured  and do', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText4 = this.add.text(width/2 - 75, height/8 *3 + 25,'not stand on the top step', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText5 = this.add.text(width/2 - 75, height/8 *3 + 50,'', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
+        
+        if(correct == 1){
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 - 25, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2 -25, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            this.sound.play('wrong');
+        }
+
+
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
+
+        this.continue.once('pointerdown', () => {
+            
+            this.ladder.destroy(true);
+            this.questionrandomiser();
+            this.pauseBG.destroy(true);
+            ansText.setText('');
+            ansText2.setText('');
+            ansText3.setText('');
+            ansText4.setText('');
+            ansText5.setText('');
+            rightORwrong.setText('');
+            this.continue.destroy(true);
+        });
+
+        
+    }
+
+    round8()
+    {
+        
+        this.cow = this.add.image(width/2, height/2 ,'cow');
+        scoreText.setText('Score: ' + score);
+        roundText.setText('Round: ' + round);    
+        
+        multipliertext.setText('Score *:'+scoremultiplier);
+        if(width  > 400)
+        {
+            question = this.add.text(width/2-200, height/7 + 50, 'Which of these cows', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+            question2 = this.add.text(width/2-200, height/7 + 75, 'is a bull?', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+        }else
+        {
+            question = this.add.text(width/8, height/7+25, 'Which of these cows', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question2 = this.add.text(width/8, height/7 + 50, 'is a bull?', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
+        }
+ 
+        this.box1 = this.add.image(width/4, height/2 + 150, 'A');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'B');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'C');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'D');
+
+        this.interactive();
+        this.box1.once('pointerdown', () => {
+            this.round8inter();
+            scoremultiplier = 1;
+            this.sound.play('wrong');
+        });  
+        this.box2.once('pointerdown', () => {
+            console.log('correct');
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
+            this.sound.play('correct');
+            correct=1;
+            this.round8inter();
+        });
+        this.box3.once('pointerdown', () => {
+            this.round8inter();
+            scoremultiplier = 1;
+            this.sound.play('wrong');
+        });
+        this.box4.once('pointerdown', () => {
+            this.round8inter();
+            scoremultiplier = 1;
+            this.sound.play('wrong');
+        });
+
+    }
+
+    round8inter(){
+        round ++;
+        this.destroy();
+        this.cow.destroy(true);
+        question.setText('');
+        
+        question2.setText('');        
+        
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
+
+        this.bull= this.add.image(width/2, height/2 + 25 ,'bull');
+        this.destroy();
+        question.setText('');
+
+
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Bulls usually have muscle', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,' and sometimes horns', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText3 = this.add.text(width/2 - 75, height/8 *3,'All cows can have horns however', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
+        
+        if(correct == 1){
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            this.sound.play('wrong');
+        }
+
+
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
+
+        this.continue.once('pointerdown', () => {
+            this.questionrandomiser();
+            this.pauseBG.destroy(true);
+            ansText.setText('');
+            ansText2.setText('');
+            ansText3.setText('')
+            rightORwrong.setText('');
+            this.continue.destroy(true);
+        });
+
+        
+    }
+
+
+    round9()
+    {
+        
+        this.weld = this.add.image(width/2, height/2 ,'weld');
+        scoreText.setText('Score: ' + score);
+        roundText.setText('Round: ' + round);    
+        
+        multipliertext.setText('Score *:'+scoremultiplier);
+        
+        if(width  > 400)
+        {
+            question = this.add.text(width/2-200, height/7 + 50, 'What does this sign mean?', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+            question2 = this.add.text(width/2-200, height/7 + 75, '', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+        }else
+        {
+            question = this.add.text(width/8, height/7+25, 'What does this sign mean?', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question2 = this.add.text(width/8, height/7 + 50, '', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
+        }
+ 
+        this.box1 = this.add.image(width/4, height/2 + 150, 'Q9ans1');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'Q9ans2');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'Q9ans3');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'Q9ans4');
+
+        this.interactive();
+        this.box1.once('pointerdown', () => {
+            this.round9inter();
+            scoremultiplier = 1;
+            this.sound.play('wrong');
+        });  
+        this.box2.once('pointerdown', () => {
+            this.round9inter();
+            scoremultiplier = 1;
+            this.sound.play('wrong');
+        });
+        this.box3.once('pointerdown', () => {
+            this.round9inter();
+            scoremultiplier = 1;
+            this.sound.play('wrong');
+        });
+        this.box4.once('pointerdown', () => {
+            console.log('correct');
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
+            this.sound.play('correct');
+            correct=1;
+            this.round9inter();
+        });
+
+    }
+
+    round9inter(){
+        round ++;
+        this.destroy();
+        this.weld.destroy(true);
+        question.setText('');
+        
+        question2.setText('');        
+        
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
+
+        this.destroy();
+        question.setText('');
+        
+        this.weld2 = this.add.image(width/2, height/2 + 25 ,'weld2');
+
+
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'This sign means theres', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,'welding up ahead', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText3 = this.add.text(width/2 - 75, height/8 *3,'Do not enter without ', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText4 = this.add.text(width/2 - 75, height/8 *3+ 25,'welding eye protection', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
+        
+        if(correct == 1){
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            this.sound.play('wrong');
+        }
+
+
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
+
+        this.continue.once('pointerdown', () => {
+            this.questionrandomiser();
+            this.weld2.destroy(true);
+            this.pauseBG.destroy(true);
+            ansText.setText('');
+            ansText2.setText('');
+            ansText3.setText('');
+            ansText4.setText('');
+            rightORwrong.setText('');
+            this.continue.destroy(true);
+        });
+
+        
+    }
+
+    round10()
+    {
+        scoreText.setText('Score: ' + score);
+        roundText.setText('Round: ' + round);    
+        
+        multipliertext.setText('Score *:'+scoremultiplier);
+        
+        if(width  > 400)
+        {
+            question = this.add.text(width/2-200, height/7 + 50, 'Do children need to be', { fontSize: '32px', fill: '#000' , fontFamily:'"Noto sans"'});
+            question2 = this.add.text(width/2-200, height/7 + 75, 'supervised on the farm?', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+        }else
+        {
+            question = this.add.text(width/8, height/7+25, 'Do children need to be', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question2 = this.add.text(width/8, height/7 + 50, 'supervised on the farm?', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
+        }
+        this.box1 = this.add.image(width/4, height/2 + 150, 'true');
+        this.box2 = this.add.image(width/8 * 6, height/2 + 150, 'false');
+        this.box3 = this.add.image(width/4, height/2 + 250, 'ans3');
+        this.box4 = this.add.image(width/8*6, height/2 + 250, 'ans4');
+        this.box3.setVisible(false);
+        this.box4.setVisible(false);
+
+        setTimeout(() => {
+            this.box1.setInteractive();
+            this.box2.setInteractive();
+        
+        }, 250);
+        this.box1.once('pointerdown', () => {
+
+            correct = 1;
+            score = score + 100 * scoremultiplier;
+            scoremultiplier ++;
+            round++;
+            this.round10inter();
+            this.sound.play('correct');
+        });  
+        this.box2.once('pointerdown', () => {  
+            //wrong answers
+            console.log('wrong1');
+            round++;
+            scoremultiplier = 1;
+            this.round10inter();
+
+        });
+
+    }
+
+    round10inter(){
+        round ++;
+        this.destroy();
+        question.setText('');
+        
+        question2.setText('');        
+        
+        if(width  > 1000 && height > 720)
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'largepauseBG');
+        }else
+        {
+            this.pauseBG = this.add.image(width/2, height/2, 'pauseBG');
+        }
+
+        this.destroy();
+        question.setText('');
+
+
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Children need to be', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,'supervised at all times', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText3 = this.add.text(width/2 - 75, height/8 *3,'on a farm', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');
+        
+        if(correct == 1){
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Correct!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            correct = 0;
+        }else{
+            var rightORwrong = this.add.text(width/2 - 100, height/8 *2, 'Wrong!', { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
+            this.sound.play('wrong');
+        }
+
+
+        setTimeout(() => {
+            this.continue.setInteractive();
+        }, 750);
+
+        this.continue.once('pointerdown', () => {
+            this.questionrandomiser();
+            this.pauseBG.destroy(true);
+            ansText.setText('');
+            ansText2.setText('');
+            ansText3.setText('')
+            rightORwrong.setText('');
+            this.continue.destroy(true);
+        });
+
+        
+    }
+
+
 
 
     finish()
