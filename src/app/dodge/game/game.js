@@ -3,8 +3,11 @@ import "firebase/firestore"
 import WebFontFile from './webfontfile'
 
 
-var width = window.innerWidth;
-var height =window.innerHeight;
+var realwidth = window.innerWidth;
+const width = realwidth;
+
+var realheight =window.innerHeight;
+const height = realheight;
 var timeSurvived;
 var elaspedTime;
 var time = 0;
@@ -233,6 +236,8 @@ export default class Scene1 extends Phaser.Scene {
             startedmusic = 1;
         }
 
+        
+        this.sound.pauseOnBlur = true;
         
         this.enemies2 = new Array();
         

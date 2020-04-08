@@ -11,8 +11,11 @@ var question;
 var question2;
 var roundText;
 var scoreText;
-var width = window.innerWidth;
-var height = window.innerHeight;
+var realwidth = window.innerWidth;
+const width = realwidth;
+
+var realheight =window.innerHeight;
+const height = realheight;
 var arr = [1,2,3,4,5,6,7,8,9,10];
 var scoremultiplier = 1;
 var multipliertext;
@@ -195,7 +198,7 @@ export default class Scene1 extends Phaser.Scene {
             startedmusic = 1;
         }
         
-
+        this.sound.pauseOnBlur = true;
         this.shuffle(arr);
 
         this.add.image(width/2, height/2, 'quizbg');
@@ -1561,8 +1564,10 @@ help1(){
 
         
         this.submitscore = this.add.image(width/2, height/2 + 100, 'submits');
-                
-        this.submitscore.setInteractive();
+        setTimeout(() => {
+            
+            this.submitscore.setInteractive();
+        }, 1000);
         this.submitscore.on('pointerdown', () => {
             //firebase shite here
 

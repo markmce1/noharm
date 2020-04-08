@@ -1,8 +1,11 @@
 import * as firebase from "firebase/app"
 import "firebase/firestore"
 
-var width = window.innerWidth;
-var height = window.innerHeight;
+var realwidth = window.innerWidth;
+const width = realwidth;
+
+var realheight =window.innerHeight;
+const height = realheight;
 var scoreText;
 var roundText;
 var timeSurvived;
@@ -84,6 +87,8 @@ export default class Scene1 extends Phaser.Scene
             this.sound.play('erict2', { loop: true });
             startedmusic = 1;
         }
+        
+        this.sound.pauseOnBlur = true;
 
         this.add.image(width/2, height/2, 'grass');
 

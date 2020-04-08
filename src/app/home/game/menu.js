@@ -72,6 +72,7 @@ export default class Scene1 extends Phaser.Scene {
         this.sound.play('alexz', { loop: true })
 
         
+        this.sound.pauseOnBlur = true;
         this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#3498db");
 
         this.pauseBG = this.add.image(width/2, height/2, 'menu');
