@@ -47,7 +47,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('memory','assets/gui/memory.png' );
         this.load.image('dodge','assets/gui/dodge.png' );
         this.load.image('back','assets/gui/back.png' );
-        
+        this.load.image('exit','assets/gui/exit.png' );
         this.load.image('suggest','assets/gui/suggest.png' );
         this.load.image('credits','assets/gui/credits.png' );
         this.load.image('settings','assets/gui/settings.png' );
@@ -92,6 +92,8 @@ export default class Scene1 extends Phaser.Scene {
         this.leaderboards= this.add.image(width/2 , height/2 , 'leaderboards' );
 
         this.credits= this.add.image(width/2 , height/2 + 100, 'credits' );
+        
+        this.exit= this.add.image(width/2 , height/2 + 200, 'exit' );
 
 
         this.guides.once('pointerdown', ()=> {
@@ -110,7 +112,14 @@ export default class Scene1 extends Phaser.Scene {
         /*this.settings.once('pointerdown', ()=> {
 
            this.settingsfunc();
+           cordova.plugins.exit();
+
         }); */
+
+        this.exit.once('pointerdown', ()=> {   
+            navigator['app'].exitApp();
+        });
+
 
         this.leaderboards.once('pointerdown', ()=> {
             this.leaderboardsfunc();
@@ -121,6 +130,7 @@ export default class Scene1 extends Phaser.Scene {
             this.play.setInteractive();
             this.guides.setInteractive();
             this.credits.setInteractive();
+            this.exit.setInteractive();
            // this.settings.setInteractive();
             this.leaderboards.setInteractive();
         }, 200);
@@ -190,6 +200,7 @@ export default class Scene1 extends Phaser.Scene {
             this.back = this.add.image(width/2, height/2 + 200, 'back');
 
             this.back.once('pointerdown', ()=> {
+                this.back.destroy();
                 this.leaderboardsfunc();
                 starttext10.setText('');
                 starttext9.setText('');
@@ -201,7 +212,6 @@ export default class Scene1 extends Phaser.Scene {
                 starttext3.setText('');
                 starttext2.setText('');
                 starttext.setText('');
-
             });
          
             setTimeout(() => {
@@ -248,6 +258,7 @@ export default class Scene1 extends Phaser.Scene {
             this.back = this.add.image(width/2, height/2 + 200, 'back');
 
             this.back.once('pointerdown', ()=> {
+                this.back.destroy();
                 this.leaderboardsfunc();
                 starttext10.setText('');
                 starttext9.setText('');
@@ -259,7 +270,6 @@ export default class Scene1 extends Phaser.Scene {
                 starttext3.setText('');
                 starttext2.setText('');
                 starttext.setText('');
-
             });
     
                     
@@ -306,6 +316,7 @@ export default class Scene1 extends Phaser.Scene {
             this.back = this.add.image(width/2, height/2 + 200, 'back');
 
             this.back.once('pointerdown', ()=> {
+                this.back.destroy();
                 this.leaderboardsfunc();
                 starttext10.setText('');
                 starttext9.setText('');
@@ -317,7 +328,6 @@ export default class Scene1 extends Phaser.Scene {
                 starttext3.setText('');
                 starttext2.setText('');
                 starttext.setText('');
-
             });
     
                     
@@ -362,6 +372,7 @@ export default class Scene1 extends Phaser.Scene {
             this.back = this.add.image(width/2, height/2 + 200, 'back');
 
             this.back.once('pointerdown', ()=> {
+                this.back.destroy();
                 this.leaderboardsfunc();
                 starttext10.setText('');
                 starttext9.setText('');
@@ -373,7 +384,7 @@ export default class Scene1 extends Phaser.Scene {
                 starttext3.setText('');
                 starttext2.setText('');
                 starttext.setText('');
-
+                
             });
     
                     

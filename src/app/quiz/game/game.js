@@ -968,11 +968,11 @@ help1(){
 
         if(width  > 400)
         {
-            question = this.add.text(width/2-100, height/7, 'Are farm accidents', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question = this.add.text(width/2-100, height/7, 'Are farm injuries', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
             question2 = this.add.text(width/2-100, height/7+30, 'on the rise?', { fontSize: '22px', fill: '#000' , fontFamily:'"Noto sans"'});
         }else
         {
-            question = this.add.text(width/8, height/7+ 25, 'Are farm accidents', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
+            question = this.add.text(width/8, height/7+ 25, 'Are farm injuries', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
             question2 = this.add.text(width/8, height/7+50, 'on the rise?', { fontSize: '22px', fill: '#000', fontFamily:'"Noto sans"' });
         }
 
@@ -1036,7 +1036,7 @@ help1(){
         this.box2.destroy(true);
         question.setText('');
 
-        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Farm accidents have', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
+        var ansText = this.add.text(width/2 - 75, height/8 *3-50,  'Farm injuries have', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
         var ansText2 = this.add.text(width/2 - 75, height/8 *3-25,  'risen by 13%', { fontSize: '12px', fill: '#000', fontFamily:'"Noto sans"' });
         var ansText3 = this.add.text(width/2 - 75, height/8 *3, '-Teagasc 2018', { fontSize: '9px', fill: '#000', fontFamily:'"Noto sans"' });
         this.continue = this.add.image(width/2, height/2+ height/4 - 25, 'continueBut');

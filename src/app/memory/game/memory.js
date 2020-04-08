@@ -452,7 +452,7 @@ export default class Scene1 extends Phaser.Scene
           callback: () => {
             this.elapsedTime--
             timeSurvived.setText('Time: ' + this.elapsedTime)
-            if(this.elapsedTime == 50)
+            if(this.elapsedTime == 0)
             {
                 this.timeThing.paused = true;
                 if(width  > 1000 && height > 720)

@@ -6,7 +6,6 @@ import config from './game/config';
 
 import Scene1 from './game/menu';
 
-
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 
@@ -25,5 +24,10 @@ export class HomePage {
     const game = new Phaser.Game(config);
     game.scene.add('scene1', Scene1, true, { x: 400, y: 300});
   }
+
+  exitApp() {
+    navigator['app'].exitApp();
+  }
+  
 
 }

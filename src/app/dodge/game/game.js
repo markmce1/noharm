@@ -205,8 +205,8 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image('leftBut', 'assets/space/leftBut.png');
         this.load.image('pause','assets/space/pause.png');
         this.load.image('bg1', 'assets/space/bg3.png');
-        this.load.image('left','assets/dodge/images/tractorleft.png');
-        this.load.image('right','assets/dodge/images/tractorright.png');
+        this.load.image('left','assets/dodge/images/tractor1.png');
+        this.load.image('right','assets/dodge/images/tractor1.png');
         this.load.image('help', 'assets/gui/help.png');
 
         this.load.audio('alexCh','assets/music/alexCh.wav' );
@@ -282,11 +282,12 @@ export default class Scene1 extends Phaser.Scene {
         }
         
 
-        this.bg = this.add.image(width/2, height/2, 'bg');
+        //this.bg = this.add.image(width/2, height/2, 'bg');
+        this.bg = this.add.tileSprite(width/2,height/2,2400,1164, 'bg');
         this.bg2 = this.add.image(width/2,45,'bg1');
         this.bg2.setDepth(1);
 
-        this.myTractor = new tractor(this, width/2,height - 100);
+        this.myTractor = new tractor(this, width/2,height - 150);
   
         timeSurvived = this.add.text(16, 16, 'Time: ' + time, { fontSize: '32px', fill: '#000', fontFamily:'"Noto sans"' });
         timeSurvived.setDepth(2);
@@ -572,6 +573,10 @@ help1(){
             this.myTractor.moveRight();
             
             this.myTractor.setTexture('right');
+        }
+        if(paused == 0)
+        {
+            this.bg.tilePositionY -= 1;
         }
 
         if(hitvar == 1)
