@@ -8,17 +8,10 @@ const routes: Routes = [
     path: 'space',
     loadChildren: () => import('./space/space.module').then( m => m.SpacePageModule)
   },
-  {
-    path: 'rpg',
-    loadChildren: () => import('./rpg/rpg.module').then( m => m.RPGPageModule)
-  },
+
   {
     path: 'quiz',
     loadChildren: () => import('./quiz/quiz.module').then( m => m.QuizPageModule)
-  },
-  {
-    path: 'guide',
-    loadChildren: () => import('./guide/guide.module').then( m => m.GuidePageModule)
   },
   {
     path: 'memory',
