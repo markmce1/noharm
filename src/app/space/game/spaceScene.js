@@ -477,6 +477,13 @@ export default class Scene1 extends Phaser.Scene {
         this.home.on('pointerdown', ()=> {
             location.href = "/home"
         });
+        this.restart.once('pointerdown',()=>{
+            this.scene.restart();
+            this.resume.setVisible(false);
+            this.pauseBG.setVisible(false);
+            this.restart.setVisible(false);
+            this.help.setVisible(false);
+        });
 
     }
 
@@ -549,9 +556,15 @@ export default class Scene1 extends Phaser.Scene {
                 this.resume1();
             });
         });
+
     }
 
     update() {//movement 
+
+        if(this.sys.settings.status < Phaser.Scenes.RUNNING){ // scene not ready, abort
+            return
+        }
+
         if (this.isMovingLeft) {//left
             this.myTractor.moveLeft();
         }
@@ -594,7 +607,6 @@ export default class Scene1 extends Phaser.Scene {
         }
 
         this.myTractor.update();
-
         const list = this.enemies.getChildren();
         //movement logic
         if(this.bottomRight !=  null && this.topLeft != null ){  
